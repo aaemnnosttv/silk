@@ -1,0 +1,21 @@
+{
+    "name": "silk/silk",
+    "type": "library",
+    "require": {
+        "php": "^5.4 | ^7.0",
+        "illuminate/support": "^5.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.1"
+    },
+    "authors": [
+        {
+            "name": "Evan Mattson",
+            "email": "me@aaemnnost.tv",
+            "homepage": "https://aaemnnost.tv"
+        }
+    ],
+    "autoload": {
+        "psr-4": {"Silk\\":"src"}
+    }
+}
