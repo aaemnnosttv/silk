@@ -77,7 +77,7 @@ class Post
             'posts_per_page' => 1
         ]);
 
-        if ( ! $post = reset($posts)) {
+        if (! $post = reset($posts)) {
             throw new PostNotFoundException("No post found with slug {$slug}");
         }
 
@@ -93,7 +93,7 @@ class Post
     {
         $post = \get_post();
 
-        if ( ! $post instanceof WP_Post) {
+        if (! $post instanceof WP_Post) {
             throw new PostNotFoundException('Global $post not an instance of WP_Post');
         }
 

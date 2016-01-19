@@ -11,5 +11,4 @@ class WP_ErrorException extends \RuntimeException
     {
         $this->message = $error->get_error_message();
     }
-
 }

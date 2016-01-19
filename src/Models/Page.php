@@ -11,5 +11,4 @@ class Page extends Post
      * @var string
      */
     const POST_TYPE = 'page';
-
 }

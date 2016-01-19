@@ -31,7 +31,7 @@ class Meta
      */
     public function get()
     {
-        if ( ! $this->key) {
+        if (! $this->key) {
             return $this->all();
         }
 
