@@ -77,8 +77,6 @@ class Hook
             return $given;
         }
 
-        $this->iterations++;
-
         return $this->invokeCallback(func_get_args());
     }
 
@@ -89,7 +87,9 @@ class Hook
      */
     protected function invokeCallback($arguments)
     {
-        $arguments = array_slice($arguments, 0, $this->getCallbackParameterCount());
+        $arguments = array_slice($arguments, 0, $this->callbackParamCount);
+
+        $this->iterations++;
 
         return call_user_func_array($this->callback, $arguments);
     }
