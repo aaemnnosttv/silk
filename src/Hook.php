@@ -8,6 +8,8 @@ class Hook
 
     protected $callback;
 
+    protected $callbackParamCount;
+
     protected $priority = 10;
 
     protected $iterations;
@@ -41,6 +43,7 @@ class Hook
     public function setCallback(callable $callback)
     {
         $this->callback = $callback;
+        $this->callbackParamCount = $this->getCallbackParameterCount();
 
         return $this;
     }
