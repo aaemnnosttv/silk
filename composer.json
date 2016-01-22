@@ -16,6 +16,7 @@
         }
     ],
     "autoload": {
-        "psr-4": {"Silk\\":"src"}
+        "psr-4": {"Silk\\":"src"},
+        "files": ["src/functions.php"]
     }
 }
