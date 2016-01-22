@@ -10,8 +10,10 @@ class HookTest extends WP_UnitTestCase
     public function an_instance_can_be_created_with_just_a_handle()
     {
         $hook = Hook::on('init');
+        $easy = on('init', function () {});
 
         $this->assertInstanceOf(Hook::class, $hook);
+        $this->assertInstanceOf(Hook::class, $easy);
     }
 
     /**
@@ -48,6 +50,15 @@ class HookTest extends WP_UnitTestCase
         apply_filters('some_action', 'Filter this!');
 
         $this->assertEquals($data, 'Filter this!');
+
+        $data = '';
+        $lazy = on('quick', function ($given) use (&$data) {
+            $data = $given;
+        });
+
+        do_action('quick', 'yo');
+
+        $this->assertEquals($data, 'yo');
     }
 
     /**
@@ -162,5 +173,26 @@ class HookTest extends WP_UnitTestCase
         $this->assertFalse(has_action('remove_this_test'));
 
         do_action('remove_this_test');
+    }
+
+    /**
+     * @test
+     */
+    public function it_has_a_helper_function_for_removing_hooks_now_and_in_the_future()
+    {
+        // exhibit A
+        add_action('hook_one', 'cb_one');
+        $this->assertTrue(off('hook_one', 'cb_one'));
+
+        // exhibit B
+        $boom = function () {
+            throw Exception('This should be removed or the test will fail!');
+        };
+        $hook = off('hook_two', $boom);
+        $this->assertInstanceOf(Hook::class, $hook);
+        // could be added waaaay later, sometime, we don't even know
+        add_action('hook_two', $boom);
+
+        do_action('hook_two');
     }
 }
