@@ -18,11 +18,12 @@ class Hook
 
 
     /**
-     * [make description]
-     * @param  [type] $handle [description]
-     * @return [type]         [description]
+     * Create a new Hook instance for this handle
+     *
+     * @param  string $handle action or filter handle
+     * @return static         instance
      */
-    public static function make($handle)
+    public static function on($handle)
     {
         return new static($handle);
     }

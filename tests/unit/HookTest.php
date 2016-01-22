@@ -9,7 +9,7 @@ class HookTest extends WP_UnitTestCase
      */
     public function an_instance_can_be_created_with_just_a_handle()
     {
-        $hook = Hook::make('init');
+        $hook = Hook::on('init');
 
         $this->assertInstanceOf(Hook::class, $hook);
     }
@@ -19,7 +19,7 @@ class HookTest extends WP_UnitTestCase
      */
     public function it_uses_a_fluent_api()
     {
-        $hook = Hook::make('asdf')
+        $hook = Hook::on('asdf')
             ->setCallback(function () {})
             ->withPriority(99)
             ->once()
@@ -35,7 +35,7 @@ class HookTest extends WP_UnitTestCase
     {
         $data = '';
 
-        $hook = Hook::make('some_action')
+        $hook = Hook::on('some_action')
             ->setCallback(function ($given) use (&$data) {
                 $data = $given;
             })
@@ -69,7 +69,7 @@ class HookTest extends WP_UnitTestCase
         add_filter('filterme', $iterate, 7);
         add_filter('filterme', $iterate, 8);
 
-        Hook::make('filterme')
+        Hook::on('filterme')
             ->setCallback(function ($value) use (&$data) {
                 $data = $value;
             })
@@ -88,7 +88,7 @@ class HookTest extends WP_UnitTestCase
     {
         $arguments_count = null;
 
-        $hook = Hook::make('testing_arguments_passed')
+        $hook = Hook::on('testing_arguments_passed')
             ->setCallback(function ($one, $two, $three) use (&$arguments_count) {
                 $arguments_count = func_num_args();
             })
@@ -115,7 +115,7 @@ class HookTest extends WP_UnitTestCase
     {
         $count = 0;
 
-        Hook::make('only_once_test')
+        Hook::on('only_once_test')
             ->setCallback(function () use (&$count) {
                 $count++;
             })
@@ -129,7 +129,7 @@ class HookTest extends WP_UnitTestCase
         $this->assertEquals(1, $count);
 
 
-        Hook::make('only_once_filtered')
+        Hook::on('only_once_filtered')
             ->setCallback(function ($value) {
                 $value *= 2;
                 return $value;
@@ -149,7 +149,7 @@ class HookTest extends WP_UnitTestCase
      */
     public function it_can_remove_its_hook_if_needed()
     {
-        $hook = Hook::make('remove_this_test')
+        $hook = Hook::on('remove_this_test')
             ->setCallback(function () {
                 throw new Exception('Test failed!');
             })
