@@ -139,7 +139,11 @@ class Hook
      */
     public function withPriority($priority)
     {
+        $this->remove();
+
         $this->priority = $priority;
+
+        $this->listen();
 
         return $this;
     }
