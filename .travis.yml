@@ -15,11 +15,14 @@ env:
 
 before_script:
     - bash tests/bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
-    - composer install
+    - composer install --dev --prefer-source
 
 script:
     - mkdir -p build/logs
-    - vendor/bin/phpunit
+    - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+after_script:
+    - if [ "$TRAVIS_BRANCH" == "master" ]; then php vendor/bin/coveralls -v; fi
 
 after_success:
-  - travis_retry php vendor/bin/coveralls
+    - if [ "$TRAVIS_BRANCH" == "master" ]; then coveralls; fi
