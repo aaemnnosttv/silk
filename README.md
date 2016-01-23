@@ -3,7 +3,6 @@
 [![Travis Build](https://img.shields.io/travis/aaemnnosttv/silk/master.svg)](https://travis-ci.org/aaemnnosttv/silk)
 [![Coveralls](https://img.shields.io/coveralls/aaemnnosttv/silk/master.svg)](https://coveralls.io/github/aaemnnosttv/silk?branch=master)
 [![HHVM (branch)](https://img.shields.io/hhvm/silk/silk/master.svg)](http://hhvm.h4cc.de/package/silk/silk)
-[![Dependency Status](https://www.versioneye.com/package/silk--silk/badge.svg)](https://www.versioneye.com/package/silk--silk)
 
 
 
