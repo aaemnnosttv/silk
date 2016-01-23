@@ -122,6 +122,23 @@ class HookTest extends WP_UnitTestCase
     /**
      * @test
      */
+    public function it_passes_all_arguments_to_a_callback_that_has_no_parameters()
+    {
+        $passed = 0;
+        Hook::on('test_all_arguments_passed')
+            ->setCallback(function () use (&$passed) {
+                $passed = func_num_args();
+            })->listen();
+
+        do_action('test_all_arguments_passed', 1, 2, 3);
+
+        $this->assertEquals(3, $passed);
+    }
+
+
+    /**
+     * @test
+     */
     public function it_can_be_set_to_only_fire_once()
     {
         $count = 0;

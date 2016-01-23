@@ -94,7 +94,7 @@ class Hook
      */
     protected function invokeCallback($arguments)
     {
-        $arguments = array_slice($arguments, 0, $this->callbackParamCount);
+        $arguments = array_slice($arguments, 0, $this->callbackParamCount ?: null);
 
         $this->iterations++;
 
