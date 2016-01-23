@@ -8,11 +8,12 @@ if (! function_exists('on')) :
      *
      * @param  string   $handle    action or filter handle
      * @param  callable $callback
+     * @param  int      $priority
      * @return Hook
      */
-    function on($handle, callable $callback)
+    function on($handle, callable $callback, $priority = 10)
     {
-        return Hook::on($handle)
+        return Hook::on($handle, $priority)
             ->setCallback($callback)
             ->listen();
     }

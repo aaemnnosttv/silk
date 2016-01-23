@@ -10,7 +10,7 @@ class Hook
 
     protected $callbackParamCount;
 
-    protected $priority = 10;
+    protected $priority;
 
     protected $iterations;
 
@@ -18,23 +18,26 @@ class Hook
 
 
     /**
-     * Create a new Hook instance for this handle
+     * Create a new Hook instance
      *
      * @param  string $handle action or filter handle
+     * @param  int    $priority
      * @return static         instance
      */
-    public static function on($handle)
+    public static function on($handle, $priority = 10)
     {
-        return new static($handle);
+        return new static($handle, $priority);
     }
 
     /**
-     * [__construct description]
-     * @param [type] $handle [description]
+     * Create a new Hook instance
+     * @param  string $handle action or filter handle
+     * @param  int    $priority
      */
-    public function __construct($handle)
+    public function __construct($handle, $priority = 10)
     {
         $this->handle = $handle;
+        $this->priority = $priority;
     }
 
     /**
