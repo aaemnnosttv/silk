@@ -139,6 +139,30 @@ class HookTest extends WP_UnitTestCase
     /**
      * @test
      */
+    public function it_can_limit_the_number_of_times_the_callback_is_invoked()
+    {
+        $count = 0;
+
+        Hook::on('three_times_only_test')
+            ->setCallback(function () use (&$count) {
+                $count++;
+            })
+            ->listen()
+            ->onlyXtimes(3);
+
+        do_action('three_times_only_test');
+        do_action('three_times_only_test');
+        do_action('three_times_only_test');
+        do_action('three_times_only_test');
+        do_action('three_times_only_test');
+        do_action('three_times_only_test');
+
+        $this->assertEquals(3, $count);
+    }
+
+    /**
+     * @test
+     */
     public function it_can_be_set_to_only_fire_once()
     {
         $count = 0;
