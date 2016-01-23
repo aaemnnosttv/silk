@@ -17,4 +17,9 @@ before_script:
     - bash tests/bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
     - composer install
 
-script: vendor/bin/phpunit
+script:
+    - mkdir -p build/logs
+    - vendor/bin/phpunit
+
+after_success:
+  - travis_retry php vendor/bin/coveralls
