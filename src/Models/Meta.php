@@ -12,12 +12,16 @@ class Meta
      */
     protected $type;
 
+    protected $object_id;
+
+    protected $key;
+
     /**
      * @param string     $type      Meta type
      * @param int|string $object_id ID of the object metadata is for
      * @param string     $key       [description]
      */
-    public function __construct($type, $object_id, $key = '')
+    public function __construct($type, $object_id, $key)
     {
         $this->type      = $type;
         $this->object_id = $object_id;
@@ -25,14 +29,14 @@ class Meta
     }
 
     /**
-     * Get the meta data
+     * Get the single meta data
      *
      * @return mixed
      */
-    public function get()
+    public function get($key = '')
     {
-        if (! $this->key) {
-            return $this->all();
+        if (! $this->key && $key) {
+            return new static($this->type, $this->object_id, $key);
         }
 
         return get_metadata($this->type, $this->object_id, $this->key, true);
@@ -99,5 +103,18 @@ class Meta
     public function exists()
     {
         return metadata_exists($this->type, $this->object_id, $this->key);
+    }
+
+    /**
+     *
+     */
+    public function __get($property)
+    {
+        return $this->get($property);
+    }
+
+    public function __toString()
+    {
+        return $this->get();
     }
 }
