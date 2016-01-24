@@ -5,6 +5,7 @@ namespace Silk\Models;
 use WP_Post;
 use Illuminate\Support\Collection;
 use Silk\WP_ErrorException;
+use Silk\Meta\ObjectMeta;
 use Silk\Models\Exceptions\PostNotFoundException;
 use Silk\Models\Exceptions\ModelPostTypeMismatchException;
 
@@ -129,7 +130,13 @@ class Post
      */
     public function meta($key = '')
     {
-        return new Meta('post', $this->id, $key);
+        $meta = new ObjectMeta('post', $this->id);
+
+        if ($key) {
+            return $meta->get($key);
+        }
+
+        return $meta;
     }
 
     /**
