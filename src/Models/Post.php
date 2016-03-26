@@ -204,9 +204,19 @@ class Post
      */
     public function save()
     {
-        wp_update_post($this->post);
+        if (! $this->id) {
+            $result = wp_insert_post($this->post, true);
+        } else {
+            $result = wp_update_post($this->post, true);
+        }
 
-        return $this;
+        if (is_wp_error($result)) {
+            throw new WP_ErrorException($result);
+        }
+
+        $this->id = (int) $result;
+
+        return $this->refresh();
     }
 
     /**
