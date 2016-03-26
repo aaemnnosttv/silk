@@ -45,9 +45,13 @@ class Post
         $this->id   = (int) $post->ID;
     }
 
+    public static function fromWpPost(WP_Post $post)
+    {
         if ($post->post_type !== static::POST_TYPE) {
-            throw new ModelPostTypeMismatchException($this, $post);
+            throw new ModelPostTypeMismatchException(static::class, $post);
         }
+
+        return new static($post);
     }
 
     /**
@@ -65,7 +69,7 @@ class Post
             throw new PostNotFoundException("No post found with ID {$id}");
         }
 
-        return new static($post);
+        return static::fromWpPost($post);
     }
 
     /**
@@ -88,7 +92,7 @@ class Post
             throw new PostNotFoundException("No post found with slug {$slug}");
         }
 
-        return new static($post);
+        return static::fromWpPost($post);
     }
 
     /**
@@ -104,7 +108,7 @@ class Post
             throw new PostNotFoundException('Global $post not an instance of WP_Post');
         }
 
-        return new static($post);
+        return static::fromWpPost($post);
     }
 
     /**
