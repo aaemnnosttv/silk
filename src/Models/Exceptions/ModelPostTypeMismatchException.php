@@ -9,11 +9,10 @@ class ModelPostTypeMismatchException extends \RuntimeException
 {
     const MESSAGE_FORMAT = '{modelClass} instantiated with post of type "{givenPostType}", but requires a post of type "{modelPostType}".';
 
-    public function __construct(Post $model, WP_Post $post)
+    public function __construct($modelClass, WP_Post $post)
     {
-        $this->model = $model;
+        $this->modelClass = $modelClass;
         $this->post = $post;
-
         $this->message = $this->formatMessage();
     }
 
@@ -24,9 +23,9 @@ class ModelPostTypeMismatchException extends \RuntimeException
             '{givenPostType}',
             '{modelPostType}'
         ], [
-            get_class($this->model),
+            $this->modelClass,
             $this->post->post_type,
-            $this->model->type
+            $this->modelClass::POST_TYPE
         ], static::MESSAGE_FORMAT);
     }
 }
