@@ -206,6 +206,10 @@ class Post
      */
     public function __get($property)
     {
+        if ('id' === $property) {
+            return $this->id;
+        }
+
         if ('type' === $property) {
             return static::POST_TYPE;
         }
