@@ -34,10 +34,16 @@ class Post
      * [__construct description]
      * @param WP_Post $post [description]
      */
-    public function __construct(WP_Post $post)
+    public function __construct(WP_Post $post = null)
     {
+        if (! $post) {
+            $post = new WP_Post(new \StdClass);
+            $post->post_type = static::POST_TYPE;
+        }
+
         $this->post = $post;
         $this->id   = (int) $post->ID;
+    }
 
         if ($post->post_type !== static::POST_TYPE) {
             throw new ModelPostTypeMismatchException($this, $post);
