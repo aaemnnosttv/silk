@@ -25,7 +25,7 @@ class ModelPostTypeMismatchException extends \RuntimeException
         ], [
             $this->modelClass,
             $this->post->post_type,
-            $this->modelClass::POST_TYPE
+            constant($this->modelClass . '::POST_TYPE')
         ], static::MESSAGE_FORMAT);
     }
 }
