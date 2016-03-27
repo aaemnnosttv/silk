@@ -99,6 +99,8 @@ class PostModelTest extends WP_UnitTestCase
         $model = Post::create([
             'post_title' => 'Foo'
         ]);
+        $this->assertInstanceOf(Post::class, $model);
+        $this->assertGreaterThan(0, $model->id);
 
         $post = get_post($model->id);
 
