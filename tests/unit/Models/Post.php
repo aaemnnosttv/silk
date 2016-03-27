@@ -9,6 +9,32 @@ class PostModelTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_can_create_a_post_from_a_new_instance()
+    {
+        $model = new Post();
+        $this->assertNull($model->id);
+        $this->assertInstanceOf(WP_Post::class, $model->post);
+
+        $model->post_title = 'the title';
+        $model->save();
+
+        $this->assertNotEmpty($model->post->ID);
+    }
+
+    /**
+     * @test
+     */
+    function it_can_be_instantiated_from_a_wp_post_object()
+    {
+        $post = $this->factory->post->create_and_get();
+        $model = Post::fromWpPost($post);
+
+        $this->assertSame($post->ID, $model->id);
+    }
+
+    /**
+     * @test
+     */
     public function it_can_find_a_post_by_the_id()
     {
         $post_id = $this->factory->post->create();
