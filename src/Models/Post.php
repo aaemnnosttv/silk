@@ -120,17 +120,12 @@ class Post
      */
     public static function create($attributes = [])
     {
-        $attributes = Collection::make($attributes)
-            ->except(['ID'])
-            ->put('post_type', static::POST_TYPE);
+        unset($attributes['ID']);
 
-        $id = \wp_insert_post($attributes->toArray(), true);
+        $post = new WP_Post((object) $attributes);
+        $model = static::fromWpPost($post);
 
-        if (\is_wp_error($id)) {
-            throw new WP_ErrorException($id);
-        }
-
-        return static::fromID($id);
+        return $model->save();
     }
 
     /**
