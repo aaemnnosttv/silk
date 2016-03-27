@@ -42,7 +42,7 @@ class Post
         }
 
         $this->post = $post;
-        $this->id   = (int) $post->ID;
+        $this->id   = $post->ID;
     }
 
     public static function fromWpPost(WP_Post $post)
