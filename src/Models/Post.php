@@ -154,7 +154,11 @@ class Post
      */
     public function trash()
     {
-        return wp_trash_post($this->id);
+        if (wp_trash_post($this->id)) {
+            $this->refresh();
+        }
+
+        return $this;
     }
 
     /**
@@ -164,7 +168,11 @@ class Post
      */
     public function untrash()
     {
-        return wp_untrash_post($this->id);
+        if (wp_untrash_post($this->id)) {
+            $this->refresh();
+        }
+
+        return $this;
     }
 
     /**
@@ -178,7 +186,11 @@ class Post
      */
     public function delete()
     {
-        return wp_delete_post($this->id, true);
+        if (wp_delete_post($this->id, true)) {
+            $this->refresh();
+        }
+
+        return $this;
     }
 
     /**
