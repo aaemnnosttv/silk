@@ -2,6 +2,7 @@
 
 namespace Silk\Models;
 
+use stdClass;
 use WP_Post;
 use Illuminate\Support\Collection;
 use Silk\WP_ErrorException;
@@ -37,7 +38,7 @@ class Post
     public function __construct(WP_Post $post = null)
     {
         if (! $post) {
-            $post = new WP_Post(new \StdClass);
+            $post = new WP_Post(new StdClass);
             $post->post_type = static::POST_TYPE;
         }
 
