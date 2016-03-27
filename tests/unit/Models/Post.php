@@ -100,7 +100,7 @@ class PostModelTest extends WP_UnitTestCase
             'post_title' => 'Foo'
         ]);
 
-        $post = \get_post($model->id);
+        $post = get_post($model->id);
 
         $this->assertEquals($post->ID, $model->id);
     }

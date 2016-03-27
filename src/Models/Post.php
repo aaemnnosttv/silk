@@ -82,7 +82,7 @@ class Post
      */
     public static function fromSlug($slug)
     {
-        $posts = (array) \get_posts([
+        $posts = (array) get_posts([
             'name'           => $slug,
             'post_type'      => static::POST_TYPE,
             'post_status'    => 'any',
@@ -103,7 +103,7 @@ class Post
      */
     public static function fromGlobal()
     {
-        $post = \get_post();
+        $post = get_post();
 
         if (! $post instanceof WP_Post) {
             throw new PostNotFoundException('Global $post not an instance of WP_Post');
