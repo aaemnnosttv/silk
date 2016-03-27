@@ -120,6 +120,24 @@ class PostModelTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_can_delete_itself()
+    {
+        $post_id = $this->factory->post->create();
+        $model = Post::fromID($post_id);
+
+        $this->assertSame($post_id, $model->id);
+        $this->assertInstanceOf(WP_Post::class, get_post($post_id));
+
+        $model->delete();
+
+        $this->assertNull(get_post($post_id));
+        $this->assertNull($this->post);
+    }
+
+
+    /**
+     * @test
+     */
     public function it_handles_trashing_and_untrashing()
     {
         $model = Post::create([
