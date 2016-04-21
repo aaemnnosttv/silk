@@ -38,7 +38,7 @@ class Post
     public function __construct(WP_Post $post = null)
     {
         if (! $post) {
-            $post = new WP_Post(new StdClass);
+            $post = new WP_Post(new stdClass);
             $post->post_type = static::POST_TYPE;
         }
 
