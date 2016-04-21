@@ -213,7 +213,7 @@ class Post
     public function save()
     {
         if (! $this->id) {
-            $result = wp_insert_post($this->post, true);
+            $result = wp_insert_post($this->post->to_array(), true);
         } else {
             $result = wp_update_post($this->post, true);
         }
