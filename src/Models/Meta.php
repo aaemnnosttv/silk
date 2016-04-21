@@ -106,6 +106,16 @@ class Meta
     }
 
     /**
+     * Get the object_id
+     * 
+     * @return int|string
+     */
+    public function getObjectId()
+    {
+        return $this->object_id;
+    }
+
+    /**
      *
      */
     public function __get($property)
