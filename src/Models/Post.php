@@ -237,11 +237,7 @@ class Post
         if ('id' === $property) {
             return $this->id;
         }
-
-        if ('type' === $property) {
-            return static::POST_TYPE;
-        }
-
+        
         if (isset($this->$property)) {
             return $this->$property;
         }
