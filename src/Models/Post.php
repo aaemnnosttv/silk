@@ -4,7 +4,6 @@ namespace Silk\Models;
 
 use stdClass;
 use WP_Post;
-use Illuminate\Support\Collection;
 use Silk\WP_ErrorException;
 use Silk\Meta\ObjectMeta;
 use Silk\Models\Exceptions\PostNotFoundException;
