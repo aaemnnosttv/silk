@@ -1,2 +1,4 @@
 /vendor/
+/wordpress/
 composer.lock
+.idea

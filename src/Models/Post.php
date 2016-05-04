@@ -2,8 +2,8 @@
 
 namespace Silk\Models;
 
+use stdClass;
 use WP_Post;
-use Illuminate\Support\Collection;
 use Silk\WP_ErrorException;
 use Silk\Meta\ObjectMeta;
 use Silk\Models\Exceptions\PostNotFoundException;
@@ -37,7 +37,7 @@ class Post
     public function __construct(WP_Post $post = null)
     {
         if (! $post) {
-            $post = new WP_Post(new \StdClass);
+            $post = new WP_Post(new stdClass);
             $post->post_type = static::POST_TYPE;
         }
 
@@ -81,7 +81,7 @@ class Post
      */
     public static function fromSlug($slug)
     {
-        $posts = (array) \get_posts([
+        $posts = (array) get_posts([
             'name'           => $slug,
             'post_type'      => static::POST_TYPE,
             'post_status'    => 'any',
@@ -102,7 +102,7 @@ class Post
      */
     public static function fromGlobal()
     {
-        $post = \get_post();
+        $post = get_post();
 
         if (! $post instanceof WP_Post) {
             throw new PostNotFoundException('Global $post not an instance of WP_Post');
@@ -119,17 +119,12 @@ class Post
      */
     public static function create($attributes = [])
     {
-        $attributes = Collection::make($attributes)
-            ->except(['ID'])
-            ->put('post_type', static::POST_TYPE);
+        unset($attributes['ID']);
 
-        $id = \wp_insert_post($attributes->toArray(), true);
+        $post = new WP_Post((object) $attributes);
+        $model = static::fromWpPost($post);
 
-        if (\is_wp_error($id)) {
-            throw new WP_ErrorException($id);
-        }
-
-        return static::fromID($id);
+        return $model->save();
     }
 
     /**
@@ -158,7 +153,11 @@ class Post
      */
     public function trash()
     {
-        return wp_trash_post($this->id);
+        if (wp_trash_post($this->id)) {
+            $this->refresh();
+        }
+
+        return $this;
     }
 
     /**
@@ -168,7 +167,11 @@ class Post
      */
     public function untrash()
     {
-        return wp_untrash_post($this->id);
+        if (wp_untrash_post($this->id)) {
+            $this->refresh();
+        }
+
+        return $this;
     }
 
     /**
@@ -182,7 +185,11 @@ class Post
      */
     public function delete()
     {
-        return wp_delete_post($this->id, true);
+        if (wp_delete_post($this->id, true)) {
+            $this->refresh();
+        }
+
+        return $this;
     }
 
     /**
@@ -205,7 +212,7 @@ class Post
     public function save()
     {
         if (! $this->id) {
-            $result = wp_insert_post($this->post, true);
+            $result = wp_insert_post($this->post->to_array(), true);
         } else {
             $result = wp_update_post($this->post, true);
         }
@@ -229,11 +236,7 @@ class Post
         if ('id' === $property) {
             return $this->id;
         }
-
-        if ('type' === $property) {
-            return static::POST_TYPE;
-        }
-
+        
         if (isset($this->$property)) {
             return $this->$property;
         }
