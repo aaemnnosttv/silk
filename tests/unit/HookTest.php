@@ -163,6 +163,35 @@ class HookTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_has_a_helper_method_for_bypassing_the_callback()
+    {
+        $count = 0;
+
+        $hook = Hook::on('bypass_test')
+            ->setCallback(function () use (&$count) {
+                $count++;
+            })
+            ->listen();
+
+        do_action('bypass_test');
+        do_action('bypass_test');
+        do_action('bypass_test');
+        do_action('bypass_test');
+        do_action('bypass_test'); // 5
+
+        $hook->bypass(); // callback will not be triggered again
+
+        do_action('bypass_test');
+        do_action('bypass_test');
+        do_action('bypass_test');
+
+        $this->assertEquals(5, $count);
+    }
+
+
+    /**
+     * @test
+     */
     public function it_can_be_set_to_only_fire_once()
     {
         $count = 0;
