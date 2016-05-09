@@ -2,6 +2,7 @@
 
 use Silk\Models\Post;
 use Silk\Silk\WP_ErrorException;
+use Silk\Query\Builder;
 use Symfony\Component\VarDumper\Caster\Caster;
 
 class PostModelTest extends WP_UnitTestCase
@@ -120,6 +121,17 @@ class PostModelTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_creates_a_post_of_the_models_type()
+    {
+        $model = CustomTypeStub::create(['post_title' => 'This is just a test']);
+
+        $this->assertEquals(CustomTypeStub::POST_TYPE, $model->post_type);
+    }
+
+
+    /**
+     * @test
+     */
     function it_can_delete_itself()
     {
         $post_id = $this->factory->post->create();
@@ -193,5 +205,45 @@ class PostModelTest extends WP_UnitTestCase
         $model->save();
 
         $this->assertEquals('Changed', get_the_title($model->id));
+    }
+
+    /**
+     * @test
+     */
+    function it_offers_static_methods_for_querying()
+    {
+        $this->assertInstanceOf(Builder::class, Post::query());
+    }
+
+    /**
+     * @test
+     */
+    function it_has_a_static_method_for_starting_a_new_query_for_all_posts_of_type()
+    {
+        $this->factory->post->create_many(15);
+
+        $this->assertCount(15, Post::all()->results());
+    }
+
+    /**
+     * @test
+     */
+    function it_proxies_non_existent_static_methods_to_the_builder()
+    {
+        $this->assertInstanceOf(
+            Silk\Query\Builder::class,
+            Post::limit(1)
+        );
+    }
+
+}
+
+class CustomTypeStub extends Post
+{
+    const POST_TYPE = 'cpt_stub';
+
+    public static function __register()
+    {
+        register_post_type(static::POST_TYPE);
     }
 }

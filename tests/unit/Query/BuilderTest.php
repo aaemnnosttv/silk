@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Collection;
+use Silk\Models\Post;
 use Silk\Query\Builder;
+use Illuminate\Support\Collection;
 
 class BuilderTest extends WP_UnitTestCase
 {
@@ -41,4 +42,40 @@ class BuilderTest extends WP_UnitTestCase
 
         $this->assertCount(5, $builder->results());
     }
+
+    /**
+     * @test
+     */
+    function it_has_getters_and_setters_for_holding_the_model_instance()
+    {
+        $model = new CustomCPT;
+        $builder = new Builder(new WP_Query);
+
+        $builder->setModel($model);
+
+        $this->assertSame($model, $builder->getModel());
+    }
+
+    /**
+    * @test
+    */
+    function it_returns_results_as_a_collection_of_models()
+    {
+        register_post_type(CustomCPT::POST_TYPE);
+        CustomCPT::create(['post_title' => 'check one']);
+
+        $results = CustomCPT::all()->results();
+
+        $this->assertInstanceOf(Collection::class, $results);
+        // $this->assertCount(1, $results); // need to move ::all to Model so we can setModel
+
+        $this->assertInstanceOf(CustomCPT::class, $results[0]);
+    }
+
+}
+
+class CustomCPT extends Post
+{
+    const POST_TYPE = 'custom';
+
 }

@@ -2,12 +2,14 @@
 
 namespace Silk\Models;
 
+use Silk\Query\Builder;
 use stdClass;
 use WP_Post;
 use Silk\WP_ErrorException;
 use Silk\Meta\ObjectMeta;
 use Silk\Models\Exceptions\PostNotFoundException;
 use Silk\Models\Exceptions\ModelPostTypeMismatchException;
+use WP_Query;
 
 class Post
 {
@@ -120,6 +122,7 @@ class Post
     public static function create($attributes = [])
     {
         unset($attributes['ID']);
+        $attributes['post_type'] = static::POST_TYPE;
 
         $post = new WP_Post((object) $attributes);
         $model = static::fromWpPost($post);
@@ -226,17 +229,41 @@ class Post
         return $this->refresh();
     }
 
+    public static function all()
+    {
+        return static::query()->limit(-1);
+    }
+
     /**
-     * [__get description]
-     * @param  [type] $property [description]
-     * @return [type]           [description]
+     * Get a new query builder for the model.
+     *
+     * @return Builder
+     */
+    public function newQuery()
+    {
+        return (new Builder(new WP_Query))->setModel($this);
+    }
+
+    /**
+     * Create a new query builder instance for this model type.
+     * @return Builder
+     */
+    public static function query()
+    {
+        return (new static)->newQuery();
+    }
+
+    /**
+     * Magic getter
+     * @param  string $property
+     * @return mixed
      */
     public function __get($property)
     {
         if ('id' === $property) {
             return $this->id;
         }
-        
+
         if (isset($this->$property)) {
             return $this->$property;
         }
@@ -249,9 +276,9 @@ class Post
     }
 
     /**
-     * [__set description]
-     * @param [type] $property [description]
-     * @param [type] $value    [description]
+     * Magic setter
+     * @param string $property
+     * @param mixed $value
      */
     public function __set($property, $value)
     {
@@ -259,4 +286,34 @@ class Post
             $this->post->$property = $value;
         }
     }
+
+    /**
+     * Handle dynamic static method calls on the model class.
+     *
+     * Proxies calls to direct method calls on a new instance
+     *
+     * @param       $method
+     * @param array $arguments
+     *
+     * @return mixed
+     */
+    public static function __callStatic($method, array $arguments)
+    {
+        return call_user_func_array([new static, $method], $arguments);
+    }
+
+    /**
+     * Handle dynamic method calls into the model.
+     *
+     * @param  string  $method
+     * @param  array  $arguments
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+        $query = $this->newQuery();
+
+        return call_user_func_array([$query, $method], $arguments);
+    }
+
 }
