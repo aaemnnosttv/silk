@@ -19,7 +19,7 @@ class Meta
     /**
      * @param string     $type      Meta type
      * @param int|string $object_id ID of the object metadata is for
-     * @param string     $key       [description]
+     * @param string     $key       Meta key
      */
     public function __construct($type, $object_id, $key)
     {
@@ -33,12 +33,8 @@ class Meta
      *
      * @return mixed
      */
-    public function get($key = '')
+    public function get()
     {
-        if (! $this->key && $key) {
-            return new static($this->type, $this->object_id, $key);
-        }
-
         return get_metadata($this->type, $this->object_id, $this->key, true);
     }
 
