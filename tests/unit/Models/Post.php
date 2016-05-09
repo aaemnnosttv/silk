@@ -62,10 +62,43 @@ class PostModelTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Models\Exceptions\PostNotFoundException
      */
+    public function it_blows_up_if_no_post_is_found_for_given_slug()
+    {
+        Post::fromSlug('no-post-here');
+    }
+
+    /**
+     * @test
+     * @expectedException Silk\Models\Exceptions\PostNotFoundException
+     */
     public function it_blows_up_if_no_post_exists_for_given_id()
     {
         Post::fromID(123958723409817209872350872395872304);
     }
+
+    /**
+     * @test
+     */
+    function it_can_be_created_from_the_global_post()
+    {
+        global $post;
+
+        $post = $this->factory->post->create_and_get();
+        $model = Post::fromGlobal();
+
+        $this->assertSame($post->ID, $model->id);
+    }
+
+    /**
+     * @test
+     * @expectedException Silk\Models\Exceptions\PostNotFoundException
+     */
+    function it_blows_up_if_instantiated_from_an_empty_global_post()
+    {
+        Post::fromGlobal();
+    }
+
+
 
     /**
      * @test
@@ -91,10 +124,14 @@ class PostModelTest extends WP_UnitTestCase
     public function it_provides_an_object_for_interacting_with_the_post_meta()
     {
         $post_id = $this->factory->post->create();
+        update_post_meta($post_id, 'new_meta', 'so fresh');
+
         $post_meta = get_post_custom($post_id);
         $model = Post::fromID($post_id);
 
         $this->assertEquals($post_meta, $model->meta()->toArray());
+
+        $this->assertInstanceOf(Silk\Models\Meta::class, $model->meta('new_meta'));
     }
 
     /**
