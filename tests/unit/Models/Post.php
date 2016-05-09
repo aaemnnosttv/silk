@@ -72,12 +72,17 @@ class PostModelTest extends WP_UnitTestCase
      */
     public function it_proxies_property_access_to_the_post_if_not_available_on_the_instance()
     {
-        $post_id = $this->factory->post->create();
-        $post = get_post($post_id);
+        $post = $this->factory->post->create_and_get();
         $model = new Post($post);
 
         $this->assertEquals($post->post_date, $model->post_date);
         $this->assertEquals($post->post_excerpt, $model->post_excerpt);
+
+        $this->assertEmpty($model->some_property);
+        $model->meta('some_property')->set('awesome');
+        
+        $this->assertSame('awesome', $post->some_property);
+        $this->assertSame('awesome', $model->some_property);
     }
 
     /**

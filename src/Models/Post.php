@@ -268,11 +268,10 @@ class Post
             return $this->$property;
         }
 
-        if (isset($this->post->$property)) {
-            return $this->post->$property;
-        }
-
-        throw new \InvalidArgumentException(static::class . " has no property: {$property}");
+        /**
+         * WP_Post translates non-existent properties to single post meta get
+         */
+        return $this->post->$property;
     }
 
     /**
