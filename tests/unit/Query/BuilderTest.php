@@ -11,12 +11,6 @@ class BuilderTest extends WP_UnitTestCase
      */
     public function it_requires_a_wp_query_to_be_constructed()
     {
-        try {
-            new Builder();
-        } catch (TypeError $exception) {}
-
-        $this->assertInstanceOf('TypeError', $exception);
-
         $this->assertInstanceOf(Builder::class, new Builder(new WP_Query));
     }
 
