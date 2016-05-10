@@ -61,7 +61,6 @@ class BuilderTest extends WP_UnitTestCase
         $results = CustomCPT::all()->results();
 
         $this->assertInstanceOf(Collection::class, $results);
-        // $this->assertCount(1, $results); // need to move ::all to Model so we can setModel
 
         $this->assertInstanceOf(CustomCPT::class, $results[0]);
     }
