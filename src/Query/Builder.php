@@ -46,6 +46,18 @@ class Builder
     }
 
     /**
+     * [order description]
+     * @param  [type] $order [description]
+     * @return [type]        [description]
+     */
+    public function order($order)
+    {
+        $this->query->set('order', strtoupper($order));
+
+        return $this;
+    }
+
+    /**
      * Get the results as a collection of post model instances
      *
      * @return Collection

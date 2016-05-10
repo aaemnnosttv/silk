@@ -65,6 +65,29 @@ class BuilderTest extends WP_UnitTestCase
         $this->assertInstanceOf(CustomCPT::class, $results[0]);
     }
 
+    /**
+     * @test
+     */
+    function it_has_methods_for_setting_the_order_of_results()
+    {
+        $first_id = $this->factory->post->create();
+        $this->factory->post->create_many(5);
+        $last_id = $this->factory->post->create();
+
+        $builder = new Builder(new WP_Query);
+        $builder->setModel(new Post);
+
+        $builder->order('asc');
+        $resultsAsc = $builder->results();
+        $this->assertSame($first_id, $resultsAsc->first()->id);
+        $this->assertSame($last_id, $resultsAsc->last()->id);
+
+        $builder->order('desc');
+        $resultsAsc = $builder->results();
+        $this->assertSame($first_id, $resultsAsc->last()->id);
+        $this->assertSame($last_id, $resultsAsc->first()->id);
+    }
+
 }
 
 class CustomCPT extends Post
