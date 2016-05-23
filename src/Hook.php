@@ -46,6 +46,13 @@ class Hook
      */
     public function setCallback(callable $callback)
     {
+        /**
+         * Normalize string static method callbacks to array syntax
+         */
+        if (is_string($callback) && false !== strpos($callback, '::')) {
+            $callback = explode('::', $callback);
+        }
+
         $this->callback = $callback;
         $this->callbackParamCount = $this->getCallbackParameterCount();
 
@@ -157,8 +164,14 @@ class Hook
      */
     protected function getCallbackParameterCount()
     {
-        return (new \ReflectionFunction($this->callback))
-            ->getNumberOfParameters();
+        if ($this->callback instanceof \Closure || (is_string($this->callback) && function_exists($this->callback))) {
+            $callback = new \ReflectionFunction($this->callback);
+        } else {
+            list($class, $method) = $this->callback;
+            $callback = new \ReflectionMethod($class, $method);
+        }
+
+        return $callback->getNumberOfParameters();
     }
 
     /**

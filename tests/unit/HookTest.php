@@ -265,4 +265,49 @@ class HookTest extends WP_UnitTestCase
 
         do_action('hook_two');
     }
+
+    /**
+     * @test
+     */
+    public function it_handles_different_callable_syntaxes()
+    {
+        Hook::on('test_function_name_as_string')
+            ->setCallback('aNormalFunction')
+            ->listen();
+
+        do_action('test_function_name_as_string');
+
+        Hook::on('test_static_method_as_string')
+            ->setCallback('CallMy::staticMethod')
+            ->listen();
+
+        do_action('test_static_method_as_string');
+
+        Hook::on('test_static_method_as_array')
+            ->setCallback(['CallMy', 'staticMethod'])
+            ->listen();
+
+        do_action('test_static_method_as_array');
+
+        Hook::on('test_instance_method_as_array')
+            ->setCallback([new CallMy, 'instanceMethod'])
+            ->listen();
+
+        do_action('test_instance_method_as_array');
+    }
+}
+
+function aNormalFunction()
+{
+}
+
+class CallMy
+{
+    public static function staticMethod()
+    {
+    }
+
+    public function instanceMethod()
+    {
+    }
 }
