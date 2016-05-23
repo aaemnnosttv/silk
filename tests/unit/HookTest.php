@@ -163,7 +163,7 @@ class HookTest extends WP_UnitTestCase
     /**
      * @test
      */
-    function it_has_a_helper_method_for_bypassing_the_callback()
+    public function it_has_a_helper_method_for_bypassing_the_callback()
     {
         $count = 0;
 
