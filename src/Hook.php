@@ -46,15 +46,8 @@ class Hook
      */
     public function setCallback(callable $callback)
     {
-        /**
-         * Normalize string static method callbacks to array syntax
-         */
-        if (is_string($callback) && false !== strpos($callback, '::')) {
-            $callback = explode('::', $callback);
-        }
-
-        $this->callback = $callback;
-        $this->callbackParamCount = $this->getCallbackParameterCount();
+        $this->callback = new Callback($callback);
+        $this->callbackParamCount = $this->callback->reflect()->getNumberOfParameters();
 
         return $this;
     }
@@ -87,11 +80,20 @@ class Hook
      */
     public function mediateCallback($given = null)
     {
-        if ($this->hasExceededIterations()) {
+        if (! $this->shouldInvoke(func_get_args())) {
             return $given;
         }
 
         return $this->invokeCallback(func_get_args());
+    }
+
+    public function shouldInvoke(array $args)
+    {
+        if ($this->hasExceededIterations()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -105,7 +107,7 @@ class Hook
 
         $this->iterations++;
 
-        return call_user_func_array($this->callback, $arguments);
+        return $this->callback->callArray($arguments);
     }
 
     /**
@@ -156,22 +158,6 @@ class Hook
         $this->listen();
 
         return $this;
-    }
-
-    /**
-     * [getCallbackParameterCount description]
-     * @return [type] [description]
-     */
-    protected function getCallbackParameterCount()
-    {
-        if ($this->callback instanceof \Closure || (is_string($this->callback) && function_exists($this->callback))) {
-            $callback = new \ReflectionFunction($this->callback);
-        } else {
-            list($class, $method) = $this->callback;
-            $callback = new \ReflectionMethod($class, $method);
-        }
-
-        return $callback->getNumberOfParameters();
     }
 
     /**
