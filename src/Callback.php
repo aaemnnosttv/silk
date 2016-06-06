@@ -6,8 +6,6 @@ class Callback
 {
     protected $target;
 
-    protected $callbackParamCount;
-
     /**
      * Create a new Callback instance
      *
@@ -67,6 +65,16 @@ class Callback
     public function get()
     {
         return $this->target;
+    }
+
+    /**
+     * Get the number of parameters from the callback's signature
+     *
+     * @return int
+     */
+    public function parameterCount()
+    {
+        return $this->reflect()->getNumberOfParameters();
     }
 
     /**
