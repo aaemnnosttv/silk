@@ -295,6 +295,65 @@ class HookTest extends WP_UnitTestCase
 
         do_action('test_instance_method_as_array');
     }
+
+    /**
+     * @test
+     */
+    function it_can_accept_a_condition_to_control_the_invocation_of_the_callback()
+    {
+        on('conditional_test', static function () {
+            throw new Exception("Don't let this happen!");
+        })->onlyIf(static function ($should_blow_up) {
+            return $should_blow_up;
+        });
+
+        do_action('conditional_test', false);
+
+        $sum = 0;
+
+        on('conditional_addition', function ($num) use (&$sum) {
+            $sum += $num;
+        })->onlyIf(function ($num) {
+            return 0 === $num % 2; // return true for even numbers
+        });
+
+        do_action('conditional_addition', 1); // ignored
+        do_action('conditional_addition', 2); // HIT
+        do_action('conditional_addition', 3); // ignored
+        do_action('conditional_addition', 4); // HIT
+        do_action('conditional_addition', 5); // ignored
+        do_action('conditional_addition', 6); // HIT
+        do_action('conditional_addition', 7); // ignored
+
+        $this->assertEquals(2 + 4 + 6, $sum);
+
+        // complex using filter
+
+        on('complex_condition', function ($names, $name) {
+            $names[] = $name;
+            return $names;
+        })->onlyIf(function ($names, $name) {
+            return is_string($name) && strlen($name) > 3;
+        })->onlyIf(function ($names, $name, $status) {
+            return in_array($status, ['naughty', 'nice','salamander']);
+        })->onlyIf(function ($names, $name) {
+            return ! in_array($name, $names);
+        });
+
+        $names = [];
+        $names = apply_filters('complex_condition', $names, 'Donald', 'naughty');
+        $names = apply_filters('complex_condition', $names, 'Hillary', 'naughty');
+        $names = apply_filters('complex_condition', $names, 'Barack', 'in-the-house'); // x
+        $names = apply_filters('complex_condition', $names, 'Ted', 'nice'); // x
+        $names = apply_filters('complex_condition', $names, 'Bill', 'nice');
+        $names = apply_filters('complex_condition', $names, 'Evil Bill', 'naughty');
+        $names = apply_filters('complex_condition', $names, 'Donald', 'salamander');
+        $names = apply_filters('complex_condition', $names, 'Donald', 'salamander');
+        $names = apply_filters('complex_condition', $names, 'Donald', 'salamander');
+
+        $this->assertSame(['Donald', 'Hillary', 'Bill', 'Evil Bill'], $names);
+    }
+
 }
 
 function aNormalFunction()
