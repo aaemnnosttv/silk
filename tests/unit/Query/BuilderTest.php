@@ -89,6 +89,31 @@ class BuilderTest extends WP_UnitTestCase
         $this->assertSame($last_id, $resultsAsc->first()->id);
     }
 
+    /**
+     * @test
+     */
+    function it_can_query_by_status()
+    {
+        $this->factory->post->create_many(5, ['post_status' => 'doggie']);
+        $builder = new Builder(new WP_Query);
+
+        $doggies = $builder->whereStatus('doggie')->results();
+        $this->assertCount(5, $doggies);
+    }
+
+    /**
+     * @test
+     */
+    function it_can_set_arbitrary_query_vars()
+    {
+        $query = new WP_Query('foo=bar');
+        $this->assertSame('bar', $query->get('foo'));
+
+        $builder = new Builder($query);
+        $builder->set('foo', 'donut');
+
+        $this->assertSame('donut', $query->get('foo'));
+    }
 }
 
 class CustomCPT extends Model

@@ -59,6 +59,20 @@ class Builder
     }
 
     /**
+     * Query by post status
+     *
+     * @param  string|array $status  the post status or stati to match
+     * 
+     * @return $this
+     */
+    public function whereStatus($status)
+    {
+        $this->query->set('post_status', $status);
+
+        return $this;
+    }
+
+    /**
      * Get the results as a collection of post model instances
      *
      * @return Collection
@@ -76,6 +90,21 @@ class Builder
             ->map(function ($post) use ($modelClass) {
                 return new $modelClass($post);
             });
+    }
+
+    /**
+     * Set a query variable on the query
+     *
+     * @param [type] $var   [description]
+     * @param [type] $value [description]
+     *
+     * @return $this
+     */
+    public function set($var, $value)
+    {
+        $this->query->set($var, $value);
+
+        return $this;
     }
 
     /**
