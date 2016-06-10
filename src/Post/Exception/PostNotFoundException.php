@@ -1,6 +1,6 @@
 <?php
 
-namespace Silk\Models\Exceptions;
+namespace Silk\Post\Exception;
 
 class PostNotFoundException extends \RuntimeException
 {

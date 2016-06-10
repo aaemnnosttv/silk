@@ -1,6 +1,6 @@
 <?php
 
-namespace Silk;
+namespace Silk\Support;
 
 class Callback
 {

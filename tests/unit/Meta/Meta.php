@@ -1,6 +1,6 @@
 <?php
 
-use Silk\Models\Meta;
+use Silk\Meta\Meta;
 use Illuminate\Support\Collection;
 
 class MetaModelTest extends WP_UnitTestCase

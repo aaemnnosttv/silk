@@ -1,7 +1,7 @@
 <?php
 
+use Silk\Meta\Meta;
 use Silk\Meta\ObjectMeta;
-use Silk\Models\Meta;
 use Illuminate\Support\Collection;
 
 class ObjectMetaTest extends WP_UnitTestCase

@@ -2,7 +2,6 @@
 
 namespace Silk\Meta;
 
-use Silk\Models\Meta;
 use Illuminate\Support\Collection;
 
 class ObjectMeta

@@ -1,6 +1,6 @@
 <?php
 
-use Silk\Hook;
+use Silk\Event\Hook;
 
 class HookTest extends WP_UnitTestCase
 {

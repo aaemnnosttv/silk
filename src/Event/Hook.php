@@ -1,6 +1,8 @@
 <?php
 
-namespace Silk;
+namespace Silk\Event;
+
+use Silk\Support\Callback;
 
 class Hook
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Silk\Models\Exceptions;
+namespace Silk\Post\Exception;
 
 use WP_Post;
 use Silk\Models\Post;
@@ -9,16 +9,14 @@ class ModelPostTypeMismatchException extends \RuntimeException
 {
     const MESSAGE_FORMAT = '{modelClass} instantiated with post of type "{givenPostType}", but requires a post of type "{modelPostType}".';
 
+    protected $modelClass;
+    protected $post;
+
     public function __construct($modelClass, WP_Post $post)
     {
         $this->modelClass = $modelClass;
         $this->post = $post;
-        $this->message = $this->formatMessage();
-    }
-
-    protected function formatMessage()
-    {
-        return str_replace([
+        $this->message = str_replace([
             '{modelClass}',
             '{givenPostType}',
             '{modelPostType}'

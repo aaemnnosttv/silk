@@ -1,6 +1,6 @@
 <?php
 
-use Silk\Hook;
+use Silk\Event\Hook;
 
 if (! function_exists('on')) :
     /**

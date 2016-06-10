@@ -3,20 +3,21 @@
 namespace Silk\Query;
 
 use WP_Query;
-use Silk\Models\Post;
+use Silk\Post\Post;
+use Silk\Post\Model;
 use Illuminate\Support\Collection;
 
 class Builder
 {
     /**
      * WP_Query instance
-     * @var \WP_Query
+     * @var WP_Query
      */
     protected $query;
 
     /**
      * Post Model instance
-     * @var \Silk\Models\Post
+     * @var Model
      */
     protected $model;
 
@@ -69,22 +70,22 @@ class Builder
             $this->query->set('fields', ''); // return objects
         }
 
-        $collection = Collection::make($this->query->get_posts());
         $modelClass = $this->model ? get_class($this->model) : Post::class;
 
-        return $collection->transform(function($post) use ($modelClass) {
-            return new $modelClass($post);
-        });
+        return Collection::make($this->query->get_posts())
+            ->map(function ($post) use ($modelClass) {
+                return new $modelClass($post);
+            });
     }
 
     /**
      * Set the model for this query.
      *
-     * @param Post $model
+     * @param Model $model
      *
      * @return $this
      */
-    public function setModel(Post $model)
+    public function setModel(Model $model)
     {
         $this->model = $model;
 
@@ -94,7 +95,7 @@ class Builder
     /**
      * Get the model
      *
-     * @return Post
+     * @return Model
      */
     public function getModel()
     {

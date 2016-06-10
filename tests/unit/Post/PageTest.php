@@ -1,8 +1,6 @@
 <?php
 
-use Silk\Models\Page;
-use Silk\Models\Exceptions\ModelPostTypeMismatchException;
-
+use Silk\Post\Page;
 
 class PageTest extends WP_UnitTestCase
 {
@@ -38,7 +36,7 @@ class PageTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException \Silk\Models\Exceptions\ModelPostTypeMismatchException
+     * @expectedException \Silk\Post\Exception\ModelPostTypeMismatchException
      */
     function it_blows_up_if_instantiated_with_a_non_page_post_type()
     {

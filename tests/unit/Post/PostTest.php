@@ -1,9 +1,7 @@
 <?php
 
-use Silk\Models\Post;
-use Silk\Silk\WP_ErrorException;
+use Silk\Post\Post;
 use Silk\Query\Builder;
-use Symfony\Component\VarDumper\Caster\Caster;
 
 class PostModelTest extends WP_UnitTestCase
 {
@@ -60,7 +58,7 @@ class PostModelTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Models\Exceptions\PostNotFoundException
+     * @expectedException Silk\Post\Exception\PostNotFoundException
      */
     public function it_blows_up_if_no_post_is_found_for_given_slug()
     {
@@ -69,7 +67,7 @@ class PostModelTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Models\Exceptions\PostNotFoundException
+     * @expectedException Silk\Post\Exception\PostNotFoundException
      */
     public function it_blows_up_if_no_post_exists_for_given_id()
     {
@@ -91,14 +89,12 @@ class PostModelTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Models\Exceptions\PostNotFoundException
+     * @expectedException Silk\Post\Exception\PostNotFoundException
      */
     function it_blows_up_if_instantiated_from_an_empty_global_post()
     {
         Post::fromGlobal();
     }
-
-
 
     /**
      * @test
@@ -131,7 +127,7 @@ class PostModelTest extends WP_UnitTestCase
 
         $this->assertEquals($post_meta, $model->meta()->toArray());
 
-        $this->assertInstanceOf(Silk\Models\Meta::class, $model->meta('new_meta'));
+        $this->assertInstanceOf(Silk\Meta\Meta::class, $model->meta('new_meta'));
     }
 
     /**
@@ -153,7 +149,7 @@ class PostModelTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\WP_ErrorException
+     * @expectedException Silk\Exception\WP_ErrorException
      */
     public function it_blows_up_if_required_attributes_are_not_passed_when_created()
     {
@@ -169,8 +165,7 @@ class PostModelTest extends WP_UnitTestCase
 
         $this->assertEquals(CustomTypeStub::POST_TYPE, $model->post_type);
     }
-
-
+    
     /**
      * @test
      */

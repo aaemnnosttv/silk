@@ -1,6 +1,6 @@
 <?php
 
-use Silk\Callback;
+use Silk\Support\Callback;
 
 class CallbackTest extends WP_UnitTestCase
 {

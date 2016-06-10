@@ -1,6 +1,6 @@
 <?php
 
-namespace Silk\Models;
+namespace Silk\Meta;
 
 use Illuminate\Support\Collection;
 

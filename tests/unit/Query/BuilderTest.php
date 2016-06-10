@@ -1,6 +1,7 @@
 <?php
 
-use Silk\Models\Post;
+use Silk\Post\Model;
+use Silk\Post\Post;
 use Silk\Query\Builder;
 use Illuminate\Support\Collection;
 
@@ -90,8 +91,7 @@ class BuilderTest extends WP_UnitTestCase
 
 }
 
-class CustomCPT extends Post
+class CustomCPT extends Model
 {
     const POST_TYPE = 'custom';
-
 }

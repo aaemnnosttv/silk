@@ -1,17 +1,17 @@
 <?php
 
-namespace Silk\Models;
+namespace Silk\Post;
 
-use Silk\Query\Builder;
 use stdClass;
 use WP_Post;
-use Silk\WP_ErrorException;
-use Silk\Meta\ObjectMeta;
-use Silk\Models\Exceptions\PostNotFoundException;
-use Silk\Models\Exceptions\ModelPostTypeMismatchException;
 use WP_Query;
+use Silk\Query\Builder;
+use Silk\Meta\ObjectMeta;
+use Silk\Exception\WP_ErrorException;
+use Silk\Post\Exception\PostNotFoundException;
+use Silk\Post\Exception\ModelPostTypeMismatchException;
 
-class Post
+abstract class Model
 {
     /**
      * The post
@@ -86,7 +86,6 @@ class Post
         $posts = (array) get_posts([
             'name'           => $slug,
             'post_type'      => static::POST_TYPE,
-            'post_status'    => 'any',
             'posts_per_page' => 1
         ]);
 
@@ -121,10 +120,10 @@ class Post
      */
     public static function create($attributes = [])
     {
-        unset($attributes['ID']);
-        $attributes['post_type'] = static::POST_TYPE;
+        $attributes = (object) collect($attributes)->except('ID')
+            ->put('post_type', static::POST_TYPE)->all();
 
-        $post = new WP_Post((object) $attributes);
+        $post = new WP_Post($attributes);
         $model = static::fromWpPost($post);
 
         return $model->save();
@@ -134,7 +133,8 @@ class Post
      * Meta API for this post
      *
      * @param  string $key [description]
-     * @return Meta
+     *
+     * @return object
      */
     public function meta($key = '')
     {
