@@ -3,7 +3,7 @@
 use Silk\Post\Post;
 use Silk\Query\Builder;
 
-class PostModelTest extends WP_UnitTestCase
+class PostTest extends WP_UnitTestCase
 {
     /**
      * @test
