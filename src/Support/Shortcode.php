@@ -31,6 +31,7 @@ abstract class Shortcode
 
     /**
      * Register a tag for this shortcode
+     *
      * @param  mixed $tag  the tag to register with the shortcode
      */
     public static function register($tag)
@@ -39,7 +40,7 @@ abstract class Shortcode
     }
 
     /**
-     * WP Callback
+     * WordPress Shortcode Callback
      */
     public static function controller($atts, $content, $tag)
     {
