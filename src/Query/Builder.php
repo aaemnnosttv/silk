@@ -73,20 +73,31 @@ class Builder
     }
 
     /**
-     * Get the results as a collection of post model instances
+     * Get the results as a collection
      *
      * @return Collection
      */
     public function results()
     {
         if ($this->model) {
-            $this->query->set('post_type', $this->model->post_type);
-            $this->query->set('fields', ''); // return objects
+            return $this->collectModels();
         }
 
-        $modelClass = $this->model ? get_class($this->model) : Post::class;
+        return collect($this->query->get_posts());
+    }
 
-        return Collection::make($this->query->get_posts())
+    /**
+     * Get the results as a collection of post model instances
+     *
+     * @return Collection
+     */
+    protected function collectModels()
+    {
+        $this->query->set('post_type', $this->model->post_type);
+        $this->query->set('fields', ''); // as WP_Post objects
+        $modelClass = get_class($this->model);
+
+        return collect($this->query->get_posts())
             ->map(function ($post) use ($modelClass) {
                 return new $modelClass($post);
             });
