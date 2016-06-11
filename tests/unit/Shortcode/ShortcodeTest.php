@@ -38,7 +38,22 @@ class ShortcodeTest extends WP_UnitTestCase
         $this->assertCount(1, $shortcode->attributes());
     }
 
+    /**
+     * @test
+     */
+    function it_returns_an_emtpy_string_if_no_handler_is_implemented()
+    {
+        $shortcode = new TestShortcode([], '', 'test');
+        $this->assertSame('', $shortcode->render());
+    }
+
 }
+
+/**
+ * The parent Shortcode class is abstract,
+ * so we use TestShortcode to test the unchanged behavior.
+ */
+class TestShortcode extends Shortcode {}
 
 class SomeShortcode extends Shortcode
 {
