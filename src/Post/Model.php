@@ -33,8 +33,9 @@ abstract class Model
 
 
     /**
-     * [__construct description]
-     * @param WP_Post $post [description]
+     * Create a new instance
+     *
+     * @param WP_Post $post  Post object to model
      */
     public function __construct(WP_Post $post = null)
     {
@@ -59,7 +60,7 @@ abstract class Model
     /**
      * Make new instance from a Post with the given ID
      *
-     * @param  int|string $id [description]
+     * @param  int|string $id  Post ID of post to create the instance from
      *
      * @return static
      */
@@ -115,8 +116,9 @@ abstract class Model
     /**
      * Create a new post of the model's type
      *
-     * @param  [type] $attributes [description]
-     * @return [type]             [description]
+     * @param  array $attributes
+     *
+     * @return static
      */
     public static function create($attributes = [])
     {
@@ -133,7 +135,7 @@ abstract class Model
     /**
      * Meta API for this post
      *
-     * @param  string $key [description]
+     * @param  string $key  Meta key to retreive or empty to retreive all.
      *
      * @return object
      */
@@ -153,7 +155,7 @@ abstract class Model
      *
      * If trash is disabled, the post or page is permanently deleted.
      *
-     * @return false|array|WP_Post|null Post data array, otherwise false.
+     * @return $this
      */
     public function trash()
     {
@@ -167,7 +169,7 @@ abstract class Model
     /**
      * Restore a post or page from the Trash
      *
-     * @return WP_Post|false WP_Post object. False on failure.
+     * @return $this
      */
     public function untrash()
     {
@@ -185,7 +187,7 @@ abstract class Model
      * tied to it is deleted also. This includes comments, post meta fields,
      * and terms associated with the post.
      *
-     * @return [type] [description]
+     * @return $this
      */
     public function delete()
     {
@@ -199,7 +201,7 @@ abstract class Model
     /**
      * Refresh the post object from cache/database
      *
-     * @return static
+     * @return $this
      */
     public function refresh()
     {
@@ -211,7 +213,7 @@ abstract class Model
     /**
      * Update the post in the database
      *
-     * @return [type] [description]
+     * @return $this
      */
     public function save()
     {
@@ -247,6 +249,7 @@ abstract class Model
 
     /**
      * Create a new query builder instance for this model type.
+     *
      * @return Builder
      */
     public static function query()
@@ -256,7 +259,9 @@ abstract class Model
 
     /**
      * Magic getter
+     *
      * @param  string $property
+     *
      * @return mixed
      */
     public function __get($property)
@@ -273,6 +278,7 @@ abstract class Model
 
     /**
      * Magic setter
+     *
      * @param string $property
      * @param mixed $value
      */
@@ -288,7 +294,7 @@ abstract class Model
      *
      * Proxies calls to direct method calls on a new instance
      *
-     * @param       $method
+     * @param string $method
      * @param array $arguments
      *
      * @return mixed
@@ -301,8 +307,9 @@ abstract class Model
     /**
      * Handle dynamic method calls into the model.
      *
-     * @param  string  $method
-     * @param  array  $arguments
+     * @param  string $method
+     * @param  array $arguments
+     *
      * @return mixed
      */
     public function __call($method, $arguments)

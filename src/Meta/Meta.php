@@ -52,7 +52,8 @@ class Meta
      * Set the meta value
      *
      * @param mixed  $value
-     * @param string $prev_value [description]
+     * @param string $prev_value
+     *
      * @return bool              True on success, false on failure
      */
     public function set($value, $prev_value = '')
@@ -64,7 +65,7 @@ class Meta
      * Add metadata for the specified object
      *
      * @param mixed  $value  The value to add
-     * @param [type] $unique [description]
+     * @param bool $unique
      *
      * @return int|false The meta ID on success, false on failure.
      */
@@ -103,7 +104,7 @@ class Meta
 
     /**
      * Get the object_id
-     * 
+     *
      * @return int|string
      */
     public function getObjectId()

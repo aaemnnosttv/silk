@@ -24,7 +24,8 @@ class Hook
      *
      * @param  string $handle action or filter handle
      * @param  int    $priority
-     * @return static         instance
+     *
+     * @return static
      */
     public static function on($handle, $priority = 10)
     {
@@ -33,6 +34,7 @@ class Hook
 
     /**
      * Create a new Hook instance
+     *
      * @param  string $handle action or filter handle
      * @param  int    $priority
      */
@@ -43,8 +45,11 @@ class Hook
     }
 
     /**
-     * [setCallback description]
-     * @param callable $callback [description]
+     * Set the callback to be invoked by the action or filter
+     *
+     * @param callable $callback
+     *
+     * @return $this
      */
     public function setCallback(callable $callback)
     {
@@ -55,8 +60,11 @@ class Hook
     }
 
     /**
-     * Set the hook in WP
-     * @return [type] [description]
+     * Set the hook in WordPress
+     *
+     * Both actions and filters are registered as filters.
+     *
+     * @return $this
      */
     public function listen()
     {
@@ -66,8 +74,9 @@ class Hook
     }
 
     /**
-     * Unset the hook in WP
-     * @return [type] [description]
+     * Unset the hook in WordPress
+     *
+     * @return $this
      */
     public function remove()
     {
@@ -77,8 +86,9 @@ class Hook
     }
 
     /**
-     * [mediateCallback description]
-     * @return [type] [description]
+     * Control invocation of the callback
+     *
+     * @return mixed  callback returned value
      */
     public function mediateCallback($given = null)
     {
@@ -89,6 +99,13 @@ class Hook
         return $this->invokeCallback(func_get_args());
     }
 
+    /**
+     * Whether or not the callback should be invoked
+     *
+     * @param  array  $args  all arguments passed to the callback
+     *
+     * @return bool
+     */
     public function shouldInvoke(array $args)
     {
         if ($this->hasExceededIterations()) {
@@ -99,9 +116,11 @@ class Hook
     }
 
     /**
-     * [invokeCallback description]
-     * @param  [type] $arguments [description]
-     * @return [type]            [description]
+     * Call the callback
+     *
+     * @param  array $arguments  the arguments expected by the callback
+     *
+     * @return mixed  returned output from the callback
      */
     protected function invokeCallback($arguments)
     {
@@ -113,8 +132,9 @@ class Hook
     }
 
     /**
-     * [once description]
-     * @return [type] [description]
+     * Set the callback to only be invoked one time
+     *
+     * @return $this
      */
     public function once()
     {
@@ -124,9 +144,11 @@ class Hook
     }
 
     /**
-     * [onlyXtimes description]
-     * @param  [type] $times [description]
-     * @return [type]        [description]
+     * Set the callback to only be invoked the given number of times
+     *
+     * @param  int $times  maimum iterations of invocations to allow
+     *
+     * @return $this
      */
     public function onlyXtimes($times)
     {
@@ -137,7 +159,8 @@ class Hook
 
     /**
      * Prevent the callback from being triggered again
-     * @return [type] [description]
+     *
+     * @return $this
      */
     public function bypass()
     {
@@ -147,9 +170,11 @@ class Hook
     }
 
     /**
-     * [withPriority description]
-     * @param  [type] $priority [description]
-     * @return [type]           [description]
+     * Set the priority the callback should be registered with
+     *
+     * @param  string|int $priority
+     *
+     * @return $this
      */
     public function withPriority($priority)
     {
@@ -163,8 +188,9 @@ class Hook
     }
 
     /**
-     * [hasExceededIterations description]
-     * @return boolean [description]
+     * Whether or not the callback has reached the limit of allowed invocations
+     *
+     * @return boolean  true for limit reached, otherwise false
      */
     protected function hasExceededIterations()
     {

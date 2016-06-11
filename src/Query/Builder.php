@@ -11,12 +11,14 @@ class Builder
 {
     /**
      * WP_Query instance
+     *
      * @var WP_Query
      */
     protected $query;
 
     /**
      * Post Model instance
+     *
      * @var Model
      */
     protected $model;
@@ -47,9 +49,11 @@ class Builder
     }
 
     /**
-     * [order description]
-     * @param  [type] $order [description]
-     * @return [type]        [description]
+     * Set the order for the query
+     *
+     * @param  string $order
+     *
+     * @return $this
      */
     public function order($order)
     {
@@ -62,7 +66,7 @@ class Builder
      * Query by post status
      *
      * @param  string|array $status  the post status or stati to match
-     * 
+     *
      * @return $this
      */
     public function whereStatus($status)
