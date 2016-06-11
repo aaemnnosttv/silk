@@ -120,13 +120,14 @@ abstract class Model
      */
     public static function create($attributes = [])
     {
-        $attributes = (object) collect($attributes)->except('ID')
-            ->put('post_type', static::POST_TYPE)->all();
+        $post = new WP_Post((object)
+            collect($attributes)
+                ->except('ID')
+                ->put('post_type', static::POST_TYPE)
+                ->all()
+        );
 
-        $post = new WP_Post($attributes);
-        $model = static::fromWpPost($post);
-
-        return $model->save();
+        return static::fromWpPost($post)->save();
     }
 
     /**
