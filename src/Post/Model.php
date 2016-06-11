@@ -260,11 +260,7 @@ abstract class Model
      */
     public function __get($property)
     {
-        if ('id' === $property) {
-            return $this->id;
-        }
-
-        if (isset($this->$property)) {
+        if (property_exists($this, $property)) {
             return $this->$property;
         }
 
