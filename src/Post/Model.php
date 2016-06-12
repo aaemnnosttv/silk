@@ -11,6 +11,35 @@ use Silk\Exception\WP_ErrorException;
 use Silk\Post\Exception\PostNotFoundException;
 use Silk\Post\Exception\ModelPostTypeMismatchException;
 
+/**
+ * @property-read $post
+ * @property-read $id
+ * All WP_Post properties are available via magic get/set on this instance
+ * @property $ID
+ * @property $comment_count
+ * @property $comment_status
+ * @property $filter
+ * @property $guid
+ * @property $menu_order
+ * @property $ping_status
+ * @property $pinged
+ * @property $post_author
+ * @property $post_content
+ * @property $post_content_filtered
+ * @property $post_date
+ * @property $post_date_gmt
+ * @property $post_excerpt
+ * @property $post_mime_type
+ * @property $post_modified
+ * @property $post_modified_gmt
+ * @property $post_name
+ * @property $post_parent
+ * @property $post_password
+ * @property $post_status
+ * @property $post_title
+ * @property $post_type
+ * @property $to_ping
+ */
 abstract class Model
 {
     /**
