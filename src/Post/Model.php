@@ -84,17 +84,13 @@ abstract class Model
      */
     public static function fromSlug($slug)
     {
-        $posts = (array) get_posts([
-            'name'           => $slug,
-            'post_type'      => static::POST_TYPE,
-            'posts_per_page' => 1
-        ]);
+        $found = static::whereSlug($slug)->limit(1)->results();
 
-        if (! $post = reset($posts)) {
+        if ($found->isEmpty()) {
             throw new PostNotFoundException("No post found with slug {$slug}");
         }
 
-        return static::fromWpPost($post);
+        return $found->first();
     }
 
     /**
