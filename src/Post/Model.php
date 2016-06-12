@@ -100,13 +100,11 @@ abstract class Model
      */
     public static function fromGlobal()
     {
-        $post = get_post();
-
-        if (! $post instanceof WP_Post) {
+        if (! $GLOBALS['post'] instanceof WP_Post) {
             throw new PostNotFoundException('Global $post not an instance of WP_Post');
         }
 
-        return static::fromWpPost($post);
+        return static::fromWpPost($GLOBALS['post']);
     }
 
     /**
