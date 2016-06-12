@@ -49,6 +49,16 @@ class Builder
     }
 
     /**
+     * Return an unlimited number of results.
+     * 
+     * @return $this
+     */
+    public function all()
+    {
+        return $this->limit(-1);
+    }
+
+    /**
      * Set the order for the query
      *
      * @param  string $order

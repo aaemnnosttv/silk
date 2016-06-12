@@ -310,11 +310,6 @@ abstract class Model
         return $this->refresh();
     }
 
-    public static function all()
-    {
-        return static::query()->limit(-1);
-    }
-
     /**
      * Get a new query builder for the model.
      *
