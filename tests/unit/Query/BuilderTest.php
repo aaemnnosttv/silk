@@ -104,6 +104,19 @@ class BuilderTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_can_query_by_slug()
+    {
+        $post_id = $this->factory->post->create(['post_name' => 'sluggy']);
+        $builder = new Builder(new WP_Query);
+        $builder->whereSlug('sluggy');
+
+        $this->assertSame($post_id, $builder->results()->first()->ID);
+    }
+
+
+    /**
+     * @test
+     */
     function it_can_set_arbitrary_query_vars()
     {
         $query = new WP_Query('foo=bar');

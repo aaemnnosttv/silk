@@ -77,6 +77,20 @@ class Builder
     }
 
     /**
+     * Query by slug
+     *
+     * @param  string $slug  the post slug to query by
+     *
+     * @return $this
+     */
+    public function whereSlug($slug)
+    {
+        $this->query->set('name', $slug);
+
+        return $this;
+    }
+
+    /**
      * Get the results as a collection
      *
      * @return Collection
