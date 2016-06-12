@@ -23,7 +23,7 @@ class ModelPostTypeMismatchException extends \RuntimeException
         ], [
             $this->modelClass,
             $this->post->post_type,
-            constant($this->modelClass . '::POST_TYPE')
+            call_user_func([$this->modelClass, 'postTypeId'])
         ], static::MESSAGE_FORMAT);
     }
 }
