@@ -77,6 +77,13 @@ abstract class Model
         $this->id   = $post->ID;
     }
 
+    /**
+     * Create a new instance from the given WP_Post object
+     *
+     * @param  WP_Post $post
+     *
+     * @return static
+     */
     public static function fromWpPost(WP_Post $post)
     {
         if ($post->post_type !== static::POST_TYPE) {
@@ -87,7 +94,7 @@ abstract class Model
     }
 
     /**
-     * Make new instance from a Post with the given ID
+     * Create a new instance from a Post with the given ID
      *
      * @param  int|string $id  Post ID of post to create the instance from
      *
@@ -105,7 +112,7 @@ abstract class Model
     }
 
     /**
-     * Make new instance from a Post slug
+     * Create a new instance from a Post with the given slug
      *
      * @param  string $slug  the post slug
      *
@@ -123,7 +130,7 @@ abstract class Model
     }
 
     /**
-     * Make new instance from the global $post
+     * Create a new instance from the global $post
      *
      * @return static
      */
