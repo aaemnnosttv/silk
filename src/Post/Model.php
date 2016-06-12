@@ -178,6 +178,17 @@ abstract class Model
         if (static::POST_TYPE) {
             return static::POST_TYPE;
         }
+
+        return self::getPostTypeFromName();
+    }
+
+    /**
+     * Get the post type id from the class name
+     *
+     * @return string
+     */
+    protected static function getPostTypeFromName()
+    {
         if (isset(static::$postTypeIds[static::class])) {
             return static::$postTypeIds[static::class];
         }
