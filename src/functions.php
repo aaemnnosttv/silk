@@ -25,9 +25,9 @@ if (! function_exists('off')) :
      *
      * Will attempt to remove on-demand as a fallback
      *
-     * @param  [type] $handle   [description]
-     * @param  [type] $callback [description]
-     * @return bool|Hook        true if immediately removed, Hook instance if not
+     * @param  string $handle   action or filter handle
+     * @param  callable $callback
+     * @return bool|Hook        true if immediately removed, Hook instance otherwise
      */
     function off($handle, $callback, $priority = 10)
     {
@@ -35,6 +35,11 @@ if (! function_exists('off')) :
             return $removed;
         }
 
+        /**
+         * If the hook was not able to be removed above, then it has not been set yet.
+         * Here we add a new listener right before the hook is expected to fire,
+         * so that if it is there, we can unhook it just in time.
+         */
         return on($handle, function ($given = null) use ($handle, $callback, $priority) {
             remove_filter($handle, $callback, $priority);
             return $given;
