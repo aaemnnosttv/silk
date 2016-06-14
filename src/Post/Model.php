@@ -55,12 +55,6 @@ abstract class Model
     protected $id;
 
     /**
-     * Class name derived post type identifiers
-     * @var array  className => post_type
-     */
-    protected static $postTypeIds = [];
-
-    /**
      * The post type of the post this model wraps
      * @var string
      */
@@ -175,39 +169,7 @@ abstract class Model
      */
     public static function postTypeId()
     {
-        if (static::POST_TYPE) {
-            return static::POST_TYPE;
-        }
-
-        return self::getPostTypeFromName();
-    }
-
-    /**
-     * Get the post type id from the class name
-     *
-     * @return string
-     */
-    protected static function getPostTypeFromName()
-    {
-        if (isset(static::$postTypeIds[static::class])) {
-            return static::$postTypeIds[static::class];
-        }
-
-        /**
-         * Convert the class name to snake_case and cache on a static property
-         * to prevent evaluating more than once.
-         */
-        $name = (new \ReflectionClass(static::class))->getShortName();
-
-        /**
-         * Adapted from Str::snake()
-         * @link https://github.com/laravel/framework/blob/5.2/src/Illuminate/Support/Str.php
-         */
-        if (! ctype_lower($name)) {
-            $name = strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1_', $name));
-        }
-
-        return static::$postTypeIds[static::class] = $name;
+        return static::POST_TYPE;
     }
 
     /**
