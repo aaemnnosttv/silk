@@ -173,6 +173,16 @@ abstract class Model
     }
 
     /**
+     * Get the post type API
+     *
+     * @return PostType
+     */
+    public static function postType()
+    {
+        return PostType::make(static::postTypeId());
+    }
+    
+    /**
      * Meta API for this post
      *
      * @param  string $key  Meta key to retreive or empty to retreive all.

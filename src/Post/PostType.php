@@ -38,7 +38,7 @@ class PostType
             throw new InvalidArgumentException('Post type must be a string (slug) or post type object.');
         }
 
-        $this->args = new Collection($args);
+        $this->args = Collection::make($args)->put('name', $this->slug);
 
         if (strlen($this->slug) < 1 || strlen($this->slug) > 20) {
             throw new InvalidPostTypeNameException('Post type names must be between 1 and 20 characters in length.');
