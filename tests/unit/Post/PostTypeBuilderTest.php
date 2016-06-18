@@ -129,4 +129,12 @@ class PostTypeBuilderTest extends WP_UnitTestCase
         $this->assertSame('book', PostTypeBuilder::make('book')->slug);
     }
 
+    /**
+     * @test
+     */
+    function it_returns_null_for_non_existent_properties()
+    {
+        $this->assertNull(PostTypeBuilder::make('book')->nonExistentProperty);
+    }
+
 }
