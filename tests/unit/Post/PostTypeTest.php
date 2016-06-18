@@ -1,63 +1,45 @@
 <?php
 
 use Silk\Post\PostType;
+use Silk\Post\PostTypeBuilder;
 
 class PostTypeTest extends WP_UnitTestCase
 {
-    /**
-     * @test
-     */
-    function it_can_be_constructed_with_a_slug_or_post_type_object()
-    {
-        $somePostType = new PostType('some-post-type');
-        $post = new PostType(get_post_type_object('post'));
-    }
+    use PostTypeAssertions;
 
     /**
-     * @test
-     * @expectedException InvalidArgumentException
-     */
-    function it_blows_up_if_constructed_without_a_slug_or_post_type_object()
+    * @test
+    */
+    function it_takes_a_post_type_object_in_the_constructor()
     {
-        new PostType(new stdClass);
-    }
-
-    /**
-     * @test
-     */
-    function it_has_a_named_constructor_for_making_a_new_instance()
-    {
-        $this->assertInstanceOf(PostType::class, PostType::make('new-type'));
-    }
-
-    /**
-     * @test
-     */
-    function it_can_register_the_post_type()
-    {
-        $this->assertPostTypeNotExists('some-post-type');
-
-        PostType::make('some-post-type')->register();
-
-        $this->assertPostTypeExists('some-post-type');
+        new PostType(get_post_type_object('post'));
     }
 
     /**
     * @test
-    * @expectedException Silk\Post\Exception\InvalidPostTypeNameException
     */
-    function it_blows_up_if_the_post_type_slug_is_too_long()
+    function it_has_a_named_constructor_for_creating_a_new_instance_from_an_existing_post_type()
     {
-        PostType::make('twenty-character-limit');
+        $this->assertInstanceOf(PostType::class, PostType::load('post'));
+        $this->assertInstanceOf(PostType::class, PostType::make('page'));
     }
 
     /**
-    * @test
-    * @expectedException Silk\Post\Exception\InvalidPostTypeNameException
-    */
-    function it_blows_up_if_the_post_type_slug_is_too_short()
+     * @test
+     * @expectedException Silk\Post\Exception\NonExistentPostTypeException
+     */
+    function it_blows_up_if_loading_a_non_existent_post_type()
     {
-        PostType::make('');
+        PostType::load('non-existent-type');
+    }
+
+    /**
+     * @test
+     */
+    function the_make_method_returns_a_new_instance_for_existing_types_otherwise_a_builder_instance()
+    {
+        $this->assertInstanceOf(PostType::class, PostType::make('post'));
+        $this->assertInstanceOf(PostTypeBuilder::class, PostType::make('mega-post'));
     }
 
     /**
@@ -80,7 +62,11 @@ class PostTypeTest extends WP_UnitTestCase
      */
     function it_blows_up_if_it_tries_to_unregister_a_nonexistent_type()
     {
-        PostType::make('non-existent')->unregister();
+        $type = PostType::make('non-existent')->register();
+
+        unregister_post_type('non-existent');
+
+        $type->unregister();
     }
 
     /**
@@ -92,96 +78,42 @@ class PostTypeTest extends WP_UnitTestCase
         PostType::load('post')->unregister();
     }
 
+    /**
+     * @test
+     */
+    function it_can_check_if_the_post_type_exists()
+    {
+        $this->assertTrue(PostType::exists('post'));
+        $this->assertFalse(PostType::exists('post-it-note'));
+    }
 
     /**
      * @test
      */
-    function it_can_load_a_new_instance_from_an_existing_post_type()
+    function it_has_methods_for_adding_and_removing_support_for_post_type_features()
+    {
+        $type = PostType::load('post')
+            ->addSupportFor('dollars', 'cents');
+
+        $this->assertTrue($type->supports('title', 'editor'));
+        $this->assertFalse($type->supports('euros'));
+
+        $type->removeSupportFor('dollars', 'cents')->addSupportFor('euros');
+
+        $this->assertFalse($type->supports('bits-of-string', 'euros', 'monopoly-money'));
+        $this->assertTrue($type->supports('euros'));
+    }
+
+    /**
+     * @test
+     */
+    function it_has_readonly_magic_properties()
     {
         $type = PostType::load('post');
-        $this->assertInstanceOf(\stdClass::class, $type->object());
+
+        $this->assertSame('post', $type->slug);
+        $this->assertSame('Post', $type->one);
+        $this->assertSame('Posts', $type->many);
     }
 
-    /**
-     * @test
-     * @expectedException Silk\Post\Exception\NonExistentPostTypeException
-     */
-    function it_blows_up_if_loading_a_non_existent_post_type()
-    {
-        PostType::load('non-existent-type');
-    }
-
-    /**
-     * @test
-     */
-    function it_accepts_an_array_or_parameters_for_supported_features()
-    {
-        PostType::make('bread')->supports(['flour', 'water'])->register();
-
-        $this->assertTrue(post_type_supports('bread', 'flour'));
-        $this->assertTrue(post_type_supports('bread', 'water'));
-
-        PostType::make('butter')->supports('bread', 'spreading')->register();
-
-        $this->assertTrue(post_type_supports('butter', 'bread'));
-        $this->assertTrue(post_type_supports('butter', 'spreading'));
-    }
-
-    /**
-     * @test
-     */
-    function it_can_get_and_set_arbitrary_values_for_the_registration_arguments()
-    {
-        $type = PostType::make('stuff')->set('mood', 'happy');
-
-        $this->assertSame('happy', $type->get('mood'));
-    }
-
-    /**
-     * @test
-     */
-    function it_has_dedicated_methods_for_public_visibility()
-    {
-        $public = PostType::make('a-public-type')->open();
-        $this->assertTrue($public->get('public'));
-
-        $private = PostType::make('a-private-type')->closed();
-        $this->assertFalse($private->get('public'));
-    }
-
-    /**
-     * @test
-     */
-    function it_has_dedicated_methods_for_user_interface()
-    {
-        $ui = PostType::make('ui-having')->withUI();
-        $this->assertTrue($ui->get('show_ui'));
-
-        $no_ui = PostType::make('no-ui')->noUI();
-        $this->assertFalse($no_ui->get('show_ui'));
-    }
-
-
-
-    // *******************************************************************
-
-    /**
-     * [assertPostTypeExists description]
-     * @param  [type] $slug [description]
-     * @return [type]       [description]
-     */
-    protected function assertPostTypeExists($slug)
-    {
-        $this->assertTrue(post_type_exists($slug));
-    }
-
-    /**
-     * [assertPostTypeExists description]
-     * @param  [type] $slug [description]
-     * @return [type]       [description]
-     */
-    protected function assertPostTypeNotExists($slug)
-    {
-        $this->assertFalse(post_type_exists($slug));
-    }
 }
