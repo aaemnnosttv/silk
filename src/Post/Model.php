@@ -175,13 +175,14 @@ abstract class Model
     /**
      * Get the post type API
      *
-     * @return PostType
+     * @return mixed        Loads an existing type as a new PostType,
+     *                      or returns a new PostTypeBuilder for registering a new type.
      */
     public static function postType()
     {
         return PostType::make(static::postTypeId());
     }
-    
+
     /**
      * Meta API for this post
      *
