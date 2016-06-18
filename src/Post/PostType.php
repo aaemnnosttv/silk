@@ -167,9 +167,12 @@ class PostType
     public function __get($property)
     {
         switch ($property) :
-            case 'slug': return $this->object->name;
-            case 'one':  return $this->object->labels->singular_name;
-            case 'many': return $this->object->labels->name;
+            case 'slug':
+                return $this->object->name;
+            case 'one':
+                return $this->object->labels->singular_name;
+            case 'many':
+                return $this->object->labels->name;
         endswitch;
 
         return null;

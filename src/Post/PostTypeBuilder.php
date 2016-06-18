@@ -200,9 +200,12 @@ class PostTypeBuilder
     public function __get($property)
     {
         switch ($property) :
-            case 'slug': return $this->slug;
-            case 'one':  return $this->labelSingular;
-            case 'many': return $this->labelPlural;
+            case 'slug':
+                return $this->slug;
+            case 'one':
+                return $this->labelSingular;
+            case 'many':
+                return $this->labelPlural;
         endswitch;
 
         return null;
