@@ -114,6 +114,8 @@ class PostTypeTest extends WP_UnitTestCase
         $this->assertSame('post', $type->slug);
         $this->assertSame('Post', $type->one);
         $this->assertSame('Posts', $type->many);
+
+        $this->assertNull($type->nonExistentProperty);
     }
 
 }
