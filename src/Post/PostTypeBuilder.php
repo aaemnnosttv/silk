@@ -183,10 +183,6 @@ class PostTypeBuilder
     {
         $object = register_post_type($this->slug, $this->args->toArray());
 
-        if (is_wp_error($object)) {
-            throw new WP_ErrorException($object);
-        }
-
         return new PostType($object);
     }
 
