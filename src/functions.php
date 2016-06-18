@@ -4,11 +4,12 @@ use Silk\Event\Hook;
 
 if (! function_exists('on')) :
     /**
-     * Create and set a new event listener
+     * Create and set a new event listener.
      *
      * @param  string   $handle    action or filter handle
      * @param  callable $callback
      * @param  int      $priority
+     *
      * @return Hook
      */
     function on($handle, callable $callback, $priority = 10)
@@ -21,12 +22,14 @@ endif;
 
 if (! function_exists('off')) :
     /**
-     * Remove an event listener
+     * Remove an event listener.
      *
-     * Will attempt to remove on-demand as a fallback
+     * If the callback cannot be removed immediately, attempt to remove it just-in-time as a fallback.
      *
      * @param  string $handle   action or filter handle
      * @param  callable $callback
+     * @param  int $priority
+     *
      * @return bool|Hook        true if immediately removed, Hook instance otherwise
      */
     function off($handle, $callback, $priority = 10)
