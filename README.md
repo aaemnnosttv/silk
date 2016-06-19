@@ -7,7 +7,7 @@
 
 
 
-A beautiful API for working with WordPress the way you always wanted to.
+A modern API for WordPress.
 
 **This project is still in early development and may introduce breaking changes.**
 

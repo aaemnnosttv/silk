@@ -1,5 +1,6 @@
 {
     "name": "silk/silk",
+    "description": "A modern API for WordPress",
     "type": "library",
     "require": {
         "php": "^5.5 | ^7.0",
