@@ -13,14 +13,16 @@ A modern API for WordPress.
 
 --
 
-### What is Silk?
+## What is Silk?
 
 Silk is a library designed as a thin layer on top of WordPress, abstracting away the mess of functions into a clean and expressive object-oriented API.  Use as much or little as you want, while maintaining compatibility with everything else that's meant to work with WordPress.
 
+## Contributing
+
+Contributions are welcome! If you're interested in contributing to the project, please open an issue first.  I would hate to decline a Pull Request forged by hours of effort for any reason, so please read the contribution guidelines first.
 
 #### Related Projects and Inspiration
 - [Timber](https://github.com/jarednova/timber)
 - [Corcel](https://github.com/jgrossi/corcel)
 - [WordPlate](https://github.com/wordplate/wordplate)
 - [WP Eloquent](https://github.com/tareq1988/wp-eloquent)
-
