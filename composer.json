@@ -9,6 +9,7 @@
             "homepage": "https://aaemnnost.tv"
         }
     ],
+    "license": "MIT",
     "require": {
         "php": "^5.5 | ^7.0",
         "tightenco/collect": "^5.2"
