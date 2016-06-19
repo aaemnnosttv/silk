@@ -2,6 +2,13 @@
     "name": "silk/silk",
     "description": "A modern API for WordPress",
     "type": "library",
+    "authors": [
+        {
+            "name": "Evan Mattson",
+            "email": "me@aaemnnost.tv",
+            "homepage": "https://aaemnnost.tv"
+        }
+    ],
     "require": {
         "php": "^5.5 | ^7.0",
         "tightenco/collect": "^5.2"
@@ -11,13 +18,6 @@
         "satooshi/php-coveralls": "^1.0",
         "johnpbloch/wordpress": "^4.5"
     },
-    "authors": [
-        {
-            "name": "Evan Mattson",
-            "email": "me@aaemnnost.tv",
-            "homepage": "https://aaemnnost.tv"
-        }
-    ],
     "autoload": {
         "psr-4": {"Silk\\":"src"},
         "files": ["src/functions.php"]
