@@ -9,6 +9,11 @@
             "homepage": "https://aaemnnost.tv"
         }
     ],
+    "support": {
+        "issues": "https://github.com/aaemnnosttv/silk/issues",
+        "source": "https://github.com/aaemnnosttv/silk",
+        "wiki": "https://github.com/aaemnnosttv/silk/wiki"
+    },
     "license": "MIT",
     "require": {
         "php": "^5.5 | ^7.0",
