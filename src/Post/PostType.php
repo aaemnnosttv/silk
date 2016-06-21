@@ -26,7 +26,7 @@ class PostType
     /**
      * PostType Constructor
      *
-     * @param object post type object
+     * @param stdClass $object  The WordPress post type object
      */
     public function __construct(stdClass $object)
     {
@@ -38,10 +38,10 @@ class PostType
      *
      * Loads an existing type, or returns a new builder for registering a new type.
      *
-     * @param  string $slug  string - the post type slug ("name")
+     * @param  string $slug  The post type slug
      *
-     * @return mixed         static - if the post type has been registered
-     *                       PostTypeBuilder otherwise
+     * @return static|PostTypeBuilder  If the post type has been registered, a new static instance is returned.
+     *                                 Otherwise a new PostTypeBuilder is created for building a new post type to register.
      */
     public static function make($slug)
     {
@@ -55,7 +55,7 @@ class PostType
     /**
      * Create a new instance from an existing type.
      *
-     * @param  string $slug  post type id  (slug/name)
+     * @param  string $slug  The post type slug
      *
      * @return static
      */
@@ -70,6 +70,8 @@ class PostType
 
     /**
      * Checks if a post type with this slug has been registered.
+     *
+     * @param string $slug  The post type slug
      *
      * @return bool
      */
@@ -91,8 +93,8 @@ class PostType
     /**
      * Check for feature support.
      *
-     * @param mixed $features  string - feature
-     *                         array - many features
+     * @param string,...|array $features  string - First feature of possible many,
+     *                                    array - Many features to check support for.
      *
      * @return mixed
      */

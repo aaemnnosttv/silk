@@ -4,6 +4,10 @@ namespace Silk\Support;
 
 class Callback
 {
+    /**
+     * The normalized callable.
+     * @var mixed
+     */
     protected $target;
 
     /**

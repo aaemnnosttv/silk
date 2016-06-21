@@ -6,23 +6,42 @@ use Silk\Support\Callback;
 
 class Hook
 {
+    /**
+     * The action or filter handle attached to.
+     * @var string
+     */
     protected $handle;
-
+    /**
+     * The callback object holding the target callable.
+     * @var Callback
+     */
     protected $callback;
-
+    /**
+     * The number of parameters defined in the callback's signature.
+     * @var int
+     */
     protected $callbackParamCount;
-
+    /**
+     * The action or filter priority the callback is registered on.
+     * @var mixed
+     */
     protected $priority;
-
+    /**
+     * The number of times the callback has been invoked.
+     * @var int
+     */
     protected $iterations;
-
+    /**
+     * The maximum number of iterations allowed for the callback to be invoked.
+     * @var int
+     */
     protected $maxIterations;
 
 
     /**
-     * Create a new Hook instance
+     * Create a new Hook instance.
      *
-     * @param  string $handle action or filter handle
+     * @param  string $handle   Action or filter handle
      * @param  int    $priority
      *
      * @return static
@@ -33,9 +52,9 @@ class Hook
     }
 
     /**
-     * Create a new Hook instance
+     * Create a new Hook instance.
      *
-     * @param  string $handle action or filter handle
+     * @param  string $handle   Action or filter handle
      * @param  int    $priority
      */
     public function __construct($handle, $priority = 10)
@@ -45,9 +64,9 @@ class Hook
     }
 
     /**
-     * Set the callback to be invoked by the action or filter
+     * Set the callback to be invoked by the action or filter.
      *
-     * @param callable $callback
+     * @param callable $callback    The callback to be invoked
      *
      * @return $this
      */
@@ -60,7 +79,7 @@ class Hook
     }
 
     /**
-     * Set the hook in WordPress
+     * Set the hook in WordPress.
      *
      * Both actions and filters are registered as filters.
      *
@@ -74,7 +93,7 @@ class Hook
     }
 
     /**
-     * Unset the hook in WordPress
+     * Unset the hook in WordPress.
      *
      * @return $this
      */
@@ -86,9 +105,12 @@ class Hook
     }
 
     /**
-     * Control invocation of the callback
+     * Control invocation of the callback.
      *
-     * @return mixed  callback returned value
+     * @param $given  The first argument passed to the callback.
+     *                Needed to return for filters.
+     *
+     * @return mixed  Returned value from Callback
      */
     public function mediateCallback($given = null)
     {
@@ -100,13 +122,13 @@ class Hook
     }
 
     /**
-     * Whether or not the callback should be invoked
+     * Whether or not the callback should be invoked.
      *
-     * @param  array  $args  all arguments passed to the callback
+     * @param  array  $arguments  All arguments passed to the callback
      *
      * @return bool
      */
-    public function shouldInvoke(array $args)
+    public function shouldInvoke(array $arguments)
     {
         if ($this->hasExceededIterations()) {
             return false;
@@ -116,11 +138,11 @@ class Hook
     }
 
     /**
-     * Call the callback
+     * Call the callback.
      *
-     * @param  array $arguments  the arguments expected by the callback
+     * @param  array $arguments  All arguments passed to the callback
      *
-     * @return mixed  returned output from the callback
+     * @return mixed  The value returned from the callback
      */
     protected function invokeCallback($arguments)
     {
@@ -132,7 +154,7 @@ class Hook
     }
 
     /**
-     * Set the callback to only be invoked one time
+     * Set the callback to only be invokable one time.
      *
      * @return $this
      */
@@ -144,9 +166,9 @@ class Hook
     }
 
     /**
-     * Set the callback to only be invoked the given number of times
+     * Set the maximum number of callback invocations to allow.
      *
-     * @param  int $times  maimum iterations of invocations to allow
+     * @param  int $times  The maximum iterations of invocations to allow
      *
      * @return $this
      */
@@ -158,7 +180,7 @@ class Hook
     }
 
     /**
-     * Prevent the callback from being triggered again
+     * Prevent the callback from being triggered again.
      *
      * @return $this
      */
@@ -170,9 +192,9 @@ class Hook
     }
 
     /**
-     * Set the priority the callback should be registered with
+     * Set the priority the callback should be registered with.
      *
-     * @param  string|int $priority
+     * @param  mixed $priority  The callback priority
      *
      * @return $this
      */
@@ -188,9 +210,9 @@ class Hook
     }
 
     /**
-     * Whether or not the callback has reached the limit of allowed invocations
+     * Whether or not the callback has reached the limit of allowed invocations.
      *
-     * @return boolean  true for limit reached, otherwise false
+     * @return boolean  true for limit reached/exceeded, otherwise false
      */
     protected function hasExceededIterations()
     {

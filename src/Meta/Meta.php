@@ -11,12 +11,20 @@ class Meta
      * @var string
      */
     protected $type;
-
+    /**
+     * The object ID this metadata is for
+     * @var int
+     */
     protected $object_id;
-
+    /**
+     * The key the metadata is for
+     * @var string
+     */
     protected $key;
 
     /**
+     * Meta Constructor.
+     *
      * @param string     $type      Meta type
      * @param int|string $object_id ID of the object metadata is for
      * @param string     $key       Meta key
@@ -24,12 +32,12 @@ class Meta
     public function __construct($type, $object_id, $key)
     {
         $this->type      = $type;
-        $this->object_id = $object_id;
+        $this->object_id = (int) $object_id;
         $this->key       = $key;
     }
 
     /**
-     * Get the single meta data
+     * Get the single meta data.
      *
      * @return mixed
      */
@@ -39,7 +47,7 @@ class Meta
     }
 
     /**
-     * Get all meta data
+     * Get all meta data.
      *
      * @return Collection
      */
@@ -49,7 +57,7 @@ class Meta
     }
 
     /**
-     * Set the meta value
+     * Set the meta value.
      *
      * @param mixed  $value
      * @param string $prev_value
@@ -62,10 +70,12 @@ class Meta
     }
 
     /**
-     * Add metadata for the specified object
+     * Add metadata for the specified object.
      *
      * @param mixed  $value  The value to add
-     * @param bool $unique
+     * @param bool $unique  Whether the specified metadata key should be unique
+     *                      for the object.  If true, and the object already has
+     *                      a value for the specified metadata key, no change will be made.
      *
      * @return int|false The meta ID on success, false on failure.
      */
@@ -93,7 +103,7 @@ class Meta
     }
 
     /**
-     * Determine if a meta key is set for a given object
+     * Determine if a meta key is set for a given object.
      *
      * @return bool     True of the key is set, false if not.
      */
@@ -103,9 +113,9 @@ class Meta
     }
 
     /**
-     * Get the object_id
+     * Get the object_id.
      *
-     * @return int|string
+     * @return int  Object ID
      */
     public function getObjectId()
     {
@@ -113,13 +123,22 @@ class Meta
     }
 
     /**
+     * Magic getter.
      *
+     * @param string $property  The called unaccessible property name
+     *
+     * @return mixed
      */
     public function __get($property)
     {
         return $this->get($property);
     }
 
+    /**
+     * Get the string representation of the meta data.
+     *
+     * @return string  The meta value
+     */
     public function __toString()
     {
         return $this->get();

@@ -22,6 +22,13 @@ abstract class Shortcode
      */
     protected $tag;
 
+    /**
+     * Shortcode Constructor.
+     *
+     * @param array $atts      Shortcode attributes
+     * @param string $content  The inner (enclosed) content
+     * @param string $tag      The called shortcode tag
+     */
     public function __construct($atts, $content, $tag)
     {
         $this->attributes = $atts;
@@ -30,9 +37,9 @@ abstract class Shortcode
     }
 
     /**
-     * Register a tag for this shortcode
+     * Register a tag for this shortcode.
      *
-     * @param  mixed $tag  the tag to register with the shortcode
+     * @param mixed $tag  The tag to register with this shortcode class
      */
     public static function register($tag)
     {
@@ -41,6 +48,12 @@ abstract class Shortcode
 
     /**
      * WordPress Shortcode Callback
+     *
+     * @param  mixed $atts      Shortcode attributes
+     * @param  string $content  The inner (enclosed) content
+     * @param  string $tag      The called shortcode tag
+     *
+     * @return static
      */
     public static function controller($atts, $content, $tag)
     {
@@ -48,9 +61,9 @@ abstract class Shortcode
     }
 
     /**
-    * Render the shortcode to string
+    * Call the shortcode's handler and return the output.
     *
-    * @return string
+    * @return mixed  Rendered shortcode output
     */
     public function render()
     {
@@ -64,7 +77,7 @@ abstract class Shortcode
     }
 
     /**
-     * Catch-all render method
+     * Catch-all render method.
      *
      * @return string
      */
@@ -74,9 +87,9 @@ abstract class Shortcode
     }
 
     /**
-     * Get all attributes as a collection
+     * Get all attributes as a collection.
      *
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
     public function attributes()
     {
