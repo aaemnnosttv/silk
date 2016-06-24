@@ -19,6 +19,13 @@ Silk is a library designed as a thin layer on top of WordPress, abstracting away
 
 [See the Wiki](https://github.com/aaemnnosttv/silk/wiki) for examples and documentation.
 
+## Installation
+
+#### Via Composer (Recommended)
+```
+composer require silk/silk:^0.9
+```
+
 ## Contributing
 
 Contributions are welcome! If you're interested in contributing to the project, please open an issue first.  I would hate to decline a Pull Request forged by hours of effort for any reason, so please read the contribution guidelines first.
