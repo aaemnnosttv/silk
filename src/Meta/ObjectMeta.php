@@ -49,7 +49,9 @@ class ObjectMeta
      */
     public function collect()
     {
-        return Collection::make($this->toArray());
+        return Collection::make($this->toArray())->map(function ($value, $key) {
+            return new Meta($this->type, $this->id, $key);
+        });
     }
 
     /**

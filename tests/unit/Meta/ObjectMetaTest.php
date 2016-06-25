@@ -47,5 +47,9 @@ class ObjectMetaTest extends WP_UnitTestCase
         $meta = new ObjectMeta('post', $post_id);
 
         $this->assertInstanceOf(Collection::class, $meta->collect());
+
+        foreach ($meta->collect() as $metaForKey) {
+            $this->assertInstanceOf(Meta::class, $metaForKey);
+        }
     }
 }
