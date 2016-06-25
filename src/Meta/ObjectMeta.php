@@ -19,9 +19,10 @@ class ObjectMeta
     protected $id;
 
     /**
-     * Create a new ObjectMeta instance
-     * @param string $type object type
-     * @param int    $id   object id
+     * ObjectMeta constructor.
+     *
+     * @param string $type Object type
+     * @param int    $id   Object ID
      */
     public function __construct($type, $id)
     {
@@ -30,7 +31,7 @@ class ObjectMeta
     }
 
     /**
-     * Get meta object for the key
+     * Get meta object for the key.
      *
      * @param  string $key  meta key
      *
@@ -42,7 +43,7 @@ class ObjectMeta
     }
 
     /**
-     * Get all meta for the object as a Collection
+     * Get all meta for the object as a Collection.
      *
      * @return Collection
      */
@@ -52,7 +53,8 @@ class ObjectMeta
     }
 
     /**
-     * Get the representation of the instance as an array
+     * Get the representation of the instance as an array.
+     *
      * @return array
      */
     public function toArray()
@@ -63,8 +65,9 @@ class ObjectMeta
     /**
      * Get the single value for the given key
      *
-     * @param  string $property meta key
-     * @return mixed            meta value
+     * @param  string $property Meta key
+     *
+     * @return mixed            Single meta value
      */
     public function __get($property)
     {
