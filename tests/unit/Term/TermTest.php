@@ -61,10 +61,10 @@ class TermTest extends WP_UnitTestCase
      */
     function it_blows_up_if_the_terms_taxonomy_does_not_match_the_models()
     {
-            wp_insert_term('Green', 'post_tag');
-            $term = get_term_by('name', 'Green', 'post_tag');
+        wp_insert_term('Green', 'post_tag');
+        $tag_term = get_term_by('name', 'Green', 'post_tag');
 
-            Category::fromWpTerm($term);
+        Category::fromWpTerm($tag_term);
     }
 
     /**
@@ -78,6 +78,102 @@ class TermTest extends WP_UnitTestCase
 
         $this->assertInstanceOf(Category::class, $model);
         $this->assertSame($ids['term_id'], $model->id);
+    }
+
+    /**
+     * @test
+     * @expectedException Silk\Term\Exception\TermNotFoundException
+     */
+    function it_blows_up_if_the_term_cannot_be_found_by_id()
+    {
+        Category::fromID(0);
+    }
+
+    /**
+     * @test
+     */
+    function it_has_a_named_constructor_for_creating_a_new_instance_and_term_at_the_same_time()
+    {
+        $model = Category::create([
+            'name' => 'Carnivore',
+            'slug' => 'meat-eater',
+        ]);
+
+        $term = get_term_by('slug', 'meat-eater', 'category');
+
+        $this->assertSame('meat-eater', $model->slug);
+    }
+
+    /**
+     * @test
+     */
+    function it_has_method_for_checking_if_the_term_exists()
+    {
+        $model = new Category;
+        $this->assertFalse($model->exists());
+
+        $model->name = 'Alive';
+        $model->save();
+
+        $this->assertTrue($model->exists());
+    }
+
+    /**
+     * @test
+     */
+    function it_has_a_method_for_checking_if_the_term_is_a_child_of_another_term()
+    {
+        $parent = Category::create([
+            'name' => 'Parent'
+        ]);
+
+        $child = Category::create([
+            'name' => 'Child',
+            'parent' => $parent->id
+        ]);
+
+        $this->assertTrue($child->isChildOf($parent->id));
+        $this->assertTrue($child->isChildOf($parent));
+    }
+
+    /**
+     * @test
+     */
+    function it_can_save_changes_to_the_database()
+    {
+        $model = Category::create(['name' => 'Initial Name']);
+
+        $this->assertSame(
+            'Initial Name',
+            get_term_field('name', $model->id, $model->taxonomy)
+        );
+
+        $model->name = 'New Name';
+        $model->save();
+
+        $this->assertSame(
+            'New Name',
+            get_term_field('name', $model->id, $model->taxonomy)
+        );
+    }
+
+    /**
+     * @test
+     * @expectedException Silk\Exception\WP_ErrorException
+     */
+    function it_blows_up_if_trying_to_save_a_term_without_a_name()
+    {
+        $model = new Category;
+        $model->save();
+    }
+
+    /**
+     * @test
+     */
+    function that_non_existent_properties_return_null()
+    {
+        $model = new Category;
+        $this->assertNull($model->non_existent_property);
     }
 
 }
