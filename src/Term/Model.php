@@ -152,6 +152,21 @@ abstract class Model
     }
 
     /**
+     * Delete the term from the database.
+     *
+     * @return $this
+     */
+    public function delete()
+    {
+        if ($result = wp_delete_term($this->id, static::TAXONOMY)) {
+            $this->term->term_id = null;
+            $this->term->term_taxonomy_id = 0;
+        }
+
+        return $this;
+    }
+
+    /**
      * Check if this term exists in the database.
      *
      * @return boolean
@@ -183,6 +198,29 @@ abstract class Model
     }
 
     /**
+     * Get the parent term instance.
+     *
+     * @return static
+     */
+    public function parent()
+    {
+        return static::fromID($this->term->parent);
+    }
+
+    /**
+     * Get all ancestors of this term as a collection.
+     *
+     * @return Collection
+     */
+    public function ancestors()
+    {
+        return Collection::make(get_ancestors($this->id, static::TAXONOMY, 'taxonomy'))
+            ->map(function ($term_ID) {
+                return static::fromID($term_ID);
+            });
+    }
+
+    /**
      * Magic Getter.
      *
      * @param  string $property Property name accessed
@@ -200,6 +238,18 @@ abstract class Model
         }
 
         return null;
+    }
+
+    /**
+     * Magic set checker.
+     *
+     * @param  string  $property  Property name queried
+     *
+     * @return boolean
+     */
+    public function __isset($property)
+    {
+        return property_exists($this->term, $property);
     }
 
     /**

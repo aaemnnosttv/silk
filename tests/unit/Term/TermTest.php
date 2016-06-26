@@ -170,10 +170,84 @@ class TermTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_can_delete_itself()
+    {
+        $model = Category::create(['name' => 'Doomed']);
+        $this->assertTrue($model->exists());
+
+        $model->delete();
+
+        $this->assertFalse($model->exists());
+        $this->assertEmpty($model->id);
+        $this->assertEmpty($model->term_taxonomy_id);
+    }
+
+    /**
+     * @test
+     */
+    function it_blows_up_if_it_tries_to_delete_a_non_existent_term()
+    {
+        $model = new Category; // does not exist yet
+        $model->delete();
+    }
+
+    /**
+     * @test
+     */
     function that_non_existent_properties_return_null()
     {
         $model = new Category;
         $this->assertNull($model->non_existent_property);
+    }
+
+    /**
+     * @test
+     */
+    function it_reports_proxied_properties_as_set()
+    {
+        $model = new Category;
+        $this->assertTrue(isset($model->term_id));
+    }
+
+    /**
+     * @test
+     */
+    function it_has_a_method_for_returning_the_parent_instance()
+    {
+        $parent = Category::create([
+            'name' => 'Parent'
+        ]);
+
+        $child = Category::create([
+            'name' => 'Child',
+            'parent' => $parent->id
+        ]);
+
+        $this->assertSame($child->parent, $child->parent()->id);
+    }
+
+    /**
+     * @test
+     */
+    function it_has_a_method_for_getting_a_collection_of_all_term_ancestors()
+    {
+        $grand = Category::create([
+            'name' => 'Grandparent'
+        ]);
+        $parent = Category::create([
+            'name' => 'Parent',
+            'parent' => $grand->id
+        ]);
+        $child = Category::create([
+            'name' => 'Child',
+            'parent' => $parent->id
+        ]);
+
+        $ancestor_ids = $child->ancestors()->pluck('term_id');
+
+        $this->assertCount(2, $ancestor_ids);
+        $this->assertContains($grand->id, $ancestor_ids);
+        $this->assertContains($parent->id, $ancestor_ids);
     }
 
 }
