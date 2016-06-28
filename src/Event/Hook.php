@@ -3,6 +3,7 @@
 namespace Silk\Event;
 
 use Silk\Support\Callback;
+use Illuminate\Support\Collection;
 
 class Hook
 {
@@ -36,6 +37,12 @@ class Hook
      * @var int
      */
     protected $maxIterations;
+
+    /**
+     * A collection of conditions which control the the invocation of the callback.
+     * @var Collection
+     */
+    protected $conditions;
 
 
     /**
@@ -134,7 +141,13 @@ class Hook
             return false;
         }
 
-        return true;
+        /**
+         * Check if any of the conditions returns false,
+         * if so, do not invoke.
+         */
+        return ! $this->conditions()->contains(function ($key, $callback) use ($arguments) {
+            return false === $callback->callArray($arguments);
+        });
     }
 
     /**
@@ -207,6 +220,37 @@ class Hook
         $this->listen();
 
         return $this;
+    }
+
+    /**
+     * Add a condition to control the invocation of the callback.
+     *
+     * @param  callable $condition  A function to evaluate a condition before the
+     *                              hook's callback is invoked.
+     *                              If the function returns false, the callback
+     *                              will not be invoked.
+     *
+     * @return $this
+     */
+    public function onlyIf(callable $condition)
+    {
+        $this->conditions()->push(new Callback($condition));
+
+        return $this;
+    }
+
+    /**
+     * Get the collection of callback invocation conditions.
+     *
+     * @return Collection
+     */
+    protected function conditions()
+    {
+        if (is_null($this->conditions)) {
+            $this->conditions = new Collection;
+        }
+
+        return $this->conditions;
     }
 
     /**
