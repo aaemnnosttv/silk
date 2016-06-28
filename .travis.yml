@@ -22,11 +22,8 @@ script:
     - mkdir -p build/logs
     - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
-after_script:
-    - if [ "$TRAVIS_BRANCH" == "master" ]; then php vendor/bin/coveralls -v; fi
-
 after_success:
-    - if [ "$TRAVIS_BRANCH" == "master" ]; then coveralls; fi
+    - travis_retry php vendor/bin/coveralls -v
 
 before_deploy:
     - ./bin/build-docs.sh
