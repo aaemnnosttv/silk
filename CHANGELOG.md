@@ -2,6 +2,9 @@
 
 ## v0.?
 
+### Added
+- Conditional Hooks with `onlyIf(callback)` method
+
 ### Changed
 - `ObjectMeta->collect()` now returns a Collection of Meta objects
 
