@@ -11,11 +11,13 @@ abstract class Shortcode
      * @var array
      */
     protected $attributes;
+
     /**
      * The enclosed content within the shortcode
      * @var string
      */
     protected $content;
+    
     /**
      * The shortcode tag that was called
      * @var string

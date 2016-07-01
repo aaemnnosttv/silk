@@ -11,11 +11,13 @@ class Meta
      * @var string
      */
     protected $type;
+
     /**
      * The object ID this metadata is for
      * @var int
      */
     protected $object_id;
+    
     /**
      * The key the metadata is for
      * @var string

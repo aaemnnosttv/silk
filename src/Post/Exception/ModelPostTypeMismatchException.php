@@ -14,6 +14,7 @@ class ModelPostTypeMismatchException extends \RuntimeException
      * @var string
      */
     protected $modelClass;
+    
     /**
      * The post object
      * @var WP_Post

@@ -12,26 +12,31 @@ class Hook
      * @var string
      */
     protected $handle;
+
     /**
      * The callback object holding the target callable.
      * @var Callback
      */
     protected $callback;
+
     /**
      * The number of parameters defined in the callback's signature.
      * @var int
      */
     protected $callbackParamCount;
+
     /**
      * The action or filter priority the callback is registered on.
      * @var mixed
      */
     protected $priority;
+
     /**
      * The number of times the callback has been invoked.
      * @var int
      */
     protected $iterations;
+    
     /**
      * The maximum number of iterations allowed for the callback to be invoked.
      * @var int
