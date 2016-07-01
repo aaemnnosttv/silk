@@ -26,7 +26,7 @@ after_success:
     - travis_retry php vendor/bin/coveralls -v
 
 before_deploy:
-    - ./bin/build-docs.sh
+    - ./build/bin/build-docs.sh
 
 deploy:
     provider: s3
@@ -36,7 +36,7 @@ deploy:
     bucket: aaemnnosttv-silk-api-docs
     acl: public_read
     skip_cleanup: true
-    local_dir: api-docs
+    local_dir: ../silk-api-docs
     on:
         php: 5.6
         all_branches: true
