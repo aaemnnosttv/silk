@@ -104,7 +104,7 @@ class PostType
             $features = func_get_args();
         }
 
-        return ! collect($features)
+        return ! Collection::make($features)
             ->contains(function ($key, $feature) {
                 return ! post_type_supports($this->slug, $feature);
             });
@@ -131,7 +131,7 @@ class PostType
      */
     public function removeSupportFor($features)
     {
-        collect(is_array($features) ? $features : func_get_args())
+        Collection::make(is_array($features) ? $features : func_get_args())
             ->each(function ($features) {
                 remove_post_type_support($this->slug, $features);
             });

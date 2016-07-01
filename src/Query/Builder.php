@@ -111,7 +111,7 @@ class Builder
             return $this->collectModels();
         }
 
-        return collect($this->query->get_posts());
+        return Collection::make($this->query->get_posts());
     }
 
     /**
@@ -125,7 +125,7 @@ class Builder
         $this->query->set('fields', ''); // as WP_Post objects
         $modelClass = get_class($this->model);
 
-        return collect($this->query->get_posts())
+        return Collection::make($this->query->get_posts())
             ->map(function ($post) use ($modelClass) {
                 return new $modelClass($post);
             });

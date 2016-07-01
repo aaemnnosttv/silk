@@ -5,6 +5,7 @@ namespace Silk\Post;
 use stdClass;
 use WP_Post;
 use WP_Query;
+use Illuminate\Support\Collection;
 use Silk\Query\Builder;
 use Silk\Meta\ObjectMeta;
 use Silk\Exception\WP_ErrorException;
@@ -153,7 +154,7 @@ abstract class Model
     public static function create($attributes = [])
     {
         $post = new WP_Post((object)
-            collect($attributes)
+            Collection::make($attributes)
                 ->except('ID')
                 ->put('post_type', static::postTypeId())
                 ->all()
