@@ -4,7 +4,6 @@ namespace Silk\Post;
 
 use Illuminate\Support\Collection;
 use Silk\Post\Exception\InvalidPostTypeNameException;
-use Silk\Post\PostTypeBuilder;
 
 /**
  * @property-read string $slug
