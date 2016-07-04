@@ -131,5 +131,12 @@ class TaxonomyTest extends WP_UnitTestCase
         $this->assertContains('cat', $types->pluck('id'));
     }
 
+    /**
+     * @test
+     */
+    public function non_existent_properties_return_null()
+    {
+        $this->assertNull(Taxonomy::make('category')->non_existent);
+    }
 
 }
