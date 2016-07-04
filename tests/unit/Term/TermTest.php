@@ -3,6 +3,8 @@
 use Silk\Term\Tag;
 use Silk\Term\Category;
 use Silk\Taxonomy\Taxonomy;
+use Silk\Meta\Meta;
+use Silk\Meta\ObjectMeta;
 
 class TermTest extends WP_UnitTestCase
 {
@@ -283,4 +285,18 @@ class TermTest extends WP_UnitTestCase
         $this->assertSame('category', $term->taxonomy()->id);
     }
 
+    /**
+     * @test
+     */
+    public function it_has_a_method_for_accessing_the_meta_api()
+    {
+        $model = Category::create(['name' => 'Testing']);
+
+        $this->assertInstanceOf(ObjectMeta::class, $model->meta());
+        $this->assertInstanceOf(Meta::class, $model->meta('some-key'));
+
+        $model->meta('some-key')->set('single value');
+
+        $this->assertSame('single value', get_term_meta($model->id, 'some-key', true));
+    }
 }

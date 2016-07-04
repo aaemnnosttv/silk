@@ -4,6 +4,7 @@ namespace Silk\Term;
 
 use stdClass;
 use WP_Term;
+use Silk\Meta\ObjectMeta;
 use Silk\Taxonomy\Taxonomy;
 use Silk\Query\QueryBuilder;
 use Illuminate\Support\Collection;
@@ -222,6 +223,24 @@ abstract class Model
             ->map(function ($term_ID) {
                 return static::fromID($term_ID);
             });
+    }
+
+    /**
+     * Meta API for this term
+     *
+     * @param  string $key  Meta key to retreive or empty to retreive all.
+     *
+     * @return object
+     */
+    public function meta($key = '')
+    {
+        $meta = new ObjectMeta('term', $this->id);
+
+        if ($key) {
+            return $meta->get($key);
+        }
+
+        return $meta;
     }
 
     /**
