@@ -4,6 +4,7 @@ namespace Silk\Term;
 
 use stdClass;
 use WP_Term;
+use Silk\Taxonomy\Taxonomy;
 use Silk\Query\QueryBuilder;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
@@ -221,6 +222,16 @@ abstract class Model
             ->map(function ($term_ID) {
                 return static::fromID($term_ID);
             });
+    }
+
+    /**
+     * Get the Taxonomy model.
+     *
+     * @return Taxonomy
+     */
+    public function taxonomy()
+    {
+        return Taxonomy::make($this->taxonomy);
     }
 
     /**

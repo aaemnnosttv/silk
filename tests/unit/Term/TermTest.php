@@ -2,6 +2,7 @@
 
 use Silk\Term\Tag;
 use Silk\Term\Category;
+use Silk\Taxonomy\Taxonomy;
 
 class TermTest extends WP_UnitTestCase
 {
@@ -269,6 +270,17 @@ class TermTest extends WP_UnitTestCase
         foreach ($tags as $tag) {
             $this->assertInstanceOf(Tag::class, $tag);
         }
+    }
+
+    /**
+     * @test
+     */
+    public function it_has_a_method_for_returning_the_taxonomy_model()
+    {
+        $term = new Category;
+
+        $this->assertInstanceOf(Taxonomy::class, $term->taxonomy());
+        $this->assertSame('category', $term->taxonomy()->id);
     }
 
 }
