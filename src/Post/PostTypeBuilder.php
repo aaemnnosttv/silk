@@ -154,6 +154,8 @@ class PostTypeBuilder
      *
      * @param string $key
      * @param mixed $value
+     *
+     * @return $this
      */
     public function set($key, $value)
     {
