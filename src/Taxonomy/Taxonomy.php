@@ -2,6 +2,7 @@
 
 namespace Silk\Taxonomy;
 
+use Silk\Post\PostType;
 use Silk\Term\TermQueryBuilder;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
@@ -92,6 +93,19 @@ class Taxonomy
     public function terms()
     {
         return (new TermQueryBuilder)->forTaxonomy($this);
+    }
+
+    /**
+     * Get all post types associated with this taxonomy.
+     *
+     * @return Collection
+     */
+    public function postTypes()
+    {
+        return Collection::make($this->object_type)
+            ->map(function ($post_type) {
+                return PostType::load($post_type);
+            });
     }
 
     /**

@@ -114,4 +114,22 @@ class TaxonomyTest extends WP_UnitTestCase
         $this->assertSame('category', $model->id);
     }
 
+    /**
+     * @test
+     */
+    public function it_can_return_a_collection_of_post_types_associated_with_it()
+    {
+        register_taxonomy('breed', ['dog', 'cat']);
+        register_post_type('dog', ['taxonomies' => (array) 'breed']);
+        register_post_type('cat', ['taxonomies' => (array) 'breed']);
+
+        $types = Taxonomy::make('breed')->postTypes();
+
+        $this->assertInstanceOf(Collection::class, $types);
+        $this->assertCount(2, $types);
+        $this->assertContains('dog', $types->pluck('id'));
+        $this->assertContains('cat', $types->pluck('id'));
+    }
+
+
 }
