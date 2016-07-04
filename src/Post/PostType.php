@@ -179,4 +179,16 @@ class PostType
 
         return null;
     }
+
+    /**
+     * Magic Isset Check.
+     *
+     * @param  string  $property Queried property name
+     *
+     * @return boolean
+     */
+    public function __isset($property)
+    {
+        return ! is_null($this->__get($property));
+    }
 }
