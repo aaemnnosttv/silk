@@ -4,6 +4,7 @@ namespace Silk\Term;
 
 use stdClass;
 use WP_Term;
+use Silk\Query\QueryBuilder;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
 use Silk\Term\Exception\TermNotFoundException;
@@ -23,6 +24,8 @@ use Silk\Term\Exception\TaxonomyMismatchException;
  */
 abstract class Model
 {
+    use QueryBuilder;
+
     /**
      * The term's taxonomy
      * @var string
@@ -218,6 +221,16 @@ abstract class Model
             ->map(function ($term_ID) {
                 return static::fromID($term_ID);
             });
+    }
+
+    /**
+     * Start a new query for terms of this type.
+     *
+     * @return TermQueryBuilder
+     */
+    public function newQuery()
+    {
+        return (new TermQueryBuilder)->setModel($this);
     }
 
     /**

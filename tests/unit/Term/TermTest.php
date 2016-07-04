@@ -1,9 +1,12 @@
 <?php
 
+use Silk\Term\Tag;
 use Silk\Term\Category;
 
 class TermTest extends WP_UnitTestCase
 {
+    use TermFactoryHelpers;
+
     /**
      * @test
      */
@@ -248,6 +251,24 @@ class TermTest extends WP_UnitTestCase
         $this->assertCount(2, $ancestor_ids);
         $this->assertContains($grand->id, $ancestor_ids);
         $this->assertContains($parent->id, $ancestor_ids);
+    }
+
+    /**
+     * @test
+     */
+    public function it_can_query_terms_of_the_same_type()
+    {
+        $post_id = $this->factory->post->create();
+
+        $this->createManyTagsForPost(5, $post_id);
+
+        $tags = Tag::query()->results();
+
+        $this->assertCount(5, $tags);
+
+        foreach ($tags as $tag) {
+            $this->assertInstanceOf(Tag::class, $tag);
+        }
     }
 
 }
