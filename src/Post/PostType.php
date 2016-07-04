@@ -169,17 +169,12 @@ class PostType
      */
     public function __get($property)
     {
-        switch ($property) :
-            case 'id':
-            case 'slug':
-                return $this->object->name;
-            case 'one':
-                return $this->object->labels->singular_name;
-            case 'many':
-                return $this->object->labels->name;
-        endswitch;
-
-        return null;
+        return Collection::make([
+            'id'   => $this->object->name,
+            'slug' => $this->object->name,
+            'one'  => $this->object->labels->singular_name,
+            'many' => $this->object->labels->name,
+        ])->get($property);
     }
 
     /**
