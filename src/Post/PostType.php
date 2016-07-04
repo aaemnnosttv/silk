@@ -11,6 +11,7 @@ use Silk\Post\Exception\NonExistentPostTypeException;
 use Silk\Post\PostTypeBuilder;
 
 /**
+ * @property-read string $id
  * @property-read string $slug
  * @property-read string $one
  * @property-read string $many
@@ -160,15 +161,16 @@ class PostType
     }
 
     /**
-     * Magic Getter
+     * Magic Getter.
      *
-     * @param  string $property
+     * @param  string $property  Accessed property name
      *
      * @return mixed
      */
     public function __get($property)
     {
         switch ($property) :
+            case 'id':
             case 'slug':
                 return $this->object->name;
             case 'one':
