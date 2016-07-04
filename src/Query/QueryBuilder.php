@@ -22,19 +22,4 @@ trait QueryBuilder
     {
         return (new static)->newQuery();
     }
-
-    /**
-     * Handle dynamic method calls into the model.
-     *
-     * @param  string $method
-     * @param  array $arguments
-     *
-     * @return mixed
-     */
-    public function __call($method, $arguments)
-    {
-        $query = $this->newQuery();
-
-        return call_user_func_array([$query, $method], $arguments);
-    }
 }
