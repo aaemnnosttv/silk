@@ -4,7 +4,7 @@ namespace Silk\Term;
 
 use stdClass;
 use WP_Term;
-use Silk\Meta\ObjectMeta;
+use Silk\Meta\TypeMeta;
 use Silk\Taxonomy\Taxonomy;
 use Silk\Query\QueryBuilder;
 use Illuminate\Support\Collection;
@@ -26,8 +26,6 @@ use Silk\Term\Exception\TaxonomyMismatchException;
  */
 abstract class Model
 {
-    use QueryBuilder;
-
     /**
      * The term's taxonomy
      * @var string
@@ -35,10 +33,19 @@ abstract class Model
     const TAXONOMY = '';
 
     /**
+     * The object type in WordPress
+     * @var string
+     */
+    const OBJECT_TYPE = 'term';
+
+    /**
      * The term object
      * @var WP_Term
      */
     protected $term;
+
+    use TypeMeta;
+    use QueryBuilder;
 
     /**
      * Model Constructor.
@@ -223,24 +230,6 @@ abstract class Model
             ->map(function ($term_ID) {
                 return static::fromID($term_ID);
             });
-    }
-
-    /**
-     * Meta API for this term
-     *
-     * @param  string $key  Meta key to retreive or empty to retreive all.
-     *
-     * @return object
-     */
-    public function meta($key = '')
-    {
-        $meta = new ObjectMeta('term', $this->id);
-
-        if ($key) {
-            return $meta->get($key);
-        }
-
-        return $meta;
     }
 
     /**

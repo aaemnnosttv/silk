@@ -7,7 +7,7 @@ use WP_Post;
 use WP_Query;
 use Illuminate\Support\Collection;
 use Silk\Query\Builder;
-use Silk\Meta\ObjectMeta;
+use Silk\Meta\TypeMeta;
 use Silk\Exception\WP_ErrorException;
 use Silk\Post\Exception\PostNotFoundException;
 use Silk\Post\Exception\ModelPostTypeMismatchException;
@@ -61,6 +61,13 @@ abstract class Model
      */
     const POST_TYPE = '';
 
+    /**
+     * The object type in WordPress
+     * @var string
+     */
+    const OBJECT_TYPE = 'post';
+
+    use TypeMeta;
 
     /**
      * Create a new instance
@@ -182,24 +189,6 @@ abstract class Model
     public static function postType()
     {
         return PostType::make(static::postTypeId());
-    }
-
-    /**
-     * Meta API for this post
-     *
-     * @param  string $key  Meta key to retreive or empty to retreive all.
-     *
-     * @return object
-     */
-    public function meta($key = '')
-    {
-        $meta = new ObjectMeta('post', $this->id);
-
-        if ($key) {
-            return $meta->get($key);
-        }
-
-        return $meta;
     }
 
     /**
