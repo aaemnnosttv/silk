@@ -74,6 +74,19 @@ class Meta
     }
 
     /**
+     * Replace a single value.
+     *
+     * @param  mixed $old  Previous value to update
+     * @param  mixed $new  New value to set the previous value to
+     *
+     * @return $this
+     */
+    public function replace($old, $new)
+    {
+        return $this->set($new, $old);
+    }
+
+    /**
      * Add metadata for the specified object.
      *
      * @param mixed  $value  The value to add
