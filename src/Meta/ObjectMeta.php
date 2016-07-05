@@ -65,14 +65,10 @@ class ObjectMeta
     }
 
     /**
-     * Get the single value for the given key
      *
-     * @param  string $property Meta key
      *
-     * @return mixed            Single meta value
      */
     public function __get($property)
     {
-        return (new Meta($this->type, $this->id, $property))->get();
     }
 }
