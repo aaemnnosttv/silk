@@ -17,7 +17,7 @@ class Meta
      * @var int
      */
     protected $object_id;
-    
+
     /**
      * The key the metadata is for
      * @var string
@@ -99,10 +99,10 @@ class Meta
     /**
      * Add metadata for the specified object.
      *
-     * @param mixed  $value  The value to add
-     * @param bool $unique  Whether the specified metadata key should be unique
-     *                      for the object.  If true, and the object already has
-     *                      a value for the specified metadata key, no change will be made.
+     * @param mixed  $value   The value to add
+     * @param bool   $unique  Whether the specified metadata key should be unique
+     *                        for the object.  If true, and the object already has
+     *                        a value for the specified metadata key, no change will be made.
      *
      * @return $this
      */
@@ -146,7 +146,7 @@ class Meta
     /**
      * Magic getter.
      *
-     * @param string $property  The called unaccessible property name
+     * @param string $property  Accessed property name
      *
      * @return mixed
      */
@@ -156,7 +156,7 @@ class Meta
     }
 
     /**
-     * Get the string representation of the meta data.
+     * Get the meta data as a string.
      *
      * @return string  The meta value
      */
