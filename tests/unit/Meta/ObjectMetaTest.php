@@ -11,7 +11,7 @@ class ObjectMetaTest extends WP_UnitTestCase
      */
     public function it_can_get_a_dedicated_meta_object_for_a_given_key()
     {
-        $post_id = $this->factory->post->create(['post_title' => 'Test me, baby']);
+        $post_id = $this->factory->post->create();
 
         $postMeta = new ObjectMeta('post', $post_id);
 
@@ -23,7 +23,7 @@ class ObjectMetaTest extends WP_UnitTestCase
      */
     public function it_can_return_all_meta_as_a_collection()
     {
-        $post_id = $this->factory->post->create(['post_title' => 'Test me, baby']);
+        $post_id = $this->factory->post->create();
 
         $meta = new ObjectMeta('post', $post_id);
 
