@@ -134,8 +134,8 @@ class Builder
     /**
      * Set a query variable on the query
      *
-     * @param [type] $var   [description]
-     * @param [type] $value [description]
+     * @param string $var   Query variable key
+     * @param mixed  $value Query value for key
      *
      * @return $this
      */
