@@ -151,10 +151,8 @@ class PostType
             throw new NonExistentPostTypeException("No post type exists with name '{$this->slug}'.");
         }
 
-        $result = unregister_post_type($this->slug);
-
-        if (is_wp_error($result)) {
-            throw new WP_ErrorException($result);
+        if (is_wp_error($error = unregister_post_type($this->slug))) {
+            throw new WP_ErrorException($error);
         }
 
         return $this;
