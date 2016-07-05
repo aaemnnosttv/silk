@@ -49,13 +49,23 @@ class Meta
     }
 
     /**
-     * Get all meta data.
+     * Get all meta data as a Collection.
      *
      * @return Collection
      */
+    public function collect()
+    {
+        return Collection::make($this->all());
+    }
+
+    /**
+     * Get all meta data as an array.
+     *
+     * @return array
+     */
     public function all()
     {
-        return Collection::make(get_metadata($this->type, $this->object_id, $this->key, false));
+        return (array) get_metadata($this->type, $this->object_id, $this->key, false);
     }
 
     /**
