@@ -33,4 +33,27 @@ class ObjectMetaTest extends WP_UnitTestCase
             $this->assertInstanceOf(Meta::class, $metaForKey);
         }
     }
+
+    /**
+     * @test
+     */
+    public function it_can_return_all_meta_as_an_array()
+    {
+        /**
+         * Use a made up post ID so that we can be sure these are the only meta values.
+         * @var integer
+         */
+        $post_id = 100;
+        $meta = new ObjectMeta('post', $post_id);
+
+        update_post_meta($post_id, 'a', '1', true);
+        update_post_meta($post_id, 'b', '2', true);
+
+        $this->assertSame([
+                'a' => ['1'],
+                'b' => ['2']
+            ],
+            get_metadata('post', $post_id)
+        );
+    }
 }
