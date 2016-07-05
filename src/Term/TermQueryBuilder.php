@@ -52,6 +52,11 @@ class TermQueryBuilder implements BuildsQueries
         return $this;
     }
 
+    /**
+     * Include terms that have no related objects in the results.
+     *
+     * @return $this
+     */
     public function includeEmpty()
     {
         $this->args->put('hide_empty', false);
