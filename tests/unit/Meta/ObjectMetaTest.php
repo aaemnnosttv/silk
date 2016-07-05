@@ -56,4 +56,17 @@ class ObjectMetaTest extends WP_UnitTestCase
             get_metadata('post', $post_id)
         );
     }
+
+    /**
+     * @test
+     */
+    public function it_has_readonly_properties()
+    {
+        $meta = new ObjectMeta('post', 123);
+
+        $this->assertSame('post', $meta->type);
+        $this->assertSame(123, $meta->id);
+
+        $this->assertNull($meta->non_existent);
+    }
 }

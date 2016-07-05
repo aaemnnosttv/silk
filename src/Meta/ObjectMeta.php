@@ -4,6 +4,10 @@ namespace Silk\Meta;
 
 use Illuminate\Support\Collection;
 
+/**
+ * @property-read string $type
+ * @property-read int $id
+ */
 class ObjectMeta
 {
     /**
@@ -65,10 +69,14 @@ class ObjectMeta
     }
 
     /**
+     * Magic Getter.
      *
+     * @param  string $property Accessed property
      *
+     * @return mixed
      */
     public function __get($property)
     {
+        return isset($this->$property) ? $this->$property : null;
     }
 }
