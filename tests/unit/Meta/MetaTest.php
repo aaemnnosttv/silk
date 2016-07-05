@@ -3,7 +3,7 @@
 use Silk\Meta\Meta;
 use Illuminate\Support\Collection;
 
-class MetaModelTest extends WP_UnitTestCase
+class MetaTest extends WP_UnitTestCase
 {
     /**
      * @test
@@ -11,7 +11,7 @@ class MetaModelTest extends WP_UnitTestCase
     public function it_gets_the_single_value_for_a_post_meta_key()
     {
         $post_id = $this->factory->post->create();
-        
+
         update_post_meta($post_id, 'some_meta_key', 'the value');
 
         $metaForKey = new Meta('post', $post_id, 'some_meta_key');
@@ -47,7 +47,7 @@ class MetaModelTest extends WP_UnitTestCase
         $this->assertTrue($meta->exists());
     }
 
-    
+
     /**
      * @test
      */
