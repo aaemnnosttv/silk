@@ -144,18 +144,6 @@ class Meta
     }
 
     /**
-     * Magic getter.
-     *
-     * @param string $property  Accessed property name
-     *
-     * @return mixed
-     */
-    public function __get($property)
-    {
-        return $this->get($property);
-    }
-
-    /**
      * Get the meta data as a string.
      *
      * @return string  The meta value

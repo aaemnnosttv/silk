@@ -14,7 +14,6 @@ class MetaTest extends WP_UnitTestCase
 
         $meta = new Meta('post', 123, 'some_meta_key');
         $this->assertEquals('the value', $meta->get());
-        $this->assertEquals('the value', $meta->some_meta_key);
         $this->assertEquals('the value', (string) $meta);
     }
 
