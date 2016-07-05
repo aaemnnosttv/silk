@@ -59,16 +59,18 @@ class Meta
     }
 
     /**
-     * Set the meta value.
+     * Set the new value.
      *
      * @param mixed  $value
      * @param string $prev_value
      *
-     * @return bool              True on success, false on failure
+     * @return $this
      */
     public function set($value, $prev_value = '')
     {
-        return update_metadata($this->type, $this->object_id, $this->key, $value, $prev_value);
+        update_metadata($this->type, $this->object_id, $this->key, $value, $prev_value);
+
+        return $this;
     }
 
     /**
@@ -79,11 +81,13 @@ class Meta
      *                      for the object.  If true, and the object already has
      *                      a value for the specified metadata key, no change will be made.
      *
-     * @return int|false The meta ID on success, false on failure.
+     * @return $this
      */
     public function add($value, $unique = false)
     {
-        return add_metadata($this->type, $this->object_id, $this->key, $value, $unique);
+        add_metadata($this->type, $this->object_id, $this->key, $value, $unique);
+
+        return $this;
     }
 
     /**
@@ -97,11 +101,13 @@ class Meta
      *                       This is only necessary when deleting a specific value
      *                       from an object which has multiple values for the key.
      *
-     * @return bool              True on success, false on failure
+     * @return $this
      */
     public function delete($value = '')
     {
-        return delete_metadata($this->type, $this->object_id, $this->key, $value);
+        delete_metadata($this->type, $this->object_id, $this->key, $value);
+
+        return $this;
     }
 
     /**
