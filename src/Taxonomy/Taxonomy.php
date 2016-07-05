@@ -92,7 +92,7 @@ class Taxonomy
      */
     public function terms()
     {
-        return (new TermQueryBuilder)->forTaxonomy($this);
+        return (new TermQueryBuilder)->forTaxonomy($this->id);
     }
 
     /**
