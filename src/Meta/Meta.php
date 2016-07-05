@@ -115,16 +115,6 @@ class Meta
     }
 
     /**
-     * Get the object_id.
-     *
-     * @return int  Object ID
-     */
-    public function getObjectId()
-    {
-        return $this->object_id;
-    }
-
-    /**
      * Magic getter.
      *
      * @param string $property  The called unaccessible property name
