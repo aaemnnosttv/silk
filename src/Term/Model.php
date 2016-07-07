@@ -47,6 +47,8 @@ abstract class Model extends ActiveRecord
      * Model Constructor.
      *
      * @param mixed $term  WP_Term to fill data from
+     *
+     * @throws TaxonomyMismatchException
      */
     public function __construct(WP_Term $term = null)
     {
@@ -77,6 +79,8 @@ abstract class Model extends ActiveRecord
      *
      * @param  int|string $id  Term ID
      *
+     * @throws TermNotFoundException
+     *
      * @return static
      */
     public static function fromID($id)
@@ -92,6 +96,8 @@ abstract class Model extends ActiveRecord
      * Create a new instance from a slug.
      *
      * @param  string $slug  Term slug
+     *
+     * @throws TermNotFoundException
      *
      * @return static
      */
