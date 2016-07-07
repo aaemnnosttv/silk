@@ -9,7 +9,6 @@ use Illuminate\Support\Collection;
 use Silk\Query\Builder;
 use Silk\Query\QueryBuilder;
 use Silk\Database\ActiveRecord;
-use Silk\Exception\WP_ErrorException;
 use Silk\Post\Exception\PostNotFoundException;
 use Silk\Post\Exception\ModelPostTypeMismatchException;
 

@@ -63,10 +63,10 @@ abstract class Shortcode
     }
 
     /**
-    * Call the shortcode's handler and return the output.
-    *
-    * @return mixed  Rendered shortcode output
-    */
+     * Call the shortcode's handler and return the output.
+     *
+     * @return mixed  Rendered shortcode output
+     */
     public function render()
     {
         $dedicated_method = "{$this->tag}_handler";
