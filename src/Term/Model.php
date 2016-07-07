@@ -8,7 +8,6 @@ use Silk\Taxonomy\Taxonomy;
 use Silk\Query\QueryBuilder;
 use Silk\Database\ActiveRecord;
 use Illuminate\Support\Collection;
-use Silk\Exception\WP_ErrorException;
 use Silk\Term\Exception\TermNotFoundException;
 use Silk\Term\Exception\TaxonomyMismatchException;
 
