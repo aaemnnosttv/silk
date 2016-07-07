@@ -1,6 +1,6 @@
 <?php
 
-namespace Silk\Database;
+namespace Silk\Contracts;
 
 interface Executable
 {

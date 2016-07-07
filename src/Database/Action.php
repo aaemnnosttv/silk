@@ -2,6 +2,8 @@
 
 namespace Silk\Database;
 
+use Silk\Contracts\Executable;
+
 abstract class Action implements Executable
 {
     /**

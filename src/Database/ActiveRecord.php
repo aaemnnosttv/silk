@@ -3,6 +3,7 @@
 namespace Silk\Database;
 
 use Silk\Meta\ObjectMeta;
+use Silk\Contracts\Executable;
 use Illuminate\Support\Collection;
 
 /**
