@@ -113,7 +113,8 @@ abstract class ActiveRecord
      *
      * @return $this
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         $this->object->{static::ID_PROPERTY} = (int) $id;
 
         return $this;
