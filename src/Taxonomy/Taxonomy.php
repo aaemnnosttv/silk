@@ -49,7 +49,9 @@ class Taxonomy
     /**
      * Taxonomy Constructor.
      *
-     * @param object $taxonomy  The taxonomy object
+     * @param object $taxonomy The taxonomy object
+     *
+     * @throws Exception\NonExistentTaxonomyException
      */
     public function __construct($taxonomy)
     {
@@ -111,6 +113,9 @@ class Taxonomy
     /**
      * Unregister the taxonomy.
      *
+     * @throws WP_ErrorException
+     * @throws Exception\NonExistentTaxonomyException
+     *
      * @return $this
      */
     public function unregister()
@@ -142,5 +147,7 @@ class Taxonomy
         if (isset($this->taxonomy->$property)) {
             return $this->taxonomy->$property;
         }
+
+        return null;
     }
 }

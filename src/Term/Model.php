@@ -4,17 +4,14 @@ namespace Silk\Term;
 
 use stdClass;
 use WP_Term;
-use Silk\Meta\TypeMeta;
 use Silk\Taxonomy\Taxonomy;
 use Silk\Query\QueryBuilder;
+use Silk\Database\ActiveRecord;
 use Illuminate\Support\Collection;
-use Silk\Exception\WP_ErrorException;
 use Silk\Term\Exception\TermNotFoundException;
 use Silk\Term\Exception\TaxonomyMismatchException;
 
 /**
- * @property-read int $id
- * 
  * @property int    $term_id
  * @property string $name
  * @property string $slug
@@ -25,7 +22,7 @@ use Silk\Term\Exception\TaxonomyMismatchException;
  * @property int    $parent
  * @property int    $count
  */
-abstract class Model
+abstract class Model extends ActiveRecord
 {
     /**
      * The term's taxonomy
@@ -40,18 +37,18 @@ abstract class Model
     const OBJECT_TYPE = 'term';
 
     /**
-     * The term object
-     * @var WP_Term
+     * The primary ID property on the object
      */
-    protected $term;
+    const ID_PROPERTY = 'term_id';
 
-    use TypeMeta;
     use QueryBuilder;
 
     /**
      * Model Constructor.
      *
      * @param mixed $term  WP_Term to fill data from
+     *
+     * @throws TaxonomyMismatchException
      */
     public function __construct(WP_Term $term = null)
     {
@@ -62,7 +59,7 @@ abstract class Model
             throw new TaxonomyMismatchException();
         }
 
-        $this->term = $term;
+        $this->object = $term;
     }
 
     /**
@@ -82,6 +79,8 @@ abstract class Model
      *
      * @param  int|string $id  Term ID
      *
+     * @throws TermNotFoundException
+     *
      * @return static
      */
     public static function fromID($id)
@@ -97,6 +96,8 @@ abstract class Model
      * Create a new instance from a slug.
      *
      * @param  string $slug  Term slug
+     *
+     * @throws TermNotFoundException
      *
      * @return static
      */
@@ -134,49 +135,10 @@ abstract class Model
     {
         return static::fromArray(
             Collection::make($attributes)
-                ->except(['term_id', 'term_taxonomy_id'])
+                ->except([static::ID_PROPERTY, 'term_taxonomy_id'])
                 ->put('taxonomy', static::TAXONOMY)
                 ->toArray()
         )->save();
-    }
-
-    /**
-     * Save or update the term instance in the database.
-     *
-     * @return $this
-     */
-    public function save()
-    {
-        if ($this->exists()) {
-            $ids = wp_update_term($this->id, static::TAXONOMY, $this->term->to_array());
-        } else {
-            $ids = wp_insert_term($this->name, static::TAXONOMY, $this->term->to_array());
-        }
-
-        if (is_wp_error($ids)) {
-            throw new WP_ErrorException($ids);
-        }
-
-        foreach ($ids as $field => $id) {
-            $this->term->$field = $id;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Delete the term from the database.
-     *
-     * @return $this
-     */
-    public function delete()
-    {
-        if ($result = wp_delete_term($this->id, static::TAXONOMY)) {
-            $this->term->term_id = null;
-            $this->term->term_taxonomy_id = 0;
-        }
-
-        return $this;
     }
 
     /**
@@ -186,7 +148,7 @@ abstract class Model
      */
     public function exists()
     {
-        return (bool) term_exists((int) $this->id, static::TAXONOMY);
+        return $this->id && ((bool) term_exists((int) $this->id, static::TAXONOMY));
     }
 
     /**
@@ -217,7 +179,7 @@ abstract class Model
      */
     public function parent()
     {
-        return static::fromID($this->term->parent);
+        return static::fromID($this->object->parent);
     }
 
     /**
@@ -254,45 +216,16 @@ abstract class Model
     }
 
     /**
-     * Magic Getter.
+     * Get the array of actions and their respective handler classes.
      *
-     * @param  string $property Property name accessed
-     *
-     * @return mixed
+     * @return array
      */
-    public function __get($property)
+    protected function actionClasses()
     {
-        if ('id' == strtolower($property)) {
-            return $this->term->term_id;
-        }
-
-        if (isset($this->term->$property)) {
-            return $this->term->$property;
-        }
-
-        return null;
-    }
-
-    /**
-     * Magic set checker.
-     *
-     * @param  string  $property  Property name queried
-     *
-     * @return boolean
-     */
-    public function __isset($property)
-    {
-        return property_exists($this->term, $property);
-    }
-
-    /**
-     * Magic Setter.
-     *
-     * @param string $property  Property name assigned
-     * @param mixed  $value     Assigned property value
-     */
-    public function __set($property, $value)
-    {
-        $this->term->$property = $value;
+        return [
+            'save'   => Action\TermSaver::class,
+            'load'   => Action\TermLoader::class,
+            'delete' => Action\TermDeleter::class,
+        ];
     }
 }

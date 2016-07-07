@@ -212,7 +212,10 @@ class TermTest extends WP_UnitTestCase
     function it_reports_proxied_properties_as_set()
     {
         $model = new Category;
-        $this->assertTrue(isset($model->term_id));
+        
+        $this->assertTrue(isset($model->name));
+        $this->assertTrue(isset($model->slug));
+        $this->assertTrue(isset($model->taxonomy));
     }
 
     /**
