@@ -96,6 +96,8 @@ abstract class ActiveRecord
      * Update the core object
      *
      * @param object $object
+     *
+     * @return $this
      */
     public function setObject($object)
     {
@@ -140,6 +142,8 @@ abstract class ActiveRecord
 
     /**
      * Execute the active action
+     *
+     * @return void
      */
     private function executeAction(Executable $action)
     {
@@ -168,6 +172,8 @@ abstract class ActiveRecord
 
     /**
      * Magic Isset Checker.
+     *
+     * @return bool
      */
     public function __isset($property)
     {
