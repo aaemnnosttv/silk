@@ -147,5 +147,7 @@ class Taxonomy
         if (isset($this->taxonomy->$property)) {
             return $this->taxonomy->$property;
         }
+
+        return null;
     }
 }
