@@ -136,7 +136,7 @@ abstract class ActiveRecord
      *
      * @return void
      */
-    private function executeAction(Executable $action)
+    protected function executeAction(Executable $action)
     {
         $action->execute();
     }
