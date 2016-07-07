@@ -24,7 +24,7 @@ abstract class Action implements Executable
 
     /**
      * Execute the action.
-     * 
+     *
      * @return void
      */
     abstract public function execute();

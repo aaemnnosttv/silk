@@ -4,7 +4,6 @@ namespace Silk\Term\Action;
 
 use Silk\Database\Action;
 
-
 class TermLoader extends Action
 {
     public function execute()
