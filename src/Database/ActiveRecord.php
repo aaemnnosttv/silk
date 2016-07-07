@@ -65,16 +65,6 @@ abstract class ActiveRecord
     }
 
     /**
-     * Simple existence checking
-     *
-     * @return bool
-     */
-    public function exists()
-    {
-        return $this->object && $this->id;
-    }
-
-    /**
      * Meta API for this type
      *
      * @param  string $key  Meta key to retreive or empty to retreive all.
