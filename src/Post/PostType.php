@@ -3,10 +3,8 @@
 namespace Silk\Post;
 
 use stdClass;
-use InvalidArgumentException;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
-use Silk\Post\Exception\InvalidPostTypeNameException;
 use Silk\Post\Exception\NonExistentPostTypeException;
 use Silk\Post\PostTypeBuilder;
 
