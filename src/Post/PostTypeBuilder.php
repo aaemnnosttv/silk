@@ -216,21 +216,12 @@ class PostTypeBuilder
     /**
      * Magic Getter
      *
-     * @param  string $property
+     * @param  string $property  The accessed property
      *
      * @return mixed
      */
     public function __get($property)
     {
-        switch ($property) :
-            case 'slug':
-                return $this->slug;
-            case 'one':
-                return $this->labelSingular;
-            case 'many':
-                return $this->labelPlural;
-        endswitch;
-
         return null;
     }
 }

@@ -131,14 +131,6 @@ class PostTypeBuilderTest extends WP_UnitTestCase
     /**
      * @test
      */
-    function it_makes_the_slug_available_as_a_read_only_property()
-    {
-        $this->assertSame('book', PostTypeBuilder::make('book')->slug);
-    }
-
-    /**
-     * @test
-     */
     function it_returns_null_for_non_existent_properties()
     {
         $this->assertNull(PostTypeBuilder::make('book')->nonExistentProperty);
