@@ -165,12 +165,16 @@ class PostType
      */
     public function __get($property)
     {
+        $default = isset($this->object->$property)
+            ? $this->object->$property
+            : null;
+
         return Collection::make([
             'id'   => $this->object->name,
             'slug' => $this->object->name,
             'one'  => $this->object->labels->singular_name,
             'many' => $this->object->labels->name,
-        ])->get($property);
+        ])->get($property, $default);
     }
 
     /**
