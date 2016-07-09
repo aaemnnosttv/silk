@@ -8,6 +8,7 @@
 - TermQueryBuilder
 - Conditional Hooks with `onlyIf(callback)` method
 - Meta->replace(old, new) method
+- All post type labels set by `oneIs(...)` and `manyAre(...)` methods
 
 ### Changed
 - `ObjectMeta->collect()` now returns a Collection of Meta objects
