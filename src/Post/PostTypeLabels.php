@@ -48,7 +48,9 @@ class PostTypeLabels
     /**
      * Set the singular labels using the given form.
      *
-     * @param $this
+     * @param $label The singular label form to use
+     *
+     * @return $this
      */
     public function setSingular($label)
     {
@@ -62,7 +64,9 @@ class PostTypeLabels
     /**
      * Set the plural labels using the given form.
      *
-     * @param $this
+     * @param $label The plural label form to use
+     *
+     * @return $this
      */
     public function setPlural($label)
     {
