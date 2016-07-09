@@ -115,10 +115,17 @@ class PostTypeBuilderTest extends WP_UnitTestCase
     {
         $book = PostTypeBuilder::make('book')
             ->oneIs('Book')
-            ->manyAre('Books');
+            ->manyAre('Books')
+            ->register();
 
-        $this->assertSame('Book', $book->one);
-        $this->assertSame('Books', $book->many);
+        $labels = get_post_type_labels($book->object());
+
+
+        $this->assertSame('Book', $labels->singular_name);
+        $this->assertSame('Books', $labels->name);
+        $this->assertSame('All Books', $labels->all_items);
+        $this->assertSame('Edit Book', $labels->edit_item);
+        $this->assertSame('Add New Book', $labels->add_new_item);
     }
 
     /**
