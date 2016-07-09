@@ -2,6 +2,7 @@
 
 namespace Silk\Post;
 
+use Silk\Post\PostTypeLabels;
 use Illuminate\Support\Collection;
 use Silk\Post\Exception\InvalidPostTypeNameException;
 
@@ -25,16 +26,10 @@ class PostTypeBuilder
     protected $args;
 
     /**
-     * The label for a single instance of this post type.
-     * @var string
+     * The Post Type Labels
+     * @var PostTypeLabels
      */
-    protected $labelSingular;
-
-    /**
-     * The label for a many instances of this post type.
-     * @var string
-     */
-    protected $labelPlural;
+    protected $labels;
 
     /**
      * PostTypeBuilder constructor
@@ -129,7 +124,7 @@ class PostTypeBuilder
      */
     public function oneIs($singular_label)
     {
-        $this->labelSingular = $singular_label;
+        $this->labels()->setSingular($singular_label);
 
         return $this;
     }
@@ -143,7 +138,7 @@ class PostTypeBuilder
      */
     public function manyAre($plural_label)
     {
-        $this->labelPlural = $plural_label;
+        $this->labels()->setPlural($plural_label);
 
         return $this;
     }
@@ -182,9 +177,40 @@ class PostTypeBuilder
      */
     public function register()
     {
-        $object = register_post_type($this->slug, $this->args->toArray());
+        $object = register_post_type($this->slug, $this->assembleArgs());
 
         return new PostType($object);
+    }
+
+    /**
+     * Assemble the arguments for post type registration.
+     *
+     * @return array
+     */
+    protected function assembleArgs()
+    {
+        $registered_labels = $this->args->get('labels', []);
+
+        /**
+         * Override any generated labels with those that were passed in arguments.
+         */
+        $labels = array_merge($this->labels()->toArray(), $registered_labels);
+
+        return $this->args->put('labels', $labels)->toArray();
+    }
+
+    /**
+     * Get the labels instance.
+     *
+     * @return PostTypeLabels
+     */
+    protected function labels()
+    {
+        if (! $this->labels) {
+            $this->labels = new PostTypeLabels;
+        }
+
+        return $this->labels;
     }
 
     /**
