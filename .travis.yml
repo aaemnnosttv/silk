@@ -28,7 +28,7 @@ after_success:
     - travis_retry php vendor/bin/coveralls -v
 
 before_deploy:
-    - ./build/bin/build-docs.sh
+    - bash build/bin/build-docs.sh
 
 deploy:
     provider: s3
