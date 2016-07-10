@@ -6,11 +6,6 @@ use Silk\Support\Labels;
 use Illuminate\Support\Collection;
 use Silk\Post\Exception\InvalidPostTypeNameException;
 
-/**
- * @property-read string $slug
- * @property-read string $one
- * @property-read string $many
- */
 class PostTypeBuilder
 {
     /**
@@ -238,18 +233,6 @@ class PostTypeBuilder
         }
 
         return $this->labels;
-    }
-
-    /**
-     * Magic Getter
-     *
-     * @param  string $property  The accessed property
-     *
-     * @return mixed
-     */
-    public function __get($property)
-    {
-        return null;
     }
 
     public function __call($method, $arguments)

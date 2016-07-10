@@ -140,13 +140,4 @@ class PostTypeBuilderTest extends WP_UnitTestCase
         $this->assertSame('All the Bookz', $labels->archives);
         $this->assertSame('Read the Book', $labels->view_item);
     }
-
-    /**
-     * @test
-     */
-    function it_returns_null_for_non_existent_properties()
-    {
-        $this->assertNull(PostTypeBuilder::make('book')->nonExistentProperty);
-    }
-
 }
