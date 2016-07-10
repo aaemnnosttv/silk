@@ -114,18 +114,31 @@ class PostTypeBuilderTest extends WP_UnitTestCase
     function it_has_methods_for_setting_the_labels()
     {
         $book = PostTypeBuilder::make('book')
+            // override a default value
+            ->setLabel('archives', 'All the Bookz')
+            // override a default with a new placeholder
+            ->setLabel('search_items', 'Find %s')
+            // set a non-standard label
+            ->setLabel('some_custom_label', 'BOOKMADNESS')
+            // set using dynamic method
+            ->labelViewItem('Read the Book') // set 'view_item'
+            // populate singular defaults
             ->oneIs('Book')
+            // populate plural defaults
             ->manyAre('Books')
             ->register();
 
         $labels = get_post_type_labels($book->object());
 
-
         $this->assertSame('Book', $labels->singular_name);
         $this->assertSame('Books', $labels->name);
         $this->assertSame('All Books', $labels->all_items);
         $this->assertSame('Edit Book', $labels->edit_item);
+        $this->assertSame('Find Books', $labels->search_items);
+        $this->assertSame('BOOKMADNESS', $labels->some_custom_label);
         $this->assertSame('Add New Book', $labels->add_new_item);
+        $this->assertSame('All the Bookz', $labels->archives);
+        $this->assertSame('Read the Book', $labels->view_item);
     }
 
     /**
