@@ -159,6 +159,21 @@ class PostTypeBuilder
     }
 
     /**
+     * Set a label for the given key.
+     *
+     * @param string $key   Label key
+     * @param string $value Label value
+     *
+     * @return $this
+     */
+    public function setLabel($key, $value)
+    {
+        $this->labels()->set($key, $value);
+
+        return $this;
+    }
+
+    /**
      * Getter for post type arguments
      *
      * @param  string $key
@@ -223,5 +238,15 @@ class PostTypeBuilder
     public function __get($property)
     {
         return null;
+    }
+
+    public function __call($method, $arguments)
+    {
+        if (preg_match('/^label[A-Z]/', $method)) {
+            $label = strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1_', $method));
+            $label = str_replace('label_', '', $label);
+
+            return $this->setLabel($label, $arguments[0]);
+        }
     }
 }
