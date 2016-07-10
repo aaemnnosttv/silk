@@ -10,9 +10,9 @@
         }
     ],
     "support": {
+        "docs": "https://github.com/aaemnnosttv/silk-docs",
         "issues": "https://github.com/aaemnnosttv/silk/issues",
-        "source": "https://github.com/aaemnnosttv/silk",
-        "wiki": "https://github.com/aaemnnosttv/silk/wiki"
+        "source": "https://github.com/aaemnnosttv/silk"
     },
     "license": "MIT",
     "require": {
