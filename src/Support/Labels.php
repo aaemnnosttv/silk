@@ -1,6 +1,6 @@
 <?php
 
-namespace Silk\Labels;
+namespace Silk\Support;
 
 use Illuminate\Support\Collection;
 

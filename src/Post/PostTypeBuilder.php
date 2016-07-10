@@ -2,7 +2,7 @@
 
 namespace Silk\Post;
 
-use Silk\Labels\Labels;
+use Silk\Support\Labels;
 use Illuminate\Support\Collection;
 use Silk\Post\Exception\InvalidPostTypeNameException;
 
