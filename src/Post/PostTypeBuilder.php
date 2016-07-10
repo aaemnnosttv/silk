@@ -2,7 +2,7 @@
 
 namespace Silk\Post;
 
-use Silk\Post\PostTypeLabels;
+use Silk\Labels\Labels;
 use Illuminate\Support\Collection;
 use Silk\Post\Exception\InvalidPostTypeNameException;
 
@@ -27,7 +27,7 @@ class PostTypeBuilder
 
     /**
      * The Post Type Labels
-     * @var PostTypeLabels
+     * @var Labels
      */
     protected $labels;
 
@@ -168,7 +168,7 @@ class PostTypeBuilder
      */
     public function setLabel($key, $value)
     {
-        $this->labels()->set($key, $value);
+        $this->labels()->put($key, $value);
 
         return $this;
     }
@@ -204,14 +204,7 @@ class PostTypeBuilder
      */
     protected function assembleArgs()
     {
-        $registered_labels = $this->args->get('labels', []);
-
-        /**
-         * Override any generated labels with those that were passed in arguments.
-         */
-        $labels = array_merge($this->labels()->toArray(), $registered_labels);
-
-        return $this->args->put('labels', $labels)->toArray();
+        return $this->args->put('labels', $this->labels())->toArray();
     }
 
     /**
@@ -222,7 +215,26 @@ class PostTypeBuilder
     protected function labels()
     {
         if (! $this->labels) {
-            $this->labels = new PostTypeLabels;
+            $this->labels = Labels::make([
+                'add_new_item'          => 'Add New {one}',
+                'all_items'             => 'All {many}',
+                'archives'              => '{one} Archives',
+                'edit_item'             => 'Edit {one}',
+                'filter_items_list'     => 'Filter {many} list',
+                'insert_into_item'      => 'Insert into {one}',
+                'items_list_navigation' => '{many} list navigation',
+                'items_list'            => '{many} list',
+                'menu_name'             => '{many}',
+                'name_admin_bar'        => '{one}',
+                'name'                  => '{many}',
+                'new_item'              => 'New {one}',
+                'not_found_in_trash'    => 'No {many} found in Trash.',
+                'not_found'             => 'No {many} found.',
+                'search_items'          => 'Search {many}',
+                'singular_name'         => '{one}',
+                'uploaded_to_this_item' => 'Uploaded to this {one}',
+                'view_item'             => 'View {one}',
+            ])->merge($this->args->get('labels', []));
         }
 
         return $this->labels;

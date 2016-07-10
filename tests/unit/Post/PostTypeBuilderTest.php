@@ -117,7 +117,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
             // override a default value
             ->setLabel('archives', 'All the Bookz')
             // override a default with a new placeholder
-            ->setLabel('search_items', 'Find %s')
+            ->setLabel('search_items', 'Find {many}')
             // set a non-standard label
             ->setLabel('some_custom_label', 'BOOKMADNESS')
             // set using dynamic method
