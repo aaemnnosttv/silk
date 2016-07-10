@@ -20,10 +20,16 @@ class Labels
     protected $plural = [];
 
     /**
+     * [$extra description]
+     * @var [type]
+     */
+    protected $extra = [];
+
+    /**
      * The master collection of labels
      * @var Collection
      */
-    protected $labels;
+    protected $collection;
 
     /**
      * Set the singular labels using the given form.
@@ -34,9 +40,7 @@ class Labels
      */
     public function setSingular($label)
     {
-        $this->merge(
-            LabelsCollection::make($this->singular)->setForm($label)
-        );
+        $this->collect()->get('singular')->setForm($label);
 
         return $this;
     }
@@ -50,9 +54,24 @@ class Labels
      */
     public function setPlural($label)
     {
-        $this->merge(
-            LabelsCollection::make($this->plural)->setForm($label)
-        );
+        $this->collect()->get('plural')->setForm($label);
+
+        return $this;
+    }
+
+    /**
+     * Set the label in the appropriate collection.
+     *
+     * @param string $key   Label key
+     * @param string $label Label value
+     */
+    public function set($key, $label)
+    {
+        $this->collect()
+            ->first(function ($index, Collection $collection) use ($key) {
+                return $collection->has($key);
+            }, $this->collect()->get('extra'))
+            ->put($key, $label);
 
         return $this;
     }
@@ -64,20 +83,28 @@ class Labels
      */
     public function toArray()
     {
-        return $this->labels ? $this->labels->toArray() : [];
+        return $this->collect()->map(function (LabelsCollection $collection) {
+            return $collection->replaced();
+        })->collapse()->toArray();
     }
 
     /**
-     * Merge the labels with the master collection.
+     * Get the master collection.
      *
-     * @param  LabelsCollection $collection
+     * @return Collection
      */
-    protected function merge(LabelsCollection $collection)
+    public function collect()
     {
-        if (! $this->labels) {
-            $this->labels = new Collection;
+        if (! $this->collection) {
+            $this->collection = Collection::make([
+                'singular',
+                'plural',
+                'extra'
+            ])->flip()->map(function ($value, $key) {
+                return LabelsCollection::make($this->$key);
+            });
         }
 
-        $this->labels = $this->labels->merge($collection->replaced());
+        return $this->collection;
     }
 }
