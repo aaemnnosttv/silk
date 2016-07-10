@@ -1,6 +1,6 @@
 <?php
 
-use Silk\Support\LabelsCollection;
+use Silk\Labels\LabelsCollection;
 
 class LabelsCollectionTest extends WP_UnitTestCase
 {
