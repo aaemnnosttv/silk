@@ -43,7 +43,7 @@ abstract class Builder
     }
 
     /**
-     * Create a new instance
+     * Create a new instance.
      *
      * @param  string $type
      *
@@ -72,7 +72,7 @@ abstract class Builder
     }
 
     /**
-     * Set the singular label for this post type
+     * Set the singular label for this post type.
      *
      * @param  string $singular_label
      *
@@ -86,7 +86,7 @@ abstract class Builder
     }
 
     /**
-     * Set the plural label for this post type
+     * Set the plural label for this post type.
      *
      * @param  string $plural_label
      *
@@ -131,7 +131,7 @@ abstract class Builder
     }
 
     /**
-     * Setter for post type arguments
+     * Setter for post type arguments.
      *
      * @param string $key
      * @param mixed $value
@@ -146,7 +146,7 @@ abstract class Builder
     }
 
     /**
-     * Getter for post type arguments
+     * Getter for post type arguments.
      *
      * @param  string $key
      *
