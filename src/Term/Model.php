@@ -5,7 +5,6 @@ namespace Silk\Term;
 use stdClass;
 use WP_Term;
 use Silk\Taxonomy\Taxonomy;
-use Silk\Query\QueryBuilder;
 use Silk\Database\ActiveRecord;
 use Illuminate\Support\Collection;
 use Silk\Term\Exception\TermNotFoundException;
@@ -40,8 +39,6 @@ abstract class Model extends ActiveRecord
      * The primary ID property on the object
      */
     const ID_PROPERTY = 'term_id';
-
-    use QueryBuilder;
 
     /**
      * Model Constructor.

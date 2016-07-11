@@ -35,6 +35,9 @@ class Record extends Silk\Database\ActiveRecord
         return [];
     }
 
+    public function newQuery()
+    {}
+
     protected function executeAction(Executable $action)
     {
         $this->testCase->assertInstanceOf(NullAction::class, $action);

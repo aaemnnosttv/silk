@@ -7,7 +7,6 @@ use WP_Post;
 use WP_Query;
 use Illuminate\Support\Collection;
 use Silk\Query\Builder;
-use Silk\Query\QueryBuilder;
 use Silk\Database\ActiveRecord;
 use Silk\Post\Exception\PostNotFoundException;
 use Silk\Post\Exception\ModelPostTypeMismatchException;
@@ -59,8 +58,6 @@ abstract class Model extends ActiveRecord
      * The primary ID property on the object
      */
     const ID_PROPERTY = 'ID';
-
-    use QueryBuilder;
 
     /**
      * Create a new instance
