@@ -1,6 +1,7 @@
 <?php
 
 use Silk\Term\Category;
+use Silk\Taxonomy\Builder;
 use Silk\Taxonomy\Taxonomy;
 use Silk\Contracts\BuildsQueries;
 use Illuminate\Support\Collection;
@@ -137,6 +138,14 @@ class TaxonomyTest extends WP_UnitTestCase
     public function non_existent_properties_return_null()
     {
         $this->assertNull(Taxonomy::make('category')->non_existent);
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_a_new_builder_for_its_taxonomy_if_not_registered_yet()
+    {
+        $this->assertInstanceOf(Builder::class, Taxonomy::make('non_existent_tax'));
     }
 
 }

@@ -3,6 +3,7 @@
 namespace Silk\Taxonomy;
 
 use Silk\Post\PostType;
+use Silk\Taxonomy\Builder;
 use Silk\Term\TermQueryBuilder;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
@@ -72,7 +73,11 @@ class Taxonomy
      */
     public static function make($identifier)
     {
-        return new static(get_taxonomy($identifier));
+        if (static::exists($identifier)) {
+            return new static(get_taxonomy($identifier));
+        }
+
+        return new Builder($identifier);
     }
 
     /**

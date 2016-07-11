@@ -1,7 +1,9 @@
 <?php
 
 use Silk\Term\Tag;
+use Silk\Term\Model;
 use Silk\Term\Category;
+use Silk\Taxonomy\Builder;
 use Silk\Taxonomy\Taxonomy;
 use Silk\Meta\Meta;
 use Silk\Meta\ObjectMeta;
@@ -302,4 +304,18 @@ class TermTest extends WP_UnitTestCase
 
         $this->assertSame('single value', get_term_meta($model->id, 'some-key', true));
     }
+
+    /**
+     * @test
+     */
+    public function it_returns_a_new_builder_for_its_taxonomy_if_not_registered_yet()
+    {
+        $this->assertInstanceOf(Builder::class, NewTerm::taxonomy());
+    }
+
+}
+
+class NewTerm extends Model
+{
+    const TAXONOMY = 'new_taxonomy';
 }

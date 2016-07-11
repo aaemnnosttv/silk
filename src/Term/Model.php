@@ -197,9 +197,9 @@ abstract class Model extends ActiveRecord
      *
      * @return Taxonomy
      */
-    public function taxonomy()
+    public static function taxonomy()
     {
-        return Taxonomy::make($this->taxonomy);
+        return Taxonomy::make(static::TAXONOMY);
     }
 
     /**
