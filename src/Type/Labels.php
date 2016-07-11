@@ -1,6 +1,6 @@
 <?php
 
-namespace Silk\Support;
+namespace Silk\Type;
 
 use Illuminate\Support\Collection;
 
