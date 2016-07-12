@@ -26,7 +26,7 @@ class PostTypeTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Post\Exception\NonExistentPostTypeException
+     * @expectedException Silk\PostType\Exception\NonExistentPostTypeException
      */
     function it_blows_up_if_loading_a_non_existent_post_type()
     {
@@ -58,7 +58,7 @@ class PostTypeTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Post\Exception\NonExistentPostTypeException
+     * @expectedException Silk\PostType\Exception\NonExistentPostTypeException
      */
     function it_blows_up_if_it_tries_to_unregister_a_nonexistent_type()
     {

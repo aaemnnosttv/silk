@@ -5,7 +5,7 @@ namespace Silk\PostType;
 use stdClass;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
-use Silk\Post\Exception\NonExistentPostTypeException;
+use Silk\PostType\Exception\NonExistentPostTypeException;
 use Silk\PostType\Builder;
 
 /**
