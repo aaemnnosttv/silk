@@ -5,7 +5,7 @@ use Silk\Post\Post;
 use Silk\Post\QueryBuilder;
 use Illuminate\Support\Collection;
 
-class PostQueryQueryBuilderTest extends WP_UnitTestCase
+class PostQueryBuilderTest extends WP_UnitTestCase
 {
     /**
      * @test
