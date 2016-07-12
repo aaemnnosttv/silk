@@ -205,11 +205,11 @@ abstract class Model extends BaseModel
     /**
      * Start a new query for terms of this type.
      *
-     * @return TermQueryBuilder
+     * @return QueryBuilder
      */
     public function newQuery()
     {
-        return (new TermQueryBuilder)->setModel($this);
+        return (new QueryBuilder)->setModel($this);
     }
 
     /**

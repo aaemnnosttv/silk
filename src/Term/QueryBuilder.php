@@ -8,7 +8,7 @@ use Silk\Contracts\BuildsQueries;
 use Silk\Exception\WP_ErrorException;
 use Illuminate\Support\Collection;
 
-class TermQueryBuilder implements BuildsQueries
+class QueryBuilder implements BuildsQueries
 {
     /**
      * The term model

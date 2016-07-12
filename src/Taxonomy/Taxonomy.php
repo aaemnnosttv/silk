@@ -4,7 +4,7 @@ namespace Silk\Taxonomy;
 
 use Silk\PostType\PostType;
 use Silk\Taxonomy\Builder;
-use Silk\Term\TermQueryBuilder;
+use Silk\Term\QueryBuilder;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
 
@@ -95,11 +95,11 @@ class Taxonomy
     /**
      * Start a new query for terms of this taxonomy.
      *
-     * @return TermQueryBuilder
+     * @return QueryBuilder
      */
     public function terms()
     {
-        return (new TermQueryBuilder)->forTaxonomy($this->id);
+        return (new QueryBuilder)->forTaxonomy($this->id);
     }
 
     /**
