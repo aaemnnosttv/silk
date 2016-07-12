@@ -2,8 +2,8 @@
 
 namespace Silk\Post;
 
-use WP_Query;
 use Illuminate\Support\Collection;
+use Silk\Contracts\WP_QueryInterface;
 
 class QueryBuilder
 {
@@ -24,9 +24,9 @@ class QueryBuilder
     /**
      * Builder constructor.
      *
-     * @param WP_Query $query
+     * @param WP_QueryInterface $query
      */
-    public function __construct(WP_Query $query)
+    public function __construct(WP_QueryInterface $query)
     {
         $this->query = $query;
     }
