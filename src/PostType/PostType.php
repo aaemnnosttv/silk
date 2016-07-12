@@ -1,12 +1,12 @@
 <?php
 
-namespace Silk\Post;
+namespace Silk\PostType;
 
 use stdClass;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
 use Silk\Post\Exception\NonExistentPostTypeException;
-use Silk\Post\PostTypeBuilder;
+use Silk\PostType\Builder;
 
 /**
  * @property-read string $id
@@ -48,7 +48,7 @@ class PostType
             return static::load($slug);
         }
 
-        return new PostTypeBuilder($slug);
+        return new Builder($slug);
     }
 
     /**

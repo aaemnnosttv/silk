@@ -1,12 +1,12 @@
 <?php
 
-namespace Silk\Post;
+namespace Silk\PostType;
 
-use Silk\Type\Builder;
+use Silk\Type\Builder as BaseBuilder;
 use Illuminate\Support\Collection;
 use Silk\Post\Exception\InvalidPostTypeNameException;
 
-class PostTypeBuilder extends Builder
+class Builder extends BaseBuilder
 {
     /**
      * [$labelDefaults description]

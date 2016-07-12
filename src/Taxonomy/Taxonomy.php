@@ -2,7 +2,7 @@
 
 namespace Silk\Taxonomy;
 
-use Silk\Post\PostType;
+use Silk\PostType\PostType;
 use Silk\Taxonomy\Builder;
 use Silk\Term\TermQueryBuilder;
 use Illuminate\Support\Collection;
