@@ -83,13 +83,13 @@ class Taxonomy
     /**
      * Check if the given taxonomy exists.
      *
-     * @param  string $identifier The taxonomy identifier
+     * @param  string $id The taxonomy key/identifier
      *
      * @return bool
      */
-    public static function exists($identifier)
+    public static function exists($id)
     {
-        return taxonomy_exists($identifier);
+        return taxonomy_exists($id);
     }
 
     /**
@@ -125,11 +125,11 @@ class Taxonomy
      */
     public function unregister()
     {
-        if (! static::exists($this->taxonomy->name)) {
+        if (! $this->exists($this->id)) {
             throw new Exception\NonExistentTaxonomyException;
         }
 
-        if (is_wp_error($error = unregister_taxonomy($this->taxonomy->name))) {
+        if (is_wp_error($error = unregister_taxonomy($this->id))) {
             throw new WP_ErrorException($error);
         }
 
