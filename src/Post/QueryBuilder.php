@@ -3,9 +3,10 @@
 namespace Silk\Post;
 
 use Illuminate\Support\Collection;
+use Silk\Contracts\BuildsQueries;
 use Silk\Contracts\WP_QueryInterface;
 
-class QueryBuilder
+class QueryBuilder implements BuildsQueries
 {
     /**
      * WP_Query instance
