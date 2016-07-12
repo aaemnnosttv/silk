@@ -2,22 +2,23 @@
 
 namespace Silk\Database;
 
+use Silk\Type\Model;
 use Silk\Contracts\Executable;
 
 abstract class Action implements Executable
 {
     /**
      * The model instance
-     * @var ActiveRecord
+     * @var Model
      */
     protected $model;
 
     /**
      * Action Constructor.
      *
-     * @param ActiveRecord $model The model performing the action
+     * @param Model $model The model performing the action
      */
-    public function __construct(ActiveRecord $model)
+    public function __construct(Model $model)
     {
         $this->model = $model;
     }

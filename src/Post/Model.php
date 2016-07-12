@@ -6,8 +6,8 @@ use stdClass;
 use WP_Post;
 use WP_Query;
 use Illuminate\Support\Collection;
+use Silk\Type\Model as BaseModel;
 use Silk\PostType\PostType;
-use Silk\Database\ActiveRecord;
 use Silk\Post\Exception\PostNotFoundException;
 use Silk\Post\Exception\ModelPostTypeMismatchException;
 
@@ -40,7 +40,7 @@ use Silk\Post\Exception\ModelPostTypeMismatchException;
  * @property string $post_type
  * @property string $to_ping
  */
-abstract class Model extends ActiveRecord
+abstract class Model extends BaseModel
 {
     /**
      * The post type of the post this model wraps

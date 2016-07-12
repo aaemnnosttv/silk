@@ -1,8 +1,9 @@
 <?php
 
-namespace Silk\Database;
+namespace Silk\Type;
 
 use Silk\Meta\ObjectMeta;
+use Silk\Database\NullAction;
 use Silk\Contracts\Executable;
 use Illuminate\Support\Collection;
 
@@ -10,7 +11,7 @@ use Illuminate\Support\Collection;
  * @property-read int    $id
  * @property-read object $object
  */
-abstract class ActiveRecord
+abstract class Model
 {
     /**
      * The core model object

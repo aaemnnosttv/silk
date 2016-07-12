@@ -5,7 +5,7 @@ namespace Silk\Term;
 use stdClass;
 use WP_Term;
 use Silk\Taxonomy\Taxonomy;
-use Silk\Database\ActiveRecord;
+use Silk\Type\Model as BaseModel;
 use Illuminate\Support\Collection;
 use Silk\Term\Exception\TermNotFoundException;
 use Silk\Term\Exception\TaxonomyMismatchException;
@@ -21,7 +21,7 @@ use Silk\Term\Exception\TaxonomyMismatchException;
  * @property int    $parent
  * @property int    $count
  */
-abstract class Model extends ActiveRecord
+abstract class Model extends BaseModel
 {
     /**
      * The term's taxonomy

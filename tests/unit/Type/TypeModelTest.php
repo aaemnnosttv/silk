@@ -1,9 +1,10 @@
 <?php
 
+use Silk\Type\Model as BaseModel;
 use Silk\Database\NullAction;
 use Silk\Contracts\Executable;
 
-class ActiveRecordTest extends WP_UnitTestCase
+class TypeModelTest extends WP_UnitTestCase
 {
     /**
      * @test
@@ -16,7 +17,7 @@ class ActiveRecordTest extends WP_UnitTestCase
     }
 }
 
-class Record extends Silk\Database\ActiveRecord
+class Record extends BaseModel
 {
     protected $testCase;
 
