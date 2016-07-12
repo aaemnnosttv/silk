@@ -4,7 +4,7 @@ namespace Silk\PostType;
 
 use Silk\Type\Builder as BaseBuilder;
 use Illuminate\Support\Collection;
-use Silk\Post\Exception\InvalidPostTypeNameException;
+use Silk\PostType\Exception\InvalidPostTypeNameException;
 
 class Builder extends BaseBuilder
 {

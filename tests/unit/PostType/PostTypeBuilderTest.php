@@ -38,7 +38,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
 
     /**
     * @test
-    * @expectedException Silk\Post\Exception\InvalidPostTypeNameException
+    * @expectedException Silk\PostType\Exception\InvalidPostTypeNameException
     */
     function it_blows_up_if_the_post_type_slug_is_too_long()
     {
@@ -47,7 +47,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
 
     /**
     * @test
-    * @expectedException Silk\Post\Exception\InvalidPostTypeNameException
+    * @expectedException Silk\PostType\Exception\InvalidPostTypeNameException
     */
     function it_blows_up_if_the_post_type_slug_is_too_short()
     {
