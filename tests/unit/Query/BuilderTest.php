@@ -2,10 +2,10 @@
 
 use Silk\Post\Model;
 use Silk\Post\Post;
-use Silk\Query\Builder;
+use Silk\Post\QueryBuilder as Builder;
 use Illuminate\Support\Collection;
 
-class BuilderTest extends WP_UnitTestCase
+class PostQueryBuilderTest extends WP_UnitTestCase
 {
     /**
      * @test

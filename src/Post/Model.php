@@ -6,7 +6,6 @@ use stdClass;
 use WP_Post;
 use WP_Query;
 use Illuminate\Support\Collection;
-use Silk\Query\Builder;
 use Silk\PostType\PostType;
 use Silk\Database\ActiveRecord;
 use Silk\Post\Exception\PostNotFoundException;
@@ -214,11 +213,11 @@ abstract class Model extends ActiveRecord
     /**
      * Get a new query builder for the model.
      *
-     * @return Builder
+     * @return QueryBuilder
      */
     public function newQuery()
     {
-        return (new Builder(new WP_Query))->setModel($this);
+        return (new QueryBuilder(new WP_Query))->setModel($this);
     }
 
     /**

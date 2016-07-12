@@ -1,13 +1,11 @@
 <?php
 
-namespace Silk\Query;
+namespace Silk\Post;
 
 use WP_Query;
-use Silk\Post\Post;
-use Silk\Post\Model;
 use Illuminate\Support\Collection;
 
-class Builder
+class QueryBuilder
 {
     /**
      * WP_Query instance
@@ -50,7 +48,7 @@ class Builder
 
     /**
      * Return an unlimited number of results.
-     * 
+     *
      * @return $this
      */
     public function all()

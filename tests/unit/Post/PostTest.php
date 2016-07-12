@@ -1,7 +1,7 @@
 <?php
 
 use Silk\Post\Post;
-use Silk\Query\Builder;
+use Silk\Post\QueryBuilder as Builder;
 
 class PostTest extends WP_UnitTestCase
 {
@@ -268,7 +268,7 @@ class PostTest extends WP_UnitTestCase
     function it_proxies_non_existent_static_methods_to_the_builder()
     {
         $this->assertInstanceOf(
-            Silk\Query\Builder::class,
+            Builder::class,
             Post::limit(1)
         );
     }
