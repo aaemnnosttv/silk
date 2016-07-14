@@ -4,8 +4,8 @@ namespace Silk\Taxonomy;
 
 use Silk\Taxonomy\Taxonomy;
 use Silk\Type\Builder as TypeBuilder;
-use Silk\Exception\WP_ErrorException;
 use Illuminate\Support\Collection;
+use Silk\Taxonomy\Exception\InvalidTaxonomyNameException;
 
 class Builder extends TypeBuilder
 {
@@ -61,15 +61,17 @@ class Builder extends TypeBuilder
     /**
      * Register and return the new taxonomy.
      *
+     * @throws \Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     *
      * @return Taxonomy
      */
     public function register()
     {
-        $error = register_taxonomy($this->id, $this->objectTypes, $this->assembleArgs());
-
-        if (is_wp_error($error)) {
-            throw new WP_ErrorException($error);
+        if (! $this->id || strlen($this->id) > 32) {
+            throw new InvalidTaxonomyNameException('Taxonomy names must be between 1 and 32 characters in length.');
         }
+
+        register_taxonomy($this->id, $this->objectTypes, $this->assembleArgs());
 
         return Taxonomy::make($this->id);
     }

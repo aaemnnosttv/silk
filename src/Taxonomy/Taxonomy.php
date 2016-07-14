@@ -7,6 +7,8 @@ use Silk\Taxonomy\Builder;
 use Silk\Term\QueryBuilder;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
+use Silk\Taxonomy\Exception\InvalidTaxonomyNameException;
+use Silk\Taxonomy\Exception\NonExistentTaxonomyException;
 
 /**
  * @property-read string   $id
@@ -52,12 +54,12 @@ class Taxonomy
      *
      * @param object $taxonomy The taxonomy object
      *
-     * @throws Exception\NonExistentTaxonomyException
+     * @throws \Silk\Taxonomy\Exception\NonExistentTaxonomyException
      */
     public function __construct($taxonomy)
     {
         if (empty($taxonomy->name) || ! static::exists($taxonomy->name)) {
-            throw new Exception\NonExistentTaxonomyException;
+            throw new NonExistentTaxonomyException;
         }
 
         $this->id = $taxonomy->name;
@@ -69,12 +71,18 @@ class Taxonomy
      *
      * @param  string $identifier Taxonomy name/identifier
      *
+     * @throws \Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     *
      * @return static
      */
     public static function make($identifier)
     {
         if (static::exists($identifier)) {
             return new static(get_taxonomy($identifier));
+        }
+
+        if (! $identifier || strlen($identifier) > 32) {
+            throw new InvalidTaxonomyNameException('Taxonomy names must be between 1 and 32 characters in length.');
         }
 
         return new Builder($identifier);
@@ -118,15 +126,15 @@ class Taxonomy
     /**
      * Unregister the taxonomy.
      *
-     * @throws WP_ErrorException
-     * @throws Exception\NonExistentTaxonomyException
+     * @throws \Silk\Taxonomy\Exception\NonExistentTaxonomyException
+     * @throws \Silk\Exception\WP_ErrorException
      *
      * @return $this
      */
     public function unregister()
     {
         if (! $this->exists($this->id)) {
-            throw new Exception\NonExistentTaxonomyException;
+            throw new NonExistentTaxonomyException;
         }
 
         if (is_wp_error($error = unregister_taxonomy($this->id))) {

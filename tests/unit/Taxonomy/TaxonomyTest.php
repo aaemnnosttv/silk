@@ -47,6 +47,24 @@ class TaxonomyTest extends WP_UnitTestCase
 
     /**
      * @test
+     * @expectedException Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     */
+    public function it_blows_up_if_the_taxononmy_name_is_too_short()
+    {
+        Taxonomy::make('');
+    }
+
+    /**
+     * @test
+     * @expectedException Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     */
+    public function it_blows_up_if_the_taxononmy_name_is_too_long()
+    {
+        Taxonomy::make('thisismorethanthirtytwocharacters');
+    }
+
+    /**
+     * @test
      */
     public function it_can_unregister_the_taxonomy()
     {
