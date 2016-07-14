@@ -2,9 +2,9 @@
 
 namespace Silk\Post;
 
+use WP_Query;
 use Illuminate\Support\Collection;
 use Silk\Contracts\BuildsQueries;
-use Silk\Contracts\WP_QueryInterface;
 
 class QueryBuilder implements BuildsQueries
 {
@@ -25,9 +25,9 @@ class QueryBuilder implements BuildsQueries
     /**
      * Builder constructor.
      *
-     * @param WP_QueryInterface $query
+     * @param WP_Query $query
      */
-    public function __construct(WP_QueryInterface $query)
+    public function __construct(WP_Query $query)
     {
         $this->query = $query;
     }

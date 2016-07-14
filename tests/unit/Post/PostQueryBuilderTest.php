@@ -2,7 +2,6 @@
 
 use Silk\Post\Model;
 use Silk\Post\Post;
-use Silk\Post\Query;
 use Silk\Post\QueryBuilder;
 use Illuminate\Support\Collection;
 
@@ -13,7 +12,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
      */
     public function it_requires_a_wp_query_to_be_constructed()
     {
-        $this->assertInstanceOf(QueryBuilder::class, new QueryBuilder(new Query));
+        $this->assertInstanceOf(QueryBuilder::class, new QueryBuilder(new WP_Query));
     }
 
     /**
@@ -21,7 +20,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
      */
     public function it_returns_the_results_as_a_collection()
     {
-        $builder = new QueryBuilder(new Query);
+        $builder = new QueryBuilder(new WP_Query);
 
         $this->assertInstanceOf(Collection::class, $builder->results());
     }
@@ -33,7 +32,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
     {
         $this->factory->post->create_many(10);
 
-        $builder = new QueryBuilder(new Query);
+        $builder = new QueryBuilder(new WP_Query);
         $builder->limit(5);
 
         $this->assertCount(5, $builder->results());
@@ -45,7 +44,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
     function it_has_getters_and_setters_for_holding_the_model_instance()
     {
         $model = new CustomCPT;
-        $builder = new QueryBuilder(new Query);
+        $builder = new QueryBuilder(new WP_Query);
 
         $builder->setModel($model);
 
@@ -76,7 +75,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         $this->factory->post->create_many(5);
         $last_id = $this->factory->post->create();
 
-        $builder = new QueryBuilder(new Query);
+        $builder = new QueryBuilder(new WP_Query);
         $builder->setModel(new Post);
 
         $builder->order('asc');
@@ -96,7 +95,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
     function it_can_query_by_status()
     {
         $this->factory->post->create_many(5, ['post_status' => 'doggie']);
-        $builder = new QueryBuilder(new Query);
+        $builder = new QueryBuilder(new WP_Query);
 
         $doggies = $builder->whereStatus('doggie')->results();
         $this->assertCount(5, $doggies);
@@ -108,7 +107,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
     function it_can_query_by_slug()
     {
         $post_id = $this->factory->post->create(['post_name' => 'sluggy']);
-        $builder = new QueryBuilder(new Query);
+        $builder = new QueryBuilder(new WP_Query);
         $builder->whereSlug('sluggy');
 
         $this->assertSame($post_id, $builder->results()->first()->ID);
@@ -120,7 +119,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
      */
     function it_can_set_arbitrary_query_vars()
     {
-        $query = new Query('foo=bar');
+        $query = new WP_Query('foo=bar');
         $this->assertSame('bar', $query->get('foo'));
 
         $builder = new QueryBuilder($query);
