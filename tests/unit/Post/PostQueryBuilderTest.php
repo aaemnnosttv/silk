@@ -1,8 +1,8 @@
 <?php
 
 use Silk\Post\Model;
-use Silk\Post\Post;
 use Silk\Post\QueryBuilder;
+use Silk\WordPress\Post\Post;
 use Illuminate\Support\Collection;
 
 class PostQueryBuilderTest extends WP_UnitTestCase

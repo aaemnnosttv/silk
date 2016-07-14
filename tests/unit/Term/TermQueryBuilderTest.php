@@ -1,8 +1,8 @@
 <?php
 
-use Silk\Term\Category;
 use Silk\Taxonomy\Taxonomy;
 use Silk\Term\QueryBuilder;
+use Silk\WordPress\Term\Category;
 use Illuminate\Support\Collection;
 
 class QueryBuilderTest extends WP_UnitTestCase

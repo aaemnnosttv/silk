@@ -1,6 +1,6 @@
 <?php
 
-use Silk\Post\Post;
+use Silk\WordPress\Post\Post;
 use Silk\Post\QueryBuilder;
 
 class PostTest extends WP_UnitTestCase
