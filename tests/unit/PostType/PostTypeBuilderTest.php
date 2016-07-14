@@ -42,7 +42,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
     */
     function it_blows_up_if_the_post_type_slug_is_too_long()
     {
-        Builder::make('twenty-character-limit');
+        Builder::make('twenty-character-limit')->register();
     }
 
     /**
@@ -51,7 +51,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
     */
     function it_blows_up_if_the_post_type_slug_is_too_short()
     {
-        Builder::make('');
+        Builder::make('')->register();
     }
 
     /**

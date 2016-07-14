@@ -34,21 +34,6 @@ class Builder extends BaseBuilder
     ];
 
     /**
-     * PostTypeBuilder constructor.
-     *
-     * @param string $slug  post type slug
-     * @param array $args   initial registration arguments
-     */
-    public function __construct($slug, array $args = [])
-    {
-        if (strlen($slug) < 1 || strlen($slug) > 20) {
-            throw new InvalidPostTypeNameException('Post type names must be between 1 and 20 characters in length.');
-        }
-
-        parent::__construct($slug, $args);
-    }
-
-    /**
      * Specify which features the post type supports.
      *
      * @param  mixed $features  array of features
@@ -112,6 +97,10 @@ class Builder extends BaseBuilder
      */
     public function register()
     {
+        if (! $this->id || strlen($this->id) > 20) {
+            throw new InvalidPostTypeNameException('Post type names must be between 1 and 20 characters in length.');
+        }
+
         $object = register_post_type($this->id, $this->assembleArgs());
 
         return new PostType($object);
