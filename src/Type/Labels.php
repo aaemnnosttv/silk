@@ -54,15 +54,17 @@ class Labels extends Collection
     public function toArray()
     {
         return $this->map(function ($label) {
-                return str_replace([
-                        '{one}',
-                        '{many}'
-                    ], [
-                        $this->singularForm,
-                        $this->pluralForm
-                    ],
-                    $label
-                );
-            })->all();
+            return str_replace(
+                [
+                    '{one}',
+                    '{many}'
+                ],
+                [
+                    $this->singularForm,
+                    $this->pluralForm
+                ],
+                $label
+            );
+        })->all();
     }
 }
