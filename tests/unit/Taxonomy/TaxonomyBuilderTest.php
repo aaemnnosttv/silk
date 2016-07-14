@@ -37,18 +37,10 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
      */
     public function it_has_methods_for_setting_the_labels()
     {
-        // on('registered_taxonomy', function($taxonomy, $object_type, $args) {
-        //     print_r($args);
-        // })->onlyIf(function ($taxonomy) {
-        //     return $taxonomy == 'genre';
-        // });
-
         $registered = Builder::make('genre')
             ->oneIs('Genre')
             ->manyAre('Genres')
             ->register();
-
-        // var_dump(get_taxonomy('genre'));
 
         $this->assertSame('All Genres', $registered->labels->all_items);
     }
