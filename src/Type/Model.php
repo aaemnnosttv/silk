@@ -1,8 +1,9 @@
 <?php
 
-namespace Silk\Database;
+namespace Silk\Type;
 
 use Silk\Meta\ObjectMeta;
+use Silk\Database\NullAction;
 use Silk\Contracts\Executable;
 use Illuminate\Support\Collection;
 
@@ -10,7 +11,7 @@ use Illuminate\Support\Collection;
  * @property-read int    $id
  * @property-read object $object
  */
-abstract class ActiveRecord
+abstract class Model
 {
     /**
      * The core model object
@@ -27,6 +28,30 @@ abstract class ActiveRecord
      * The name of the primary ID property on the object
      */
     const ID_PROPERTY = '';
+
+    /**
+     * Get a new query builder for the model.
+     *
+     * @return BuildsQueries
+     */
+    abstract public function newQuery();
+
+    /**
+     * Get the map of action => class for resolving active actions.
+     *
+     * @return array
+     */
+    abstract protected function actionClasses();
+
+    /**
+     * Create a new query builder instance for this model type.
+     *
+     * @return BuildsQueries
+     */
+    public static function query()
+    {
+        return (new static)->newQuery();
+    }
 
     /**
      * Save the changes to the database.
@@ -111,13 +136,6 @@ abstract class ActiveRecord
     }
 
     /**
-     * Get the map of action => class for resolving active actions.
-     *
-     * @return array
-     */
-    abstract protected function actionClasses();
-
-    /**
      * Perform a database action.
      *
      * @return void
@@ -182,5 +200,35 @@ abstract class ActiveRecord
         if (property_exists($this->object, $property)) {
             $this->object->$property = $value;
         }
+    }
+
+    /**
+     * Handle dynamic method calls into the model.
+     *
+     * @param  string $method
+     * @param  array $arguments
+     *
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+        $query = $this->newQuery();
+
+        return call_user_func_array([$query, $method], $arguments);
+    }
+
+    /**
+     * Handle dynamic static method calls on the model class.
+     *
+     * Proxies calls to direct method calls on a new instance
+     *
+     * @param string $method
+     * @param array $arguments
+     *
+     * @return mixed
+     */
+    public static function __callStatic($method, array $arguments)
+    {
+        return call_user_func_array([new static, $method], $arguments);
     }
 }

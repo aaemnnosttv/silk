@@ -5,8 +5,7 @@ namespace Silk\Term;
 use stdClass;
 use WP_Term;
 use Silk\Taxonomy\Taxonomy;
-use Silk\Query\QueryBuilder;
-use Silk\Database\ActiveRecord;
+use Silk\Type\Model as BaseModel;
 use Illuminate\Support\Collection;
 use Silk\Term\Exception\TermNotFoundException;
 use Silk\Term\Exception\TaxonomyMismatchException;
@@ -22,7 +21,7 @@ use Silk\Term\Exception\TaxonomyMismatchException;
  * @property int    $parent
  * @property int    $count
  */
-abstract class Model extends ActiveRecord
+abstract class Model extends BaseModel
 {
     /**
      * The term's taxonomy
@@ -40,8 +39,6 @@ abstract class Model extends ActiveRecord
      * The primary ID property on the object
      */
     const ID_PROPERTY = 'term_id';
-
-    use QueryBuilder;
 
     /**
      * Model Constructor.
@@ -200,19 +197,19 @@ abstract class Model extends ActiveRecord
      *
      * @return Taxonomy
      */
-    public function taxonomy()
+    public static function taxonomy()
     {
-        return Taxonomy::make($this->taxonomy);
+        return Taxonomy::make(static::TAXONOMY);
     }
 
     /**
      * Start a new query for terms of this type.
      *
-     * @return TermQueryBuilder
+     * @return QueryBuilder
      */
     public function newQuery()
     {
-        return (new TermQueryBuilder)->setModel($this);
+        return (new QueryBuilder)->setModel($this);
     }
 
     /**

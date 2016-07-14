@@ -2,10 +2,13 @@
 
 namespace Silk\Taxonomy;
 
-use Silk\Post\PostType;
-use Silk\Term\TermQueryBuilder;
+use Silk\PostType\PostType;
+use Silk\Taxonomy\Builder;
+use Silk\Term\QueryBuilder;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
+use Silk\Taxonomy\Exception\InvalidTaxonomyNameException;
+use Silk\Taxonomy\Exception\NonExistentTaxonomyException;
 
 /**
  * @property-read string   $id
@@ -51,12 +54,12 @@ class Taxonomy
      *
      * @param object $taxonomy The taxonomy object
      *
-     * @throws Exception\NonExistentTaxonomyException
+     * @throws \Silk\Taxonomy\Exception\NonExistentTaxonomyException
      */
     public function __construct($taxonomy)
     {
         if (empty($taxonomy->name) || ! static::exists($taxonomy->name)) {
-            throw new Exception\NonExistentTaxonomyException;
+            throw new NonExistentTaxonomyException;
         }
 
         $this->id = $taxonomy->name;
@@ -68,33 +71,43 @@ class Taxonomy
      *
      * @param  string $identifier Taxonomy name/identifier
      *
+     * @throws \Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     *
      * @return static
      */
     public static function make($identifier)
     {
-        return new static(get_taxonomy($identifier));
+        if (static::exists($identifier)) {
+            return new static(get_taxonomy($identifier));
+        }
+
+        if (! $identifier || strlen($identifier) > 32) {
+            throw new InvalidTaxonomyNameException('Taxonomy names must be between 1 and 32 characters in length.');
+        }
+
+        return new Builder($identifier);
     }
 
     /**
      * Check if the given taxonomy exists.
      *
-     * @param  string $identifier The taxonomy identifier
+     * @param  string $id The taxonomy key/identifier
      *
      * @return bool
      */
-    public static function exists($identifier)
+    public static function exists($id)
     {
-        return taxonomy_exists($identifier);
+        return taxonomy_exists($id);
     }
 
     /**
      * Start a new query for terms of this taxonomy.
      *
-     * @return TermQueryBuilder
+     * @return QueryBuilder
      */
     public function terms()
     {
-        return (new TermQueryBuilder)->forTaxonomy($this->id);
+        return (new QueryBuilder)->forTaxonomy($this->id);
     }
 
     /**
@@ -113,18 +126,18 @@ class Taxonomy
     /**
      * Unregister the taxonomy.
      *
-     * @throws WP_ErrorException
-     * @throws Exception\NonExistentTaxonomyException
+     * @throws \Silk\Taxonomy\Exception\NonExistentTaxonomyException
+     * @throws \Silk\Exception\WP_ErrorException
      *
      * @return $this
      */
     public function unregister()
     {
-        if (! static::exists($this->taxonomy->name)) {
-            throw new Exception\NonExistentTaxonomyException;
+        if (! $this->exists($this->id)) {
+            throw new NonExistentTaxonomyException;
         }
 
-        if (is_wp_error($error = unregister_taxonomy($this->taxonomy->name))) {
+        if (is_wp_error($error = unregister_taxonomy($this->id))) {
             throw new WP_ErrorException($error);
         }
 

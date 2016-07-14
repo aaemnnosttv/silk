@@ -1,10 +1,12 @@
 <?php
 
-use Silk\Term\Tag;
-use Silk\Term\Category;
-use Silk\Taxonomy\Taxonomy;
+use Silk\Term\Model;
 use Silk\Meta\Meta;
 use Silk\Meta\ObjectMeta;
+use Silk\Taxonomy\Builder;
+use Silk\Taxonomy\Taxonomy;
+use Silk\WordPress\Term\Tag;
+use Silk\WordPress\Term\Category;
 
 class TermTest extends WP_UnitTestCase
 {
@@ -212,7 +214,7 @@ class TermTest extends WP_UnitTestCase
     function it_reports_proxied_properties_as_set()
     {
         $model = new Category;
-        
+
         $this->assertTrue(isset($model->name));
         $this->assertTrue(isset($model->slug));
         $this->assertTrue(isset($model->taxonomy));
@@ -302,4 +304,18 @@ class TermTest extends WP_UnitTestCase
 
         $this->assertSame('single value', get_term_meta($model->id, 'some-key', true));
     }
+
+    /**
+     * @test
+     */
+    public function it_returns_a_new_builder_for_its_taxonomy_if_not_registered_yet()
+    {
+        $this->assertInstanceOf(Builder::class, NewTerm::taxonomy());
+    }
+
+}
+
+class NewTerm extends Model
+{
+    const TAXONOMY = 'new_taxonomy';
 }

@@ -1,7 +1,7 @@
 <?php
 
-use Silk\Post\Post;
-use Silk\Query\Builder;
+use Silk\WordPress\Post\Post;
+use Silk\Post\QueryBuilder;
 
 class PostTest extends WP_UnitTestCase
 {
@@ -109,7 +109,7 @@ class PostTest extends WP_UnitTestCase
 
         $this->assertEmpty($model->some_property);
         $model->meta('some_property')->set('awesome');
-        
+
         $this->assertSame('awesome', $post->some_property);
         $this->assertSame('awesome', $model->some_property);
     }
@@ -165,7 +165,7 @@ class PostTest extends WP_UnitTestCase
 
         $this->assertEquals(CustomTypeStub::POST_TYPE, $model->post_type);
     }
-    
+
     /**
      * @test
      */
@@ -249,7 +249,7 @@ class PostTest extends WP_UnitTestCase
      */
     function it_offers_static_methods_for_querying()
     {
-        $this->assertInstanceOf(Builder::class, Post::query());
+        $this->assertInstanceOf(QueryBuilder::class, Post::query());
     }
 
     /**
@@ -268,7 +268,7 @@ class PostTest extends WP_UnitTestCase
     function it_proxies_non_existent_static_methods_to_the_builder()
     {
         $this->assertInstanceOf(
-            Silk\Query\Builder::class,
+            QueryBuilder::class,
             Post::limit(1)
         );
     }

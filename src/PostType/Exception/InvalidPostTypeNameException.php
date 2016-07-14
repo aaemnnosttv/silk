@@ -1,6 +1,6 @@
 <?php
 
-namespace Silk\Post\Exception;
+namespace Silk\PostType\Exception;
 
 class InvalidPostTypeNameException extends \InvalidArgumentException
 {

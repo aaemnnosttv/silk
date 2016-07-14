@@ -1,11 +1,11 @@
 <?php
 
-use Silk\Term\Category;
 use Silk\Taxonomy\Taxonomy;
-use Silk\Term\TermQueryBuilder;
+use Silk\Term\QueryBuilder;
+use Silk\WordPress\Term\Category;
 use Illuminate\Support\Collection;
 
-class TermQueryBuilderTest extends WP_UnitTestCase
+class QueryBuilderTest extends WP_UnitTestCase
 {
     use TermFactoryHelpers;
 
@@ -14,7 +14,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
      */
     public function it_returns_the_results_as_a_collection()
     {
-        $query = new TermQueryBuilder;
+        $query = new QueryBuilder;
 
         $this->assertInstanceOf(Collection::class, $query->results());
     }
@@ -33,7 +33,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
         $this->createManyTagsForPost(3, $post_id);
         $this->createManyCatsForPost(3, $post_id);
 
-        $results = (new TermQueryBuilder)
+        $results = (new QueryBuilder)
             ->forTaxonomy('post_tag')
             ->results();
 
@@ -50,7 +50,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
         $this->createManyTags(3); // empties
         $this->createManyTagsForPost(3, $post_id); // assigned
 
-        $query = (new TermQueryBuilder)
+        $query = (new QueryBuilder)
             ->forTaxonomy('post_tag')
             ->includeEmpty();
 
@@ -66,7 +66,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     {
         $this->createManyTags(7);
 
-        $query = (new TermQueryBuilder)
+        $query = (new QueryBuilder)
             ->includeEmpty()
             ->limit(5);
 
@@ -79,7 +79,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
      */
     public function it_blows_up_if_trying_to_query_terms_of_a_non_taxonomy()
     {
-        (new TermQueryBuilder)
+        (new QueryBuilder)
             ->forTaxonomy('non-existent')
             ->results();
     }
@@ -90,7 +90,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     public function it_can_accept_and_return_a_model()
     {
         $model = new Category;
-        $builder = (new TermQueryBuilder)->setModel($model);
+        $builder = (new QueryBuilder)->setModel($model);
 
         $this->assertSame($model, $builder->getModel());
     }

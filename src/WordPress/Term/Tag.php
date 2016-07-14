@@ -1,6 +1,8 @@
 <?php
 
-namespace Silk\Term;
+namespace Silk\WordPress\Term;
+
+use Silk\Term\Model;
 
 class Tag extends Model
 {

@@ -1,7 +1,7 @@
 <?php
 
 use Silk\Post\Model;
-use Silk\Post\PostTypeBuilder;
+use Silk\PostType\Builder;
 
 class ModelTest extends PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
      */
     function it_has_a_method_for_getting_the_post_type_api()
     {
-        $this->assertInstanceOf(PostTypeBuilder::class, Dinosaur::postType());
+        $this->assertInstanceOf(Builder::class, Dinosaur::postType());
     }
 
 }

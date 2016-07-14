@@ -1,6 +1,6 @@
 <?php
 
-use Silk\Post\Page;
+use Silk\WordPress\Post\Page;
 
 class PageTest extends WP_UnitTestCase
 {

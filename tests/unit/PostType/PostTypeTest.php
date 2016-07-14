@@ -1,7 +1,7 @@
 <?php
 
-use Silk\Post\PostType;
-use Silk\Post\PostTypeBuilder;
+use Silk\PostType\PostType;
+use Silk\PostType\Builder;
 
 class PostTypeTest extends WP_UnitTestCase
 {
@@ -26,7 +26,7 @@ class PostTypeTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Post\Exception\NonExistentPostTypeException
+     * @expectedException Silk\PostType\Exception\NonExistentPostTypeException
      */
     function it_blows_up_if_loading_a_non_existent_post_type()
     {
@@ -39,7 +39,7 @@ class PostTypeTest extends WP_UnitTestCase
     function the_make_method_returns_a_new_instance_for_existing_types_otherwise_a_builder_instance()
     {
         $this->assertInstanceOf(PostType::class, PostType::make('post'));
-        $this->assertInstanceOf(PostTypeBuilder::class, PostType::make('mega-post'));
+        $this->assertInstanceOf(Builder::class, PostType::make('mega-post'));
     }
 
     /**
@@ -58,7 +58,7 @@ class PostTypeTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Post\Exception\NonExistentPostTypeException
+     * @expectedException Silk\PostType\Exception\NonExistentPostTypeException
      */
     function it_blows_up_if_it_tries_to_unregister_a_nonexistent_type()
     {
