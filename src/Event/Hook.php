@@ -85,7 +85,7 @@ class Hook
     public function setCallback(callable $callback)
     {
         $this->callback = new Callback($callback);
-        $this->callbackParamCount = $this->callback->reflect()->getNumberOfParameters();
+        $this->callbackParamCount = $this->callback->parameterCount();
 
         return $this;
     }
