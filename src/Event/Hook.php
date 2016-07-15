@@ -119,10 +119,10 @@ class Hook
     /**
      * Control invocation of the callback.
      *
-     * @param $given  The first argument passed to the callback.
-     *                Needed to return for filters.
+     * @param mixed $given  The first argument passed to the callback.
+     *                      Needed to return for filters.
      *
-     * @return mixed  Returned value from Callback
+     * @return mixed        Returned value from Callback
      */
     public function mediateCallback($given = null)
     {
