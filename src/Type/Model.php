@@ -30,18 +30,18 @@ abstract class Model
     const ID_PROPERTY = '';
 
     /**
-     * Get a new query builder for the model.
-     *
-     * @return \Silk\Contracts\BuildsQueries
-     */
-    abstract public function newQuery();
-
-    /**
      * Get the map of action => class for resolving active actions.
      *
      * @return array
      */
     abstract protected function actionClasses();
+
+    /**
+    * Get a new query builder for the model.
+    *
+    * @return \Silk\Contracts\BuildsQueries
+    */
+    abstract public function newQuery();
 
     /**
      * Create a new query builder instance for this model type.
