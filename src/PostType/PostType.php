@@ -97,8 +97,10 @@ class PostType extends Type
     /**
      * Register support of certain features for an existing post type.
      *
-     * @param mixed $features  string - single feature to add
+     * @param mixed $features string - single feature to add
      *                        array - multiple features to add
+     *
+     * @return $this
      */
     public function addSupportFor($features)
     {
@@ -110,8 +112,10 @@ class PostType extends Type
     /**
      * Deregister support of certain features for an existing post type.
      *
-     * @param mixed $features  string - single feature to remove
+     * @param mixed $features string - single feature to remove
      *                        array - multiple features to remove
+     *
+     * @return $this
      */
     public function removeSupportFor($features)
     {
