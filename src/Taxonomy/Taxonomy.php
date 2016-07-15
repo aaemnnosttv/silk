@@ -4,7 +4,6 @@ namespace Silk\Taxonomy;
 
 use Silk\Type\Type;
 use Silk\PostType\PostType;
-use Silk\Taxonomy\Builder;
 use Silk\Term\QueryBuilder;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;

@@ -3,7 +3,6 @@
 namespace Silk\Term;
 
 use WP_Term;
-use Silk\Term\Model;
 use Silk\Contracts\BuildsQueries;
 use Silk\Exception\WP_ErrorException;
 use Illuminate\Support\Collection;
