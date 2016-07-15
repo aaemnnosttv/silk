@@ -12,9 +12,9 @@ class TermSaver extends Action
         $taxonomy = $this->model->taxonomy()->id;
 
         if ($this->model->id) {
-            $ids = wp_update_term($this->model->id, $taxonomy, $this->model->term->to_array());
+            $ids = wp_update_term($this->model->id, $taxonomy, $this->model->object->to_array());
         } else {
-            $ids = wp_insert_term($this->model->name, $taxonomy, $this->model->term->to_array());
+            $ids = wp_insert_term($this->model->name, $taxonomy, $this->model->object->to_array());
         }
 
         if (is_wp_error($ids)) {

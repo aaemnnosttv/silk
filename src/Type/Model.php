@@ -172,7 +172,7 @@ abstract class Model
             return $this->object->{static::ID_PROPERTY};
         }
 
-        if ($property == static::OBJECT_TYPE) {
+        if (in_array($property, ['object', static::OBJECT_TYPE])) {
             return $this->object;
         }
 
