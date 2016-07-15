@@ -94,7 +94,7 @@ abstract class Model
      *
      * @param  string $key  Meta key to retreive or empty to retreive all.
      *
-     * @return object
+     * @return ObjectMeta|\Silk\Meta\Meta
      */
     public function meta($key = '')
     {
