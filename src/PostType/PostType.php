@@ -3,7 +3,6 @@
 namespace Silk\PostType;
 
 use stdClass;
-use WP_Post_Type;
 use Illuminate\Support\Collection;
 use Silk\Type\Type;
 use Silk\Exception\WP_ErrorException;
@@ -21,7 +20,7 @@ class PostType extends Type
      */
     public function __construct($object)
     {
-        if (! $object instanceof stdClass && ! $object instanceof WP_Post_Type) {
+        if (! is_object($object) || ! in_array(get_class($object), ['stdClass', 'WP_Post_Type'])) {
             throw new \InvalidArgumentException(static::class . ' can only be constructed with a Post Type object.');
         }
 
