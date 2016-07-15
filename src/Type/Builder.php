@@ -102,7 +102,7 @@ abstract class Builder
     /**
      * Get the labels instance.
      *
-     * @return PostTypeLabels
+     * @return Labels
      */
     protected function labels()
     {

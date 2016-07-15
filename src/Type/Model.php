@@ -159,6 +159,8 @@ abstract class Model
     /**
      * Execute the active action
      *
+     * @param Executable $action
+     *
      * @return void
      */
     protected function executeAction(Executable $action)
