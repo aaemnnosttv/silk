@@ -9,7 +9,7 @@ class TermSaver extends Action
 {
     public function execute()
     {
-        $taxonomy = $this->model->taxonomy()->id;
+        $taxonomy = $this->model->typeId();
 
         if ($this->model->id) {
             $ids = wp_update_term($this->model->id, $taxonomy, $this->model->object->to_array());

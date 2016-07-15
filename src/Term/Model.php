@@ -195,6 +195,16 @@ abstract class Model extends BaseModel
     }
 
     /**
+     * Get the taxonomy identifier for the model.
+     *
+     * @return string
+     */
+    public static function typeId()
+    {
+        return static::taxonomy()->id;
+    }
+
+    /**
      * Get the Taxonomy model.
      *
      * @return Taxonomy
