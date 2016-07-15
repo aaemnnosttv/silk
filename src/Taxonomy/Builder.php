@@ -73,6 +73,6 @@ class Builder extends TypeBuilder
 
         register_taxonomy($this->id, $this->objectTypes, $this->assembleArgs());
 
-        return Taxonomy::make($this->id);
+        return Taxonomy::load($this->id);
     }
 }

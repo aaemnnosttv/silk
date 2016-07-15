@@ -63,7 +63,7 @@ class Taxonomy extends Type
     public static function make($identifier)
     {
         if (static::exists($identifier)) {
-            return new static(get_taxonomy($identifier));
+            return static::load($identifier);
         }
 
         if (! $identifier || strlen($identifier) > 32) {
@@ -71,6 +71,24 @@ class Taxonomy extends Type
         }
 
         return new Builder($identifier);
+    }
+
+    /**
+     * Create a new instance from an existing taxonomy.
+     *
+     * @param  string $identifier  The taxonomy identifier
+     *
+     * @throws NonExistentTaxonomyException
+     *
+     * @return static
+     */
+    public static function load($identifier)
+    {
+        if (! $object = get_taxonomy($identifier)) {
+            throw new NonExistentTaxonomyException("No taxonomy exists with name '$identifier'.");
+        }
+
+        return new static($object);
     }
 
     /**

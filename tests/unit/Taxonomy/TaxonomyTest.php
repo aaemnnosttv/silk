@@ -47,6 +47,15 @@ class TaxonomyTest extends WP_UnitTestCase
 
     /**
      * @test
+     * @expectedException Silk\Taxonomy\Exception\NonExistentTaxonomyException
+     */
+    public function it_blows_up_when_attempting_to_load_an_unregistered_taxonomy()
+    {
+        Taxonomy::load('boom');
+    }
+
+    /**
+     * @test
      * @expectedException Silk\Taxonomy\Exception\InvalidTaxonomyNameException
      */
     public function it_blows_up_if_the_taxononmy_name_is_too_short()
