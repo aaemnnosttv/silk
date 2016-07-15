@@ -11,6 +11,8 @@ use Silk\Term\Exception\TermNotFoundException;
 use Silk\Term\Exception\TaxonomyMismatchException;
 
 /**
+ * @property-read WP_Term $term
+ * 
  * @property int    $term_id
  * @property string $name
  * @property string $slug
