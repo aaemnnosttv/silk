@@ -2,6 +2,7 @@
 
 namespace Silk\Taxonomy;
 
+use Silk\Type\Type;
 use Silk\PostType\PostType;
 use Silk\Taxonomy\Builder;
 use Silk\Term\QueryBuilder;
@@ -11,9 +12,6 @@ use Silk\Taxonomy\Exception\InvalidTaxonomyNameException;
 use Silk\Taxonomy\Exception\NonExistentTaxonomyException;
 
 /**
- * @property-read string   $id
- * @property-read stdClass $taxonomy
- *
  * @property-read bool     $_builtin
  * @property-read stdClass $cap
  * @property-read string   $description
@@ -35,14 +33,8 @@ use Silk\Taxonomy\Exception\NonExistentTaxonomyException;
  * @property-read bool     $show_ui
  * @property-read callable $update_count_callback
  */
-class Taxonomy
+class Taxonomy extends Type
 {
-    /**
-     * The taxonomy object
-     * @var object
-     */
-    protected $object;
-
     /**
      * Taxonomy Constructor.
      *
@@ -135,26 +127,5 @@ class Taxonomy
         }
 
         return $this;
-    }
-
-    /**
-     * Magic Getter.
-     *
-     * @param  string $property  Accessed property name
-     *
-     * @return mixed
-     */
-    public function __get($property)
-    {
-        $default = isset($this->object->$property)
-            ? $this->object->$property
-            : null;
-
-        return Collection::make([
-            'id'   => $this->object->name,
-            'slug' => $this->object->name,
-            'one'  => $this->object->labels->singular_name,
-            'many' => $this->object->labels->name,
-        ])->get($property, $default);
     }
 }

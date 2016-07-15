@@ -5,24 +5,13 @@ namespace Silk\PostType;
 use stdClass;
 use WP_Post_Type;
 use Illuminate\Support\Collection;
+use Silk\Type\Type;
 use Silk\Exception\WP_ErrorException;
 use Silk\PostType\Exception\NonExistentPostTypeException;
 use Silk\PostType\Builder;
 
-/**
- * @property-read string $id
- * @property-read string $slug
- * @property-read string $one
- * @property-read string $many
- */
-class PostType
+class PostType extends Type
 {
-    /**
-     * Post type object
-     * @var stdClass|WP_Post_Type
-     */
-    protected $object;
-
     /**
      * PostType Constructor
      *
@@ -84,16 +73,6 @@ class PostType
     public static function exists($slug)
     {
         return post_type_exists($slug);
-    }
-
-    /**
-     * Get the post type object.
-     *
-     * @return object
-     */
-    public function object()
-    {
-        return $this->object;
     }
 
     /**
@@ -161,38 +140,5 @@ class PostType
         }
 
         return $this;
-    }
-
-    /**
-     * Magic Getter.
-     *
-     * @param  string $property  Accessed property name
-     *
-     * @return mixed
-     */
-    public function __get($property)
-    {
-        $default = isset($this->object->$property)
-            ? $this->object->$property
-            : null;
-
-        return Collection::make([
-            'id'   => $this->object->name,
-            'slug' => $this->object->name,
-            'one'  => $this->object->labels->singular_name,
-            'many' => $this->object->labels->name,
-        ])->get($property, $default);
-    }
-
-    /**
-     * Magic Isset Check.
-     *
-     * @param  string  $property Queried property name
-     *
-     * @return boolean
-     */
-    public function __isset($property)
-    {
-        return ! is_null($this->__get($property));
     }
 }
