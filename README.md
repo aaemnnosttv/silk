@@ -26,7 +26,7 @@ Or check out the [API documentation](https://api.silk.aaemnnost.tv/master/) if y
 
 #### Via Composer (Recommended)
 ```
-composer require silk/silk:^0.9
+composer require silk/silk:^0.10
 ```
 
 ## Contributing
