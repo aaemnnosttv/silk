@@ -39,7 +39,7 @@ class Taxonomy extends Type
      *
      * @param object $taxonomy The taxonomy object
      *
-     * @throws \Silk\Taxonomy\Exception\NonExistentTaxonomyException
+     * @throws NonExistentTaxonomyException
      */
     public function __construct($taxonomy)
     {
@@ -55,7 +55,7 @@ class Taxonomy extends Type
      *
      * @param  string $identifier Taxonomy name/identifier
      *
-     * @throws \Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     * @throws InvalidTaxonomyNameException
      *
      * @return static|Builder
      */
@@ -128,8 +128,8 @@ class Taxonomy extends Type
     /**
      * Unregister the taxonomy.
      *
-     * @throws \Silk\Taxonomy\Exception\NonExistentTaxonomyException
-     * @throws \Silk\Exception\WP_ErrorException
+     * @throws NonExistentTaxonomyException
+     * @throws WP_ErrorException
      *
      * @return $this
      */

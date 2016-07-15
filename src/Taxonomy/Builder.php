@@ -59,7 +59,7 @@ class Builder extends TypeBuilder
     /**
      * Register and return the new taxonomy.
      *
-     * @throws \Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     * @throws InvalidTaxonomyNameException
      *
      * @return Taxonomy
      */
