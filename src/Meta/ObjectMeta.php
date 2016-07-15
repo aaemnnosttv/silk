@@ -39,7 +39,7 @@ class ObjectMeta
      *
      * @param  string $key  meta key
      *
-     * @return Silk\Models\Meta
+     * @return Meta
      */
     public function get($key)
     {
