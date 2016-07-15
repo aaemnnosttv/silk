@@ -58,7 +58,7 @@ class Taxonomy extends Type
      *
      * @throws \Silk\Taxonomy\Exception\InvalidTaxonomyNameException
      *
-     * @return static
+     * @return static|Builder
      */
     public static function make($identifier)
     {
