@@ -32,10 +32,10 @@ class PostType extends Type
      *
      * Loads an existing type, or returns a new builder for registering a new type.
      *
-     * @param  string $slug  The post type slug
+     * @param  string $slug    The post type slug
      *
-     * @return static|PostTypeBuilder  If the post type has been registered, a new static instance is returned.
-     *                                 Otherwise a new PostTypeBuilder is created for building a new post type to register.
+     * @return static|Builder  If the post type has been registered, a new static instance is returned.
+     *                         Otherwise a new Builder is created for building a new post type to register.
      */
     public static function make($slug)
     {
@@ -77,8 +77,8 @@ class PostType extends Type
     /**
      * Check for feature support.
      *
-     * @param string,...|array $features  string - First feature of possible many,
-     *                                    array - Many features to check support for.
+     * @param string|array $features  string - First feature of possible many,
+     *                                array - Many features to check support for.
      *
      * @return mixed
      */

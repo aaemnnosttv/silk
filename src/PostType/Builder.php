@@ -9,7 +9,7 @@ use Silk\PostType\Exception\InvalidPostTypeNameException;
 class Builder extends BaseBuilder
 {
     /**
-     * [$labelDefaults description]
+     * Default PostType labels
      * @var array
      */
     protected $labelDefaults = [
