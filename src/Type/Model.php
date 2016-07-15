@@ -32,7 +32,7 @@ abstract class Model
     /**
      * Get a new query builder for the model.
      *
-     * @return BuildsQueries
+     * @return \Silk\Contracts\BuildsQueries
      */
     abstract public function newQuery();
 
@@ -46,7 +46,7 @@ abstract class Model
     /**
      * Create a new query builder instance for this model type.
      *
-     * @return BuildsQueries
+     * @return \Silk\Contracts\BuildsQueries
      */
     public static function query()
     {
