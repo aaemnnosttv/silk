@@ -38,16 +38,10 @@ use Silk\Taxonomy\Exception\NonExistentTaxonomyException;
 class Taxonomy
 {
     /**
-     * The Taxonomy identifier
-     * @var string
-     */
-    protected $id;
-
-    /**
      * The taxonomy object
      * @var object
      */
-    protected $taxonomy;
+    protected $object;
 
     /**
      * Taxonomy Constructor.
@@ -62,8 +56,7 @@ class Taxonomy
             throw new NonExistentTaxonomyException;
         }
 
-        $this->id = $taxonomy->name;
-        $this->taxonomy = $taxonomy;
+        $this->object = $taxonomy;
     }
 
     /**
@@ -147,20 +140,21 @@ class Taxonomy
     /**
      * Magic Getter.
      *
-     * @param  string $property Accessed property
+     * @param  string $property  Accessed property name
      *
      * @return mixed
      */
     public function __get($property)
     {
-        if (isset($this->$property)) {
-            return $this->$property;
-        }
+        $default = isset($this->object->$property)
+            ? $this->object->$property
+            : null;
 
-        if (isset($this->taxonomy->$property)) {
-            return $this->taxonomy->$property;
-        }
-
-        return null;
+        return Collection::make([
+            'id'   => $this->object->name,
+            'slug' => $this->object->name,
+            'one'  => $this->object->labels->singular_name,
+            'many' => $this->object->labels->name,
+        ])->get($property, $default);
     }
 }

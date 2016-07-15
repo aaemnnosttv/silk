@@ -153,6 +153,20 @@ class TaxonomyTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_has_readonly_magic_properties()
+    {
+        $type = Taxonomy::make('category');
+
+        $this->assertSame('category', $type->slug);
+        $this->assertSame('Category', $type->one);
+        $this->assertSame('Categories', $type->many);
+
+        $this->assertNull($type->nonExistentProperty);
+    }
+
+    /**
+     * @test
+     */
     public function non_existent_properties_return_null()
     {
         $this->assertNull(Taxonomy::make('category')->non_existent);
