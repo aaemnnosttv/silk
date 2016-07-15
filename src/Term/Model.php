@@ -207,7 +207,7 @@ abstract class Model extends BaseModel
     /**
      * Get the Taxonomy model.
      *
-     * @return Taxonomy
+     * @return Taxonomy|\Silk\Taxonomy\Builder
      */
     public static function taxonomy()
     {
