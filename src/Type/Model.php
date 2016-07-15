@@ -99,7 +99,7 @@ abstract class Model
     /**
      * Meta API for this type
      *
-     * @param  string $key  Meta key to retreive or empty to retreive all.
+     * @param  string $key  Meta key to retrieve or empty to retrieve all.
      *
      * @return ObjectMeta|\Silk\Meta\Meta
      */
