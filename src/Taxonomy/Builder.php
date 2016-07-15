@@ -2,9 +2,7 @@
 
 namespace Silk\Taxonomy;
 
-use Silk\Taxonomy\Taxonomy;
 use Silk\Type\Builder as TypeBuilder;
-use Illuminate\Support\Collection;
 use Silk\Taxonomy\Exception\InvalidTaxonomyNameException;
 
 class Builder extends TypeBuilder

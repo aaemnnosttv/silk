@@ -7,7 +7,6 @@ use Illuminate\Support\Collection;
 use Silk\Type\Type;
 use Silk\Exception\WP_ErrorException;
 use Silk\PostType\Exception\NonExistentPostTypeException;
-use Silk\PostType\Builder;
 
 class PostType extends Type
 {
