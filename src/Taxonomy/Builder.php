@@ -47,7 +47,7 @@ class Builder extends TypeBuilder
     /**
      * Specify which object types the taxonomy is for.
      *
-     * @param  ...string|array $types  A list of object types or an array.
+     * @param string|array $types  A list of object types or an array.
      *
      * @return $this
      */
