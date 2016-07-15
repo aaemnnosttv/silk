@@ -126,6 +126,9 @@ class PostType extends Type
     /**
      * Unregister the post type
      *
+     * @throws NonExistentPostTypeException
+     * @throws WP_ErrorException
+     *
      * @return $this
      */
     public function unregister()
