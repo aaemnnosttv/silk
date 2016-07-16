@@ -1,6 +1,6 @@
 # Release Notes
 
-## v0.10.0 (2016-??-??)
+## v0.10.0 (2016-07-16)
 
 ### Added
 - `Term\Model`
