@@ -39,6 +39,9 @@ class Record extends BaseModel
     public function newQuery()
     {}
 
+    public static function typeId()
+    {}
+
     protected function executeAction(Executable $action)
     {
         $this->testCase->assertInstanceOf(NullAction::class, $action);

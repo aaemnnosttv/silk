@@ -2,9 +2,7 @@
 
 namespace Silk\Taxonomy;
 
-use Silk\Taxonomy\Taxonomy;
 use Silk\Type\Builder as TypeBuilder;
-use Illuminate\Support\Collection;
 use Silk\Taxonomy\Exception\InvalidTaxonomyNameException;
 
 class Builder extends TypeBuilder
@@ -47,7 +45,7 @@ class Builder extends TypeBuilder
     /**
      * Specify which object types the taxonomy is for.
      *
-     * @param  ...string|array $types  A list of object types or an array.
+     * @param string|array $types  A list of object types or an array.
      *
      * @return $this
      */
@@ -61,7 +59,7 @@ class Builder extends TypeBuilder
     /**
      * Register and return the new taxonomy.
      *
-     * @throws \Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     * @throws InvalidTaxonomyNameException
      *
      * @return Taxonomy
      */
@@ -73,6 +71,6 @@ class Builder extends TypeBuilder
 
         register_taxonomy($this->id, $this->objectTypes, $this->assembleArgs());
 
-        return Taxonomy::make($this->id);
+        return Taxonomy::load($this->id);
     }
 }

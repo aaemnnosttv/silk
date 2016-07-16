@@ -11,6 +11,7 @@ use Silk\Term\Exception\TermNotFoundException;
 use Silk\Term\Exception\TaxonomyMismatchException;
 
 /**
+ * @property-read WP_Term $term
  * @property int    $term_id
  * @property string $name
  * @property string $slug
@@ -193,9 +194,19 @@ abstract class Model extends BaseModel
     }
 
     /**
+     * Get the taxonomy identifier for the model.
+     *
+     * @return string
+     */
+    public static function typeId()
+    {
+        return static::taxonomy()->id;
+    }
+
+    /**
      * Get the Taxonomy model.
      *
-     * @return Taxonomy
+     * @return Taxonomy|\Silk\Taxonomy\Builder
      */
     public static function taxonomy()
     {

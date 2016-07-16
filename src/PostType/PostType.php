@@ -3,32 +3,26 @@
 namespace Silk\PostType;
 
 use stdClass;
+use Silk\Type\Type;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
 use Silk\PostType\Exception\NonExistentPostTypeException;
-use Silk\PostType\Builder;
 
-/**
- * @property-read string $id
- * @property-read string $slug
- * @property-read string $one
- * @property-read string $many
- */
-class PostType
+class PostType extends Type
 {
-    /**
-     * Post type object
-     * @var stdClass
-     */
-    protected $object;
-
     /**
      * PostType Constructor
      *
      * @param stdClass $object  The WordPress post type object
+     *
+     * @throws \InvalidArgumentException
      */
-    public function __construct(stdClass $object)
+    public function __construct($object)
     {
+        if (! is_object($object) || ! in_array(get_class($object), ['stdClass', 'WP_Post_Type'])) {
+            throw new \InvalidArgumentException(static::class . ' can only be constructed with a Post Type object.');
+        }
+
         $this->object = $object;
     }
 
@@ -37,10 +31,10 @@ class PostType
      *
      * Loads an existing type, or returns a new builder for registering a new type.
      *
-     * @param  string $slug  The post type slug
+     * @param  string $slug    The post type slug
      *
-     * @return static|PostTypeBuilder  If the post type has been registered, a new static instance is returned.
-     *                                 Otherwise a new PostTypeBuilder is created for building a new post type to register.
+     * @return static|Builder  If the post type has been registered, a new static instance is returned.
+     *                         Otherwise a new Builder is created for building a new post type to register.
      */
     public static function make($slug)
     {
@@ -80,20 +74,10 @@ class PostType
     }
 
     /**
-     * Get the post type object.
-     *
-     * @return object
-     */
-    public function object()
-    {
-        return $this->object;
-    }
-
-    /**
      * Check for feature support.
      *
-     * @param string,...|array $features  string - First feature of possible many,
-     *                                    array - Many features to check support for.
+     * @param string|array $features  string - First feature of possible many,
+     *                                array - Many features to check support for.
      *
      * @return mixed
      */
@@ -112,8 +96,10 @@ class PostType
     /**
      * Register support of certain features for an existing post type.
      *
-     * @param mixed $features  string - single feature to add
+     * @param mixed $features string - single feature to add
      *                        array - multiple features to add
+     *
+     * @return $this
      */
     public function addSupportFor($features)
     {
@@ -125,8 +111,10 @@ class PostType
     /**
      * Deregister support of certain features for an existing post type.
      *
-     * @param mixed $features  string - single feature to remove
+     * @param mixed $features string - single feature to remove
      *                        array - multiple features to remove
+     *
+     * @return $this
      */
     public function removeSupportFor($features)
     {
@@ -141,6 +129,9 @@ class PostType
     /**
      * Unregister the post type
      *
+     * @throws NonExistentPostTypeException
+     * @throws WP_ErrorException
+     *
      * @return $this
      */
     public function unregister()
@@ -154,38 +145,5 @@ class PostType
         }
 
         return $this;
-    }
-
-    /**
-     * Magic Getter.
-     *
-     * @param  string $property  Accessed property name
-     *
-     * @return mixed
-     */
-    public function __get($property)
-    {
-        $default = isset($this->object->$property)
-            ? $this->object->$property
-            : null;
-
-        return Collection::make([
-            'id'   => $this->object->name,
-            'slug' => $this->object->name,
-            'one'  => $this->object->labels->singular_name,
-            'many' => $this->object->labels->name,
-        ])->get($property, $default);
-    }
-
-    /**
-     * Magic Isset Check.
-     *
-     * @param  string  $property Queried property name
-     *
-     * @return boolean
-     */
-    public function __isset($property)
-    {
-        return ! is_null($this->__get($property));
     }
 }

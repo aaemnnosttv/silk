@@ -16,6 +16,15 @@ class PostTypeTest extends WP_UnitTestCase
     }
 
     /**
+     * @test
+     * @expectedException \InvalidArgumentException
+     */
+    public function it_blows_up_if_constructed_without_the_proper_type()
+    {
+        new PostType(new WP_Term(new stdClass));
+    }
+
+    /**
     * @test
     */
     function it_has_a_named_constructor_for_creating_a_new_instance_from_an_existing_post_type()

@@ -47,6 +47,15 @@ class TaxonomyTest extends WP_UnitTestCase
 
     /**
      * @test
+     * @expectedException Silk\Taxonomy\Exception\NonExistentTaxonomyException
+     */
+    public function it_blows_up_when_attempting_to_load_an_unregistered_taxonomy()
+    {
+        Taxonomy::load('boom');
+    }
+
+    /**
+     * @test
      * @expectedException Silk\Taxonomy\Exception\InvalidTaxonomyNameException
      */
     public function it_blows_up_if_the_taxononmy_name_is_too_short()
@@ -148,6 +157,20 @@ class TaxonomyTest extends WP_UnitTestCase
         $this->assertCount(2, $types);
         $this->assertContains('dog', $types->pluck('id'));
         $this->assertContains('cat', $types->pluck('id'));
+    }
+
+    /**
+     * @test
+     */
+    function it_has_readonly_magic_properties()
+    {
+        $type = Taxonomy::make('category');
+
+        $this->assertSame('category', $type->slug);
+        $this->assertSame('Category', $type->one);
+        $this->assertSame('Categories', $type->many);
+
+        $this->assertNull($type->nonExistentProperty);
     }
 
     /**

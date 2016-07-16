@@ -2,8 +2,8 @@
 
 namespace Silk\Taxonomy;
 
+use Silk\Type\Type;
 use Silk\PostType\PostType;
-use Silk\Taxonomy\Builder;
 use Silk\Term\QueryBuilder;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
@@ -11,9 +11,6 @@ use Silk\Taxonomy\Exception\InvalidTaxonomyNameException;
 use Silk\Taxonomy\Exception\NonExistentTaxonomyException;
 
 /**
- * @property-read string   $id
- * @property-read stdClass $taxonomy
- *
  * @property-read bool     $_builtin
  * @property-read stdClass $cap
  * @property-read string   $description
@@ -35,26 +32,14 @@ use Silk\Taxonomy\Exception\NonExistentTaxonomyException;
  * @property-read bool     $show_ui
  * @property-read callable $update_count_callback
  */
-class Taxonomy
+class Taxonomy extends Type
 {
-    /**
-     * The Taxonomy identifier
-     * @var string
-     */
-    protected $id;
-
-    /**
-     * The taxonomy object
-     * @var object
-     */
-    protected $taxonomy;
-
     /**
      * Taxonomy Constructor.
      *
      * @param object $taxonomy The taxonomy object
      *
-     * @throws \Silk\Taxonomy\Exception\NonExistentTaxonomyException
+     * @throws NonExistentTaxonomyException
      */
     public function __construct($taxonomy)
     {
@@ -62,8 +47,7 @@ class Taxonomy
             throw new NonExistentTaxonomyException;
         }
 
-        $this->id = $taxonomy->name;
-        $this->taxonomy = $taxonomy;
+        $this->object = $taxonomy;
     }
 
     /**
@@ -71,14 +55,14 @@ class Taxonomy
      *
      * @param  string $identifier Taxonomy name/identifier
      *
-     * @throws \Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     * @throws InvalidTaxonomyNameException
      *
-     * @return static
+     * @return static|Builder
      */
     public static function make($identifier)
     {
         if (static::exists($identifier)) {
-            return new static(get_taxonomy($identifier));
+            return static::load($identifier);
         }
 
         if (! $identifier || strlen($identifier) > 32) {
@@ -86,6 +70,24 @@ class Taxonomy
         }
 
         return new Builder($identifier);
+    }
+
+    /**
+     * Create a new instance from an existing taxonomy.
+     *
+     * @param  string $identifier  The taxonomy identifier
+     *
+     * @throws NonExistentTaxonomyException
+     *
+     * @return static
+     */
+    public static function load($identifier)
+    {
+        if (! $object = get_taxonomy($identifier)) {
+            throw new NonExistentTaxonomyException("No taxonomy exists with name '$identifier'.");
+        }
+
+        return new static($object);
     }
 
     /**
@@ -126,8 +128,8 @@ class Taxonomy
     /**
      * Unregister the taxonomy.
      *
-     * @throws \Silk\Taxonomy\Exception\NonExistentTaxonomyException
-     * @throws \Silk\Exception\WP_ErrorException
+     * @throws NonExistentTaxonomyException
+     * @throws WP_ErrorException
      *
      * @return $this
      */
@@ -142,25 +144,5 @@ class Taxonomy
         }
 
         return $this;
-    }
-
-    /**
-     * Magic Getter.
-     *
-     * @param  string $property Accessed property
-     *
-     * @return mixed
-     */
-    public function __get($property)
-    {
-        if (isset($this->$property)) {
-            return $this->$property;
-        }
-
-        if (isset($this->taxonomy->$property)) {
-            return $this->taxonomy->$property;
-        }
-
-        return null;
     }
 }

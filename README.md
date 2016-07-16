@@ -26,7 +26,7 @@ Or check out the [API documentation](https://api.silk.aaemnnost.tv/master/) if y
 
 #### Via Composer (Recommended)
 ```
-composer require silk/silk:^0.9
+composer require silk/silk:^0.10
 ```
 
 ## Contributing
@@ -34,6 +34,7 @@ composer require silk/silk:^0.9
 Contributions are welcome! If you're interested in contributing to the project, please open an issue first.  I would hate to decline a Pull Request forged by hours of effort for any reason, so please read the contribution guidelines first.
 
 #### Related Projects and Inspiration
+- [Laravel](https://laravel.com)
 - [Timber](https://github.com/jarednova/timber)
 - [Corcel](https://github.com/jgrossi/corcel)
 - [WordPlate](https://github.com/wordplate/wordplate)

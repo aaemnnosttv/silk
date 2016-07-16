@@ -39,7 +39,7 @@ class Meta
     }
 
     /**
-     * Get the single meta data.
+     * Get the single metadata.
      *
      * @return mixed
      */
@@ -49,7 +49,7 @@ class Meta
     }
 
     /**
-     * Get all meta data as a Collection.
+     * Get all metadata as a Collection.
      *
      * @return Collection
      */
@@ -59,7 +59,7 @@ class Meta
     }
 
     /**
-     * Get all meta data as an array.
+     * Get all metadata as an array.
      *
      * @return array
      */
@@ -114,11 +114,11 @@ class Meta
     }
 
     /**
-     * Delete the meta data
+     * Delete the metadata
      *
-     * Deletes all meta data for the key, if provided, optionally filtered by
+     * Deletes all metadata for the key, if provided, optionally filtered by
      * a previous value.
-     * If no key was provided, all meta data for the object is deleted.
+     * If no key was provided, all metadata for the object is deleted.
      *
      * @param  string $value The old value to delete.
      *                       This is only necessary when deleting a specific value
@@ -144,7 +144,7 @@ class Meta
     }
 
     /**
-     * Get the meta data as a string.
+     * Get the metadata as a string.
      *
      * @return string  The meta value
      */

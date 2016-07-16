@@ -3,13 +3,12 @@
 namespace Silk\PostType;
 
 use Silk\Type\Builder as BaseBuilder;
-use Illuminate\Support\Collection;
 use Silk\PostType\Exception\InvalidPostTypeNameException;
 
 class Builder extends BaseBuilder
 {
     /**
-     * [$labelDefaults description]
+     * Default PostType labels
      * @var array
      */
     protected $labelDefaults = [

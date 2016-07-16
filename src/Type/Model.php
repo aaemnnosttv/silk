@@ -30,13 +30,6 @@ abstract class Model
     const ID_PROPERTY = '';
 
     /**
-     * Get a new query builder for the model.
-     *
-     * @return BuildsQueries
-     */
-    abstract public function newQuery();
-
-    /**
      * Get the map of action => class for resolving active actions.
      *
      * @return array
@@ -44,9 +37,23 @@ abstract class Model
     abstract protected function actionClasses();
 
     /**
+     * Get the model's type identifier.
+     *
+     * @return string
+     */
+    abstract public static function typeId();
+
+    /**
+    * Get a new query builder for the model.
+    *
+    * @return \Silk\Contracts\BuildsQueries
+    */
+    abstract public function newQuery();
+
+    /**
      * Create a new query builder instance for this model type.
      *
-     * @return BuildsQueries
+     * @return \Silk\Contracts\BuildsQueries
      */
     public static function query()
     {
@@ -92,9 +99,9 @@ abstract class Model
     /**
      * Meta API for this type
      *
-     * @param  string $key  Meta key to retreive or empty to retreive all.
+     * @param  string $key  Meta key to retrieve or empty to retrieve all.
      *
-     * @return object
+     * @return ObjectMeta|\Silk\Meta\Meta
      */
     public function meta($key = '')
     {
@@ -152,6 +159,8 @@ abstract class Model
     /**
      * Execute the active action
      *
+     * @param Executable $action
+     *
      * @return void
      */
     protected function executeAction(Executable $action)
@@ -172,7 +181,7 @@ abstract class Model
             return $this->object->{static::ID_PROPERTY};
         }
 
-        if ($property == static::OBJECT_TYPE) {
+        if (in_array($property, ['object', static::OBJECT_TYPE])) {
             return $this->object;
         }
 

@@ -21,7 +21,7 @@ class Labels extends Collection
     /**
      * Set the singular labels using the given form.
      *
-     * @param $label The singular label form to use
+     * @param string $label The singular label form to use
      *
      * @return $this
      */
@@ -35,7 +35,7 @@ class Labels extends Collection
     /**
      * Set the plural labels using the given form.
      *
-     * @param $label The plural label form to use
+     * @param string $label The plural label form to use
      *
      * @return $this
      */
