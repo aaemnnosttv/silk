@@ -4,6 +4,7 @@ namespace Silk\User;
 
 use WP_User;
 use Silk\Type\Model as BaseModel;
+use Silk\User\Exception\UserNotFoundException;
 
 class Model extends BaseModel
 {
@@ -47,11 +48,17 @@ class Model extends BaseModel
      *
      * @param  string|int $id  User ID
      *
+     * @throws UserNotFoundException
+     *
      * @return static
      */
     public static function fromID($id)
     {
-        return new static(new WP_User($id));
+        if (! $user = get_user_by('id', $id)) {
+            throw new UserNotFoundException("No user found with ID $id");
+        }
+
+        return new static($user);
     }
 
     /**
@@ -59,12 +66,14 @@ class Model extends BaseModel
      *
      * @param  string $username  Username (login)
      *
+     * @throws UserNotFoundException
+     *
      * @return static
      */
     public static function fromUsername($username)
     {
         if (! $user = get_user_by('login', $username)) {
-            throw new \Exception("No user found with username: $username");
+            throw new UserNotFoundException("No user found with username: $username");
         }
 
         return new static($user);
@@ -75,12 +84,14 @@ class Model extends BaseModel
      *
      * @param  string $email  User email address
      *
+     * @throws UserNotFoundException
+     *
      * @return static
      */
     public static function fromEmail($email)
     {
         if (! $user = get_user_by('email', $email)) {
-            throw new \Exception("No user found with email address: $email");
+            throw new UserNotFoundException("No user found with email address: $email");
         }
 
         return new static($user);
@@ -91,12 +102,14 @@ class Model extends BaseModel
      *
      * @param  string $slug  User slug (nicename)
      *
+     * @throws UserNotFoundException
+     *
      * @return static
      */
     public static function fromSlug($slug)
     {
         if (! $user = get_user_by('slug', $slug)) {
-            throw new \Exception("No user found with slug: $slug");
+            throw new UserNotFoundException("No user found with slug: $slug");
         }
 
         return new static($user);
@@ -112,7 +125,6 @@ class Model extends BaseModel
     */
     public function newQuery()
     {
-        throw new \Exception(__METHOD__);
     }
 
     /**
@@ -154,11 +166,6 @@ class Model extends BaseModel
     {
         if (array_key_exists($property, $this->objectAliases)) {
             $property = $this->objectAliases[$property];
-        }
-
-        if (property_exists($this->object, $property)) {
-            $this->object->$property = $value;
-            return;
         }
 
         $this->object->$property = $value;

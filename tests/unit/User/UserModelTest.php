@@ -35,6 +35,16 @@ class UserTest extends WP_UnitTestCase
 
     /**
      * @test
+     * @expectedException Silk\User\Exception\UserNotFoundException
+     */
+    public function it_blows_up_if_unable_to_locate_a_user_by_id()
+    {
+        User::fromID(0);
+    }
+
+
+    /**
+     * @test
      */
     public function it_can_create_a_new_instance_from_a_username()
     {
@@ -45,6 +55,16 @@ class UserTest extends WP_UnitTestCase
         $this->assertInstanceOf(User::class, $model);
         $this->assertSame($user->ID, $model->id);
     }
+
+    /**
+     * @test
+     * @expectedException Silk\User\Exception\UserNotFoundException
+     */
+    public function it_blows_up_if_no_user_is_found_with_the_given_username()
+    {
+        User::fromUsername('non-existent-username');
+    }
+
 
     /**
      * @test
@@ -61,6 +81,15 @@ class UserTest extends WP_UnitTestCase
 
     /**
      * @test
+     * @expectedException Silk\User\Exception\UserNotFoundException
+     */
+    public function it_blows_up_if_no_user_is_found_with_the_given_email()
+    {
+        User::fromEmail('non-existent@user.com');
+    }
+
+    /**
+     * @test
      */
     public function it_can_create_a_new_instance_from_the_user_slug()
     {
@@ -70,6 +99,15 @@ class UserTest extends WP_UnitTestCase
 
         $this->assertInstanceOf(User::class, $model);
         $this->assertSame($user->ID, $model->id);
+    }
+
+    /**
+     * @test
+     * @expectedException Silk\User\Exception\UserNotFoundException
+     */
+    public function it_blows_up_if_no_user_is_found_with_the_given_slug()
+    {
+        User::fromSlug('non-existent');
     }
 
     /**
