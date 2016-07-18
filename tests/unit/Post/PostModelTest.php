@@ -3,7 +3,7 @@
 use Silk\Post\Model;
 use Silk\PostType\Builder;
 
-class ModelTest extends PHPUnit_Framework_TestCase
+class PostModelTest extends PHPUnit_Framework_TestCase
 {
     /**
      * @test
