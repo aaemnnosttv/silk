@@ -62,6 +62,31 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     /**
      * @test
      */
+    public function it_can_query_all_terms()
+    {
+        $post_id = $this->factory->post->create();
+
+        $this->createManyTags(2); // empties
+        $this->createManyTagsForPost(3, $post_id); // assigned
+
+        $tags = (new QueryBuilder)->forTaxonomy('post_tag')->all()->results();
+        $this->assertCount(2 + 3, $tags);
+
+        $this->createManyCats(4); // empties
+        $this->createManyCatsForPost(5, $post_id); // assigned
+
+        $cats = (new QueryBuilder)->forTaxonomy('category')->all()->results();
+        // +1 cat for Uncategorized
+        $this->assertCount(4 + 5 + 1, $cats);
+
+        $alls = (new QueryBuilder)->all()->results();
+        $this->assertCount(2 + 3 + 4 + 5 + 1, $alls);
+    }
+
+
+    /**
+     * @test
+     */
     public function it_can_limit_the_maximum_number_of_results_to_a_given_number()
     {
         $this->createManyTags(7);
