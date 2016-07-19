@@ -14,9 +14,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertSame('event', ModelTestEventTrait::postTypeId());
         $this->assertSame('model_test_post_type', ModelTestPostType::postTypeId());
         $this->assertSame('dinosaur', Dinosaur::postTypeId());
-
-        $this->assertSame('event', ModelTestEvent::typeId());
-        $this->assertSame('event', ModelTestEventTrait::typeId());
     }
 
     /**

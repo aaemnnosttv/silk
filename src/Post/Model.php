@@ -160,16 +160,6 @@ abstract class Model extends BaseModel
     }
 
     /**
-     * Get the post type identifier for this model.
-     *
-     * @return string
-     */
-    public static function typeId()
-    {
-        return static::postTypeId();
-    }
-
-    /**
      * Get the post type identifier for this model
      *
      * @return string post type identifier (slug)

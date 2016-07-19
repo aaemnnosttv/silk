@@ -8,12 +8,10 @@ class TermSaver extends Action
 {
     public function execute()
     {
-        $taxonomy = $this->model->typeId();
-
         if ($this->model->id) {
-            $ids = wp_update_term($this->model->id, $taxonomy, $this->model->object->to_array());
+            $ids = wp_update_term($this->model->id, $this->model->taxonomy, $this->model->object->to_array());
         } else {
-            $ids = wp_insert_term($this->model->name, $taxonomy, $this->model->object->to_array());
+            $ids = wp_insert_term($this->model->name, $this->model->taxonomy, $this->model->object->to_array());
         }
 
         if (is_wp_error($ids)) {
