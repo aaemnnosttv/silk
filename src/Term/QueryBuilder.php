@@ -3,11 +3,11 @@
 namespace Silk\Term;
 
 use WP_Term;
-use Silk\Contracts\BuildsQueries;
+use Silk\Query\Builder as BaseBuilder;
 use Silk\Exception\WP_ErrorException;
 use Illuminate\Support\Collection;
 
-class QueryBuilder implements BuildsQueries
+class QueryBuilder extends BaseBuilder
 {
     /**
      * The term model
@@ -134,30 +134,6 @@ class QueryBuilder implements BuildsQueries
             ->map(function (WP_Term $term) use ($modelClass) {
                 return new $modelClass($term);
             });
-    }
-
-    /**
-     * Set the model for this query.
-     *
-     * @param mixed $model
-     *
-     * @return $this
-     */
-    public function setModel($model)
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
-    /**
-     * Get the model.
-     *
-     * @return mixed Model
-     */
-    public function getModel()
-    {
-        return $this->model;
     }
 
     /**

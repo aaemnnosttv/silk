@@ -4,9 +4,9 @@ namespace Silk\Post;
 
 use WP_Query;
 use Illuminate\Support\Collection;
-use Silk\Contracts\BuildsQueries;
+use Silk\Query\Builder as BaseBuilder;
 
-class QueryBuilder implements BuildsQueries
+class QueryBuilder extends BaseBuilder
 {
     /**
      * WP_Query instance
@@ -154,29 +154,4 @@ class QueryBuilder implements BuildsQueries
 
         return $this;
     }
-
-    /**
-     * Set the model for this query.
-     *
-     * @param Model $model
-     *
-     * @return $this
-     */
-    public function setModel(Model $model)
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
-    /**
-     * Get the model
-     *
-     * @return Model
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
 }
