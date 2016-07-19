@@ -2,7 +2,6 @@
 
 namespace Silk\Post\Action;
 
-use Silk\Database\Action;
 use Silk\Exception\WP_ErrorException;
 
 class PostSaver extends Action

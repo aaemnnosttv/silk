@@ -2,8 +2,6 @@
 
 namespace Silk\Post\Action;
 
-use Silk\Database\Action;
-
 class PostDeleter extends Action
 {
     public function execute()

@@ -2,7 +2,6 @@
 
 namespace Silk\Term\Action;
 
-use Silk\Database\Action;
 use Silk\Exception\WP_ErrorException;
 
 class TermSaver extends Action

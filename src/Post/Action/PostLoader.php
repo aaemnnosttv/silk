@@ -2,8 +2,6 @@
 
 namespace Silk\Post\Action;
 
-use Silk\Database\Action;
-
 class PostLoader extends Action
 {
     public function execute()

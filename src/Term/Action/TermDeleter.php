@@ -2,8 +2,6 @@
 
 namespace Silk\Term\Action;
 
-use Silk\Database\Action;
-
 class TermDeleter extends Action
 {
     public function execute()
