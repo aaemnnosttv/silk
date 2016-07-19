@@ -125,6 +125,7 @@ class Model extends BaseModel
     */
     public function newQuery()
     {
+        return QueryBuilder::make();
     }
 
     /**

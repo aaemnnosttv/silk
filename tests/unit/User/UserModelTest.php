@@ -2,6 +2,8 @@
 
 use Silk\User\Model as User;
 
+use Silk\Contracts\BuildsQueries;
+
 class UserTest extends WP_UnitTestCase
 {
     /**
@@ -201,5 +203,14 @@ class UserTest extends WP_UnitTestCase
 
         $this->assertSame('pizza', $model->favorite_food);
     }
+
+    /**
+     * @test
+     */
+    public function the_query_method_fulfills_the_contract()
+    {
+        $this->assertInstanceOf(BuildsQueries::class, User::query());
+    }
+
 
 }
