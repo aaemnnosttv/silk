@@ -115,9 +115,6 @@ class Model extends BaseModel
         return new static($user);
     }
 
-    public static function typeId()
-    {}
-
     /**
     * Get a new query builder for the model.
     *
