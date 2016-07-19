@@ -2,8 +2,6 @@
 
 namespace Silk\User\Action;
 
-use Silk\Database\Action;
-
 class UserDeleter extends Action
 {
     public function execute()

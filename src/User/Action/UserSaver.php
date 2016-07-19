@@ -2,7 +2,6 @@
 
 namespace Silk\User\Action;
 
-use Silk\Database\Action;
 use Silk\Exception\WP_ErrorException;
 
 class UserSaver extends Action
