@@ -59,7 +59,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         register_post_type(CustomCPT::POST_TYPE);
         CustomCPT::create(['post_title' => 'check one']);
 
-        $results = CustomCPT::all()->results();
+        $results = CustomCPT::query()->results();
 
         $this->assertInstanceOf(Collection::class, $results);
 
