@@ -5,7 +5,7 @@ use Silk\Term\QueryBuilder;
 use Silk\WordPress\Term\Category;
 use Illuminate\Support\Collection;
 
-class QueryBuilderTest extends WP_UnitTestCase
+class TermQueryBuilderTest extends WP_UnitTestCase
 {
     use TermFactoryHelpers;
 
