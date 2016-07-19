@@ -38,6 +38,16 @@ class QueryBuilder implements BuildsQueries
     }
 
     /**
+     * Create a new instance.
+     *
+     * @return static
+     */
+    public static function make()
+    {
+        return new static;
+    }
+
+    /**
      * Restrict the query to terms of the provided Taxonomy.
      *
      * @param  string $taxonomy
@@ -49,6 +59,17 @@ class QueryBuilder implements BuildsQueries
         $this->taxonomy = $taxonomy;
 
         return $this;
+    }
+
+    /**
+     * Get all terms.
+     *
+     * @return $this
+     */
+    public function all()
+    {
+        return $this->includeEmpty()
+            ->limit('all');
     }
 
     /**

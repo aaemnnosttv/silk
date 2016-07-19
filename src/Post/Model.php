@@ -4,7 +4,6 @@ namespace Silk\Post;
 
 use stdClass;
 use WP_Post;
-use WP_Query;
 use Illuminate\Support\Collection;
 use Silk\Type\Model as BaseModel;
 use Silk\PostType\PostType;
@@ -217,7 +216,7 @@ abstract class Model extends BaseModel
      */
     public function newQuery()
     {
-        return (new QueryBuilder(new WP_Query))->setModel($this);
+        return QueryBuilder::make()->setModel($this);
     }
 
     /**

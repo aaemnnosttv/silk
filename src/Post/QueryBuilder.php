@@ -33,6 +33,16 @@ class QueryBuilder implements BuildsQueries
     }
 
     /**
+     * Create a new instance.
+     *
+     * @return static
+     */
+    public static function make()
+    {
+        return new static(new WP_Query);
+    }
+
+    /**
      * Limit the number of returned results
      *
      * @param integer $limit  The maximum number of results to return

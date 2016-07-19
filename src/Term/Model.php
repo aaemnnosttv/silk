@@ -210,7 +210,7 @@ abstract class Model extends BaseModel
      */
     public function newQuery()
     {
-        return (new QueryBuilder)->setModel($this);
+        return QueryBuilder::make()->setModel($this);
     }
 
     /**
