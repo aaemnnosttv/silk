@@ -37,13 +37,6 @@ abstract class Model
     abstract protected function actionClasses();
 
     /**
-     * Get the model's type identifier.
-     *
-     * @return string
-     */
-    abstract public static function typeId();
-
-    /**
     * Get a new query builder for the model.
     *
     * @return \Silk\Contracts\BuildsQueries
