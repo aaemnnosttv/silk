@@ -1,5 +1,10 @@
 # Release Notes
 
+## v0.10.1 (2016-)
+
+### Fixed
+- Strict notice on PHP 5 for abstract static method
+
 ## v0.10.0 (2016-07-16)
 
 ### Added
