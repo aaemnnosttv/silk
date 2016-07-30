@@ -47,6 +47,21 @@ class ObjectMeta
     }
 
     /**
+     * Set the value for the given key.
+     *
+     * @param string $key   Meta key
+     * @param mixed  $value New meta value
+     *
+     * @return $this
+     */
+    public function set($key, $value)
+    {
+        $this->get($key)->set($value);
+
+        return $this;
+    }
+
+    /**
      * Get all meta for the object as a Collection.
      *
      * @return Collection
