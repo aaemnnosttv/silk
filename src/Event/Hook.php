@@ -126,11 +126,17 @@ class Hook
      */
     public function mediateCallback($given = null)
     {
-        if (! $this->shouldInvoke(func_get_args())) {
+        $arguments = func_get_args();
+
+        if (! $this->shouldInvoke($arguments)) {
             return $given;
         }
 
-        return $this->invokeCallback(func_get_args());
+        if (is_null($returned = $this->invokeCallback($arguments))) {
+            return $given;
+        }
+
+        return $returned;
     }
 
     /**

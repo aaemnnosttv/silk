@@ -354,6 +354,26 @@ class HookTest extends WP_UnitTestCase
         $this->assertSame(['Donald', 'Hillary', 'Bill', 'Evil Bill'], $names);
     }
 
+    /**
+     * @test
+     */
+    public function it_returns_the_first_parameter_if_the_callback_returns_nothing()
+    {
+        $spy = 'spy';
+
+        on('filter_as_action_test', function () use (&$spy) {
+            $spy = 'spider';
+        });
+
+        $filtered = apply_filters('filter_as_action_test', 'something');
+
+        $this->assertSame('spider', $spy); // ensures callback was called
+        /**
+         * Our callback returned nothing, therefore Hook will return for us.
+         */
+        $this->assertSame('something', $filtered);
+    }
+
 }
 
 function aNormalFunction()
