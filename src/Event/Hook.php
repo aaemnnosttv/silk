@@ -170,11 +170,13 @@ class Hook
      */
     protected function invokeCallback($arguments)
     {
-        $arguments = array_slice($arguments, 0, $this->callbackParamCount ?: null);
+        $returned = $this->callback->callArray(
+            array_slice($arguments, 0, $this->callbackParamCount ?: null)
+        );
 
         $this->iterations++;
 
-        return $this->callback->callArray($arguments);
+        return $returned;
     }
 
     /**
