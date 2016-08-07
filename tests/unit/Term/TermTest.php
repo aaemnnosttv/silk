@@ -313,6 +313,27 @@ class TermTest extends WP_UnitTestCase
         $this->assertInstanceOf(Builder::class, NewTerm::taxonomy());
     }
 
+    /**
+     * @test
+     */
+    public function it_has_a_method_for_getting_the_term_archive_url()
+    {
+        $model = $model = Category::create(['name' => 'Awesome']);
+
+        $this->assertSame(
+            get_term_link($model->id, $model->taxonomy),
+            $model->url()
+        );
+    }
+
+    /**
+     * @test
+     * @expectedException Silk\Exception\WP_ErrorException
+     */
+    public function it_blows_up_if_getting_a_term_url_for_a_non_existent_term()
+    {
+        (new Category)->url();
+    }
 }
 
 class NewTerm extends Model

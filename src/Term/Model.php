@@ -7,6 +7,7 @@ use WP_Term;
 use Silk\Taxonomy\Taxonomy;
 use Silk\Type\Model as BaseModel;
 use Illuminate\Support\Collection;
+use Silk\Exception\WP_ErrorException;
 use Silk\Term\Exception\TermNotFoundException;
 use Silk\Term\Exception\TaxonomyMismatchException;
 
@@ -201,6 +202,22 @@ abstract class Model extends BaseModel
     public static function taxonomy()
     {
         return Taxonomy::make(static::TAXONOMY);
+    }
+
+    /**
+     * Get the URL for this term.
+     *
+     * @return string|bool
+     */
+    public function url()
+    {
+        $url = get_term_link($this->id, $this->taxonomy);
+
+        if (is_wp_error($url)) {
+            throw new WP_ErrorException($url);
+        }
+
+        return $url;
     }
 
     /**
