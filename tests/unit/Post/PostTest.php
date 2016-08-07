@@ -274,6 +274,20 @@ class PostTest extends WP_UnitTestCase
         );
     }
 
+    /**
+     * @test
+     */
+    public function it_has_a_method_for_the_permalink()
+    {
+        $post = $this->factory->post->create_and_get();
+        $model = Post::fromWpPost($post);
+
+        $this->assertSame(
+            get_permalink($post->ID),
+            $model->permalink()
+        );
+    }
+
 }
 
 class CustomTypeStub extends Post

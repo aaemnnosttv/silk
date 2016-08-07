@@ -180,6 +180,16 @@ abstract class Model extends BaseModel
     }
 
     /**
+     * Get the permalink.
+     *
+     * @return string|bool  The permalink URL, or false if the post does not exist.
+     */
+    public function permalink()
+    {
+        return get_permalink($this->id);
+    }
+
+    /**
      * Send the post to the trash
      *
      * If trash is disabled, the post or page is permanently deleted.
