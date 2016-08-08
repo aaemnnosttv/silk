@@ -186,35 +186,4 @@ class Model extends BaseModel
 
         return $this;
     }
-
-    /**
-     * Magic getter.
-     *
-     * @param  string $property
-     *
-     * @return mixed
-     */
-    public function __get($property)
-    {
-        if (! array_key_exists($property, $this->objectAliases)) {
-            return parent::__get($property);
-        }
-
-        return data_get($this->object, $this->objectAliases[$property]);
-    }
-
-    /**
-     * Magic setter.
-     *
-     * @param string $property  The property name
-     * @param mixed  $value     The new property value
-     */
-    public function __set($property, $value)
-    {
-        if (array_key_exists($property, $this->objectAliases)) {
-            $property = $this->objectAliases[$property];
-        }
-
-        $this->object->$property = $value;
-    }
 }

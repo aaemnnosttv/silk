@@ -17,6 +17,14 @@ abstract class Model
     protected $object;
 
     /**
+     * Type object property aliases
+     * @var array
+     */
+    protected $objectAliases = [
+        // 'aliasName' => 'propertyNameOnObject'
+    ];
+
+    /**
      * The object type in WordPress
      */
     const OBJECT_TYPE = '';
@@ -143,6 +151,15 @@ abstract class Model
             return $this->object;
         }
 
+        if (isset($this->objectAliases[$property])) {
+            return data_get($this->object, $this->objectAliases[$property]);
+        }
+
+        /**
+         * Finally, hand-off the request to the wrapped object.
+         * We don't check for existence as we leverage the magic __get
+         * on the wrapped object as well.
+         */
         return $this->object->$property;
     }
 
@@ -164,9 +181,11 @@ abstract class Model
      */
     public function __set($property, $value)
     {
-        if (property_exists($this->object, $property)) {
-            $this->object->$property = $value;
+        if (isset($this->objectAliases[$property])) {
+            $property = $this->objectAliases[$property];
         }
+
+        $this->object->$property = $value;
     }
 
     /**
