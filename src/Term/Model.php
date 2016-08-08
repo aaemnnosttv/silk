@@ -231,16 +231,52 @@ abstract class Model extends BaseModel
     }
 
     /**
-     * Get the array of actions and their respective handler classes.
+     * Save the term to the database.
      *
-     * @return array
+     * @throws WP_ErrorException
+     *
+     * @return $this
      */
-    protected function actionClasses()
+    public function save()
     {
-        return [
-            'save'   => Action\TermSaver::class,
-            'load'   => Action\TermLoader::class,
-            'delete' => Action\TermDeleter::class,
-        ];
+        if ($this->id) {
+            $ids = wp_update_term($this->id, $this->taxonomy, $this->object->to_array());
+        } else {
+            $ids = wp_insert_term($this->name, $this->taxonomy, $this->object->to_array());
+        }
+
+        if (is_wp_error($ids)) {
+            throw new WP_ErrorException($ids);
+        }
+
+        $this->setId($ids['term_id'])->refresh();
+
+        return $this;
+    }
+
+    /**
+     * Delete the term from the database.
+     *
+     * @return $this
+     */
+    public function delete()
+    {
+        if (wp_delete_term($this->id, $this->taxonomy)) {
+            $this->object = new WP_Term(new stdClass);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Reload the term object from the database.
+     *
+     * @return $this
+     */
+    public function refresh()
+    {
+        $this->object = WP_Term::get_instance($this->id, $this->taxonomy);
+
+        return $this;
     }
 }

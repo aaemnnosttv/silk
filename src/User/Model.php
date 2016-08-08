@@ -4,6 +4,7 @@ namespace Silk\User;
 
 use WP_User;
 use Silk\Type\Model as BaseModel;
+use Silk\Exception\WP_ErrorException;
 use Silk\User\Exception\UserNotFoundException;
 
 class Model extends BaseModel
@@ -135,17 +136,55 @@ class Model extends BaseModel
         return QueryBuilder::make();
     }
 
+
     /**
-     * Get the map of action => class for resolving active actions.
+     * Save the changes to the database.
      *
-     * @return array
+     * @throws WP_ErrorException
+     *
+     * @return $this
      */
-    protected function actionClasses()
+    public function save()
     {
-        return [
-            'save' => Action\UserSaver::class,
-            'delete' => Action\UserDeleter::class,
-        ];
+        if (! $this->id) {
+            $result = wp_insert_user($this->object);
+        } else {
+            $result = wp_update_user($this->object);
+        }
+
+        if (is_wp_error($result)) {
+            throw new WP_ErrorException($result);
+        }
+
+        $this->setId($result);
+
+        return $this;
+    }
+
+    /**
+     * Delete the modeled record from the database.
+     *
+     * @return $this
+     */
+    public function delete()
+    {
+        if (wp_delete_user($this->id)) {
+            $this->object = new WP_User;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Reload the object from the database.
+     *
+     * @return $this
+     */
+    public function refresh()
+    {
+        $this->object = new WP_User($this->id);
+
+        return $this;
     }
 
     /**

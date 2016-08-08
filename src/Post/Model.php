@@ -2,6 +2,7 @@
 
 namespace Silk\Post;
 
+use Silk\Exception\WP_ErrorException;
 use stdClass;
 use WP_Post;
 use Illuminate\Support\Collection;
@@ -230,16 +231,54 @@ abstract class Model extends BaseModel
     }
 
     /**
-     * Get the array of actions and their respective handler classes.
+     * Save the post to the database.
      *
-     * @return array
+     * @throws WP_ErrorException
+     *
+     * @return $this
      */
-    protected function actionClasses()
+    public function save()
     {
-        return [
-            'save'   => Action\PostSaver::class,
-            'load'   => Action\PostLoader::class,
-            'delete' => Action\PostDeleter::class,
-        ];
+        if (! $this->id) {
+            $result = wp_insert_post($this->object->to_array(), true);
+        } else {
+            $result = wp_update_post($this->object, true);
+        }
+
+        if (is_wp_error($result)) {
+            throw new WP_ErrorException($result);
+        }
+
+        $this->setId($result)->refresh();
+
+        return $this;
     }
+
+    /**
+     * Permanently delete the post from the database.
+     *
+     * @return $this
+     */
+    public function delete()
+    {
+        if (wp_delete_post($this->id, true)) {
+            $this->refresh();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Update the modeled object with the current state from the database.
+     *
+     * @return $this
+     */
+    public function refresh()
+    {
+        $this->object = WP_Post::get_instance($this->id);
+
+        return $this;
+    }
+
+
 }

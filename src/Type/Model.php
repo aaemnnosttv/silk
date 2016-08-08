@@ -3,9 +3,6 @@
 namespace Silk\Type;
 
 use Silk\Meta\ObjectMeta;
-use Silk\Database\NullAction;
-use Silk\Contracts\Executable;
-use Illuminate\Support\Collection;
 
 /**
  * @property-read int    $id
@@ -30,18 +27,32 @@ abstract class Model
     const ID_PROPERTY = '';
 
     /**
-     * Get the map of action => class for resolving active actions.
-     *
-     * @return array
-     */
-    abstract protected function actionClasses();
-
-    /**
     * Get a new query builder for the model.
     *
     * @return \Silk\Contracts\BuildsQueries
     */
     abstract public function newQuery();
+
+    /**
+     * Save the changes to the database.
+     *
+     * @return $this
+     */
+    abstract public function save();
+
+    /**
+     * Delete the modeled record from the database.
+     *
+     * @return $this
+     */
+    abstract public function delete();
+
+    /**
+     * Reload the object from the database.
+     *
+     * @return $this
+     */
+    abstract public function refresh();
 
     /**
      * Make new instance.
@@ -67,42 +78,6 @@ abstract class Model
     public static function query()
     {
         return (new static)->newQuery();
-    }
-
-    /**
-     * Save the changes to the database.
-     *
-     * @return $this
-     */
-    public function save()
-    {
-        $this->activeAction('save');
-
-        return $this;
-    }
-
-    /**
-     * Delete the record from the database.
-     *
-     * @return $this
-     */
-    public function delete()
-    {
-        $this->activeAction('delete');
-
-        return $this;
-    }
-
-    /**
-     * Load and set the object from the database.
-     *
-     * @return $this
-     */
-    public function refresh()
-    {
-        $this->activeAction('load');
-
-        return $this;
     }
 
     /**
@@ -144,37 +119,11 @@ abstract class Model
      *
      * @return $this
      */
-    public function setId($id)
+    protected function setId($id)
     {
         $this->object->{static::ID_PROPERTY} = (int) $id;
 
         return $this;
-    }
-
-    /**
-     * Perform a database action.
-     *
-     * @return void
-     */
-    protected function activeAction($action)
-    {
-        $actionClass = Collection::make(
-            $this->actionClasses()
-        )->get($action, NullAction::class);
-
-        $this->executeAction(new $actionClass($this));
-    }
-
-    /**
-     * Execute the active action
-     *
-     * @param Executable $action
-     *
-     * @return void
-     */
-    protected function executeAction(Executable $action)
-    {
-        $action->execute();
     }
 
     /**
