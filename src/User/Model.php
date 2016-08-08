@@ -116,6 +116,16 @@ class Model extends BaseModel
     }
 
     /**
+     * Get the URL for the user's posts archive.
+     *
+     * @return string
+     */
+    public function postsUrl()
+    {
+        return get_author_posts_url($this->id, $this->slug);
+    }
+
+    /**
     * Get a new query builder for the model.
     *
     * @return \Silk\Contracts\BuildsQueries

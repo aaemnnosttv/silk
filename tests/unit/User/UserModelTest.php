@@ -212,5 +212,18 @@ class UserTest extends WP_UnitTestCase
         $this->assertInstanceOf(BuildsQueries::class, User::query());
     }
 
+    /**
+     * @test
+     */
+    public function it_has_a_method_to_get_the_url_for_the_users_posts()
+    {
+        $user = $this->factory->user->create_and_get(['nicename' => 'franky']);
+        $model = new User($user);
+
+        $this->assertSame(
+            get_author_posts_url($user->ID),
+            $model->postsUrl()
+        );
+    }
 
 }
