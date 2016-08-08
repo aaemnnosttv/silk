@@ -4,7 +4,7 @@ use Silk\User\Model as User;
 
 use Silk\Contracts\BuildsQueries;
 
-class UserTest extends WP_UnitTestCase
+class UserModelTest extends WP_UnitTestCase
 {
     /**
      * @test
