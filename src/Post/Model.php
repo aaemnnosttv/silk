@@ -180,11 +180,11 @@ abstract class Model extends BaseModel
     }
 
     /**
-     * Get the permalink.
+     * Get the permalink URL.
      *
      * @return string|bool  The permalink URL, or false if the post does not exist.
      */
-    public function permalink()
+    public function url()
     {
         return get_permalink($this->id);
     }

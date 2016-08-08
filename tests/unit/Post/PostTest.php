@@ -284,7 +284,7 @@ class PostTest extends WP_UnitTestCase
 
         $this->assertSame(
             get_permalink($post->ID),
-            $model->permalink()
+            $model->url()
         );
     }
 
