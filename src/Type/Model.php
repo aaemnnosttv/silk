@@ -44,6 +44,22 @@ abstract class Model
     abstract public function newQuery();
 
     /**
+     * Make new instance.
+     *
+     * All provided arguments are forwarded to the constructor of the called class.
+     *
+     * @return static
+     */
+    public static function make()
+    {
+        if ($arguments = func_get_args()) {
+            return (new \ReflectionClass(static::class))->newInstanceArgs($arguments);
+        }
+
+        return new static;
+    }
+
+    /**
      * Create a new query builder instance for this model type.
      *
      * @return \Silk\Contracts\BuildsQueries
