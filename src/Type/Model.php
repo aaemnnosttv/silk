@@ -156,6 +156,32 @@ abstract class Model
     }
 
     /**
+     * Expands an alias into its respective object property name.
+     *
+     * @param string $key  Alias key
+     *
+     * @return mixed|string
+     */
+    protected function expandAlias($key)
+    {
+        if (isset($this->objectAliases[$key])) {
+            return $this->objectAliases[$key];
+        }
+
+        /**
+         * Automatically alias shorthand syntax for type_name
+         * Eg: 'post_content' is aliased to 'content'
+         */
+        $expanded = static::OBJECT_TYPE . '_' . $key;
+
+        if (property_exists($this->object, $expanded)) {
+            return $expanded;
+        }
+
+        return $key;
+    }
+
+    /**
      * Magic getter.
      *
      * @param  string $property
@@ -172,9 +198,7 @@ abstract class Model
             return $this->object;
         }
 
-        if (isset($this->objectAliases[$property])) {
-            return data_get($this->object, $this->objectAliases[$property]);
-        }
+        $property = $this->expandAlias($property);
 
         /**
          * Finally, hand-off the request to the wrapped object.
@@ -202,9 +226,7 @@ abstract class Model
      */
     public function __set($property, $value)
     {
-        if (isset($this->objectAliases[$property])) {
-            $property = $this->objectAliases[$property];
-        }
+        $property = $this->expandAlias($property);
 
         $this->object->$property = $value;
     }
