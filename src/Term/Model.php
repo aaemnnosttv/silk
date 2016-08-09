@@ -124,23 +124,6 @@ abstract class Model extends BaseModel
     }
 
     /**
-     * Create a new term, and get the instance for it.
-     *
-     * @param  array $attributes  Term attributes
-     *
-     * @return static
-     */
-    public static function create(array $attributes = [])
-    {
-        return static::fromArray(
-            Collection::make($attributes)
-                ->except([static::ID_PROPERTY, 'term_taxonomy_id'])
-                ->put('taxonomy', static::TAXONOMY)
-                ->toArray()
-        )->save();
-    }
-
-    /**
      * Check if this term exists in the database.
      *
      * @return boolean

@@ -3,6 +3,7 @@
 namespace Silk\Type;
 
 use Silk\Meta\ObjectMeta;
+use Illuminate\Support\Collection;
 
 /**
  * @property-read int    $id
@@ -76,6 +77,26 @@ abstract class Model
         }
 
         return new static;
+    }
+
+    /**
+     * Create a new model of the model's type, and save it to the database.
+     *
+     * @param  array $attributes
+     *
+     * @return static
+     */
+    public static function create($attributes = [])
+    {
+        $model = new static;
+
+        Collection::make($attributes)
+                  ->each(function ($value, $key) use ($model) {
+                      $model->$key = $value;
+                  })
+        ;
+
+        return $model->save();
     }
 
     /**

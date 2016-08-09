@@ -5,7 +5,6 @@ namespace Silk\Post;
 use Silk\Exception\WP_ErrorException;
 use stdClass;
 use WP_Post;
-use Illuminate\Support\Collection;
 use Silk\Type\Model as BaseModel;
 use Silk\PostType\PostType;
 use Silk\Post\Exception\PostNotFoundException;
@@ -143,25 +142,6 @@ abstract class Model extends BaseModel
         }
 
         return new static($GLOBALS['post']);
-    }
-
-    /**
-     * Create a new post of the model's type
-     *
-     * @param  array $attributes
-     *
-     * @return static
-     */
-    public static function create($attributes = [])
-    {
-        $post = new WP_Post((object)
-            Collection::make($attributes)
-                ->except(static::ID_PROPERTY)
-                ->put('post_type', static::postTypeId())
-                ->all()
-        );
-
-        return static::fromWpPost($post)->save();
     }
 
     /**
