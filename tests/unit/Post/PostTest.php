@@ -55,6 +55,9 @@ class PostTest extends WP_UnitTestCase
         $model = Post::fromWpPost($post);
 
         $this->assertSame($post->ID, $model->id);
+
+        $model = Post::make($post);
+        $this->assertSame($post, $model->object);
     }
 
     /**
