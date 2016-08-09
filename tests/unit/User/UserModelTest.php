@@ -226,4 +226,19 @@ class UserModelTest extends WP_UnitTestCase
         );
     }
 
+    /**
+     * @test
+     */
+    function it_can_create_a_new_user()
+    {
+        $model = User::create([
+            'user_login' => 'ralph',
+            'user_pass' => '123456'
+        ]);
+
+        $user = new WP_User($model->id);
+
+        $this->assertSame($model->id, $user->ID);
+        $this->assertSame('ralph', $user->user_login);
+    }
 }
