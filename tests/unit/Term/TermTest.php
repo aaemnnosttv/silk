@@ -109,6 +109,7 @@ class TermTest extends WP_UnitTestCase
 
         $term = get_term_by('slug', 'meat-eater', 'category');
 
+        $this->assertSame($term->term_id, $model->id);
         $this->assertSame('meat-eater', $model->slug);
     }
 
