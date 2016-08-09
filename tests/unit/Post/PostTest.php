@@ -23,6 +23,32 @@ class PostTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_can_create_a_new_instance_using_a_wp_post_object()
+    {
+        $wp_post = $this->factory->post->create_and_get();
+
+        $model = new Post($wp_post);
+
+        $this->assertSame($wp_post, $model->object);
+    }
+
+    /**
+     * @test
+     * @expectedException \Silk\Post\Exception\ModelPostTypeMismatchException
+     */
+    function it_blows_up_if_instantiated_with_a_post_of_a_different_post_type()
+    {
+        $wp_post = $this->factory->post->create_and_get(['post_type' => 'page']);
+
+        $this->assertSame('page', $wp_post->post_type);
+
+        new Post($wp_post);
+    }
+
+
+    /**
+     * @test
+     */
     function it_can_be_instantiated_from_a_wp_post_object()
     {
         $post = $this->factory->post->create_and_get();

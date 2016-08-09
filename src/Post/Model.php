@@ -63,12 +63,16 @@ abstract class Model extends BaseModel
      * Create a new instance
      *
      * @param WP_Post $post  Post object to model
+     *
+     * @throws ModelPostTypeMismatchException
      */
     public function __construct(WP_Post $post = null)
     {
         if (! $post) {
             $post = new WP_Post(new stdClass);
             $post->post_type = static::postTypeId();
+        } elseif ($post->post_type !== static::postTypeId()) {
+            throw new ModelPostTypeMismatchException(static::class, $post);
         }
 
         $this->object = $post;
