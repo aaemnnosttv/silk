@@ -80,6 +80,7 @@ abstract class Model extends BaseModel
 
     /**
      * Create a new instance from the given WP_Post object
+     * @deprecated - use static::make()
      *
      * @param  WP_Post $post
      *
@@ -109,7 +110,7 @@ abstract class Model extends BaseModel
             throw new PostNotFoundException("No post found with ID {$id}");
         }
 
-        return static::fromWpPost($post);
+        return new static($post);
     }
 
     /**
@@ -141,7 +142,7 @@ abstract class Model extends BaseModel
             throw new PostNotFoundException('Global $post not an instance of WP_Post');
         }
 
-        return static::fromWpPost($GLOBALS['post']);
+        return new static($GLOBALS['post']);
     }
 
     /**
