@@ -63,6 +63,7 @@ abstract class Model extends BaseModel
 
     /**
      * Create a new instance from a WP_Term object.
+     * @deprecated - use static::make()
      *
      * @param  WP_Term $term [description]
      *
@@ -88,7 +89,7 @@ abstract class Model extends BaseModel
             throw new TermNotFoundException("No term found with ID $id.");
         }
 
-        return static::fromWpTerm($term);
+        return new static($term);
     }
 
     /**
@@ -106,7 +107,7 @@ abstract class Model extends BaseModel
             throw new TermNotFoundException("No term found with slug '$slug'.");
         }
 
-        return static::fromWpTerm($term);
+        return new static($term);
     }
 
     /**
