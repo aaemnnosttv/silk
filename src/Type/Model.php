@@ -105,13 +105,7 @@ abstract class Model
      */
     public static function create($attributes = [])
     {
-        $model = new static;
-
-        Collection::make($attributes)
-                  ->each(function ($value, $key) use ($model) {
-                      $model->$key = $value;
-                  })
-        ;
+        $model = new static($attributes);
 
         return $model->save();
     }
