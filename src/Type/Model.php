@@ -128,20 +128,6 @@ abstract class Model
     }
 
     /**
-     * Update the core object
-     *
-     * @param object $object
-     *
-     * @return $this
-     */
-    public function setObject($object)
-    {
-        $this->object = $object;
-
-        return $this;
-    }
-
-    /**
      * Set the primary ID on the model.
      *
      * @param string|int $id  The model's ID
