@@ -16,6 +16,14 @@ class UserQueryBuilderTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function if_no_user_query_instance_is_provided_it_will_create_one_for_us()
+    {
+        $this->assertInstanceOf(QueryBuilder::class, new QueryBuilder);
+    }
+
+    /**
+     * @test
+     */
     public function it_has_a_named_constructor_for_creating_a_new_instance()
     {
         $this->assertInstanceOf(QueryBuilder::class, QueryBuilder::make());

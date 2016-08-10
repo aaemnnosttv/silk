@@ -19,19 +19,25 @@ class QueryBuilder extends BaseBuilder
      *
      * @param WP_User_Query $query
      */
-    public function __construct(WP_User_Query $query)
+    public function __construct(WP_User_Query $query = null)
     {
+        if (! $query) {
+            $query = new WP_User_Query();
+        }
+
         $this->query = $query;
     }
 
     /**
      * Create a new instance.
      *
+     * @param WP_User_Query $query
+     *
      * @return static
      */
-    public static function make()
+    public static function make(WP_User_Query $query = null)
     {
-        return new static(new WP_User_Query);
+        return new static($query);
     }
 
     /**
