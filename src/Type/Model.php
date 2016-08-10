@@ -80,6 +80,23 @@ abstract class Model
     }
 
     /**
+     * Fill the model with an array of attributes.
+     *
+     * @param  array  $attributes
+     *
+     * @return $this
+     */
+    public function fill(array $attributes)
+    {
+        foreach ($attributes as $key => $value) {
+            $expanded = $this->expandAlias($key);
+            $this->object->$expanded = $value;
+        }
+
+        return $this;
+    }
+
+    /**
      * Create a new model of the model's type, and save it to the database.
      *
      * @param  array $attributes
