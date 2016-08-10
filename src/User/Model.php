@@ -165,7 +165,7 @@ class Model extends BaseModel
             throw new WP_ErrorException($result);
         }
 
-        $this->setId($result);
+        $this->setId($result)->refresh();
 
         return $this;
     }

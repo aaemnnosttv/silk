@@ -255,4 +255,18 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertSame($user_id, $model->id);
     }
 
+    /**
+     * @test
+     */
+    function it_refreshes_the_user_object_on_save()
+    {
+        $model = new User;
+        $model->username = 'tester';
+        $model->password = 'password';
+        $model->save();
+        // Password is now hashed...
+        $this->assertNotSame('password', $model->password);
+        $this->assertTrue(wp_check_password('password', $model->password));
+    }
+
 }
