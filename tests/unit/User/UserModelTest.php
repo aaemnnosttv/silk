@@ -241,4 +241,18 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertSame($model->id, $user->ID);
         $this->assertSame('ralph', $user->user_login);
     }
+
+    /**
+     * @test
+     */
+    function it_can_create_a_new_instance_from_the_current_authenticated_user()
+    {
+        $user_id = $this->factory->user->create();
+        wp_set_current_user($user_id);
+
+        $model = User::auth();
+
+        $this->assertSame($user_id, $model->id);
+    }
+
 }

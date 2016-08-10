@@ -117,6 +117,16 @@ class Model extends BaseModel
     }
 
     /**
+     * Create a new instance using the currently authenticated user.
+     *
+     * @return static
+     */
+    public static function auth()
+    {
+        return new static(wp_get_current_user());
+    }
+
+    /**
      * Get the URL for the user's posts archive.
      *
      * @return string
