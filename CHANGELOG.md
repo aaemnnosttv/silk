@@ -1,5 +1,21 @@
 # Release Notes
 
+## v0.11.0 (2016-??-??)
+
+### Added
+- `User\Model`
+- `User\QueryBuilder`
+- `url` methods on `Post\Model` & `Term\Model`
+- `Model::make()` named constructor
+- `objectAliases` property, allowing for `$model->aliasName == $model->object->targetProperty`
+- Shorthand property names, Eg: `$postModel->{name} == $postModel->object->post_{name}`
+
+### Changed
+- `Hook` callbacks now automatically return the first argument passed if nothing is returned.
+- `ObjectMeta` now has a fluent `set(key, value)` method.
+- Deprecated `Post\Model::fromWpPost()` and `Term\Model::fromWpTerm()` (use `::make()` instead)
+- Simplified internals of `Model::save()`, `::delete()` and `::refresh()`
+
 ## v0.10.1 (2016-07-22)
 
 ### Fixed
