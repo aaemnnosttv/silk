@@ -111,20 +111,6 @@ abstract class Model extends BaseModel
     }
 
     /**
-     * Create a new instance from an array of attributes.
-     *
-     * @param  array  $attributes [description]
-     *
-     * @return static
-     */
-    public static function fromArray(array $attributes)
-    {
-        return new static(
-            new WP_Term((object) $attributes)
-        );
-    }
-
-    /**
      * Check if this term exists in the database.
      *
      * @return boolean
