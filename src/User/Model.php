@@ -133,9 +133,8 @@ class Model extends BaseModel
     */
     public function newQuery()
     {
-        return QueryBuilder::make();
+        return QueryBuilder::make()->setModel($this);
     }
-
 
     /**
      * Save the changes to the database.

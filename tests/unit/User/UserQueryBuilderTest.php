@@ -1,5 +1,6 @@
 <?php
 
+use Silk\User\Model;
 use Silk\User\QueryBuilder;
 use Illuminate\Support\Collection;
 
@@ -36,4 +37,18 @@ class UserQueryBuilderTest extends WP_UnitTestCase
     {
         $this->assertInstanceOf(Collection::class, QueryBuilder::make()->results());
     }
+
+    /**
+     * @test
+     */
+    function it_can_take_and_return_a_user_model()
+    {
+        $builder = new QueryBuilder();
+
+        $user = new Model;
+        $builder->setModel($user);
+
+        $this->assertSame($user, $builder->getModel());
+    }
+
 }
