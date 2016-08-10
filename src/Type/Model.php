@@ -160,7 +160,7 @@ abstract class Model
          */
         $expanded = static::OBJECT_TYPE . '_' . $key;
 
-        if (property_exists($this->object, $expanded)) {
+        if ($this->object && property_exists($this->object, $expanded)) {
             return $expanded;
         }
 
