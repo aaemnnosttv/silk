@@ -29,6 +29,19 @@ class TermTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_can_be_instantiated_with_an_array_of_attributes()
+    {
+        $model = new Category([
+            'name' => 'Blue'
+        ]);
+
+        $this->assertSame('Blue', $model->object->name);
+        $this->assertSame('Blue', $model->name);
+    }
+
+    /**
+     * @test
+     */
     function it_can_create_a_new_instance_from_a_wp_term()
     {
         wp_insert_term('Blue', 'category');

@@ -45,13 +45,15 @@ abstract class Model extends BaseModel
     /**
      * Model Constructor.
      *
-     * @param mixed $term  WP_Term to fill data from
+     * @param array|WP_Term $term  WP_Term
      *
      * @throws TaxonomyMismatchException
      */
-    public function __construct(WP_Term $term = null)
+    public function __construct($term = [])
     {
-        if (! $term) {
+        $attributes = is_array($term) ? $term : [];
+
+        if (! $term instanceof WP_Term) {
             $term = new WP_Term(new stdClass);
             $term->taxonomy = static::TAXONOMY;
         } elseif ($term->taxonomy != static::TAXONOMY) {
@@ -59,6 +61,8 @@ abstract class Model extends BaseModel
         }
 
         $this->object = $term;
+
+        $this->fill($attributes);
     }
 
     /**

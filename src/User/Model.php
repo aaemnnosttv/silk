@@ -33,15 +33,19 @@ class Model extends BaseModel
     /**
      * User Constructor.
      *
-     * @param WP_User $user
+     * @param array|WP_User $user  User object or array of attributes
      */
-    public function __construct(WP_User $user = null)
+    public function __construct($user = null)
     {
-        if (! $user) {
-            $user = new WP_User;
+        $attributes = is_array($user) ? $user : [];
+
+        if (! $user instanceof WP_User) {
+            $user = new WP_User();
         }
 
         $this->object = $user;
+
+        $this->fill($attributes);
     }
 
     /**

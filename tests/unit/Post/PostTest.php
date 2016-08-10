@@ -63,6 +63,19 @@ class PostTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_can_be_instantiated_with_an_array_of_attributes()
+    {
+        $model = new Post([
+            'post_title' => 'The Title'
+        ]);
+
+        $this->assertSame('The Title', $model->post_title);
+        $this->assertSame('The Title', $model->title); // shorthand
+    }
+
+    /**
+     * @test
+     */
     public function it_can_find_a_post_by_the_id()
     {
         $post_id = $this->factory->post->create();

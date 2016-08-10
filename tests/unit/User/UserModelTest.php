@@ -17,9 +17,21 @@ class UserModelTest extends WP_UnitTestCase
     /**
      * @test
      */
-    public function it_takes_a_wp_user_in_the_constructor()
+    public function it_takes_a_wp_user_or_array_of_user_attributes_in_the_constructor()
     {
-        new User(new WP_User);
+        $blankUser = new WP_User;
+
+        $model = new User($blankUser);
+
+        $this->assertSame($blankUser, $model->object);
+
+        $modelFromAtts = new User([
+            'user_login' => 'z3r0c00l',
+            'user_pass' => 'iheartkate'
+        ]);
+
+        $this->assertSame('z3r0c00l', $modelFromAtts->object->user_login);
+        $this->assertSame('iheartkate', $modelFromAtts->object->user_pass);
     }
 
     /**
