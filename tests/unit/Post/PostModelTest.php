@@ -51,7 +51,8 @@ class PostModelTest extends WP_UnitTestCase
         $model = ModelTestShorthand::create([
             'title'   => 'The Title',
             'name'    => 'urlish-title',
-            'excerpt' => 'something cool'
+            'excerpt' => 'something cool',
+            'post_content' => 'Some content', // required to test parent method
         ]);
 
         $post = get_post($model->id);
@@ -59,6 +60,7 @@ class PostModelTest extends WP_UnitTestCase
         $this->assertSame('The Title', $post->post_title);
         $this->assertSame('urlish-title', $post->post_name);
         $this->assertSame('something cool', $post->post_excerpt);
+        $this->assertSame('Some content', $post->post_content);
     }
 }
 
