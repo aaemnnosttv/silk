@@ -165,16 +165,6 @@ abstract class Model
             return $this->objectAliases[$key];
         }
 
-        /**
-         * Automatically alias shorthand syntax for type_name
-         * Eg: 'post_content' is aliased to 'content'
-         */
-        $expanded = static::OBJECT_TYPE . '_' . $key;
-
-        if ($this->object && property_exists($this->object, $expanded)) {
-            return $expanded;
-        }
-
         return $key;
     }
 

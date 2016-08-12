@@ -42,6 +42,24 @@ class PostModelTest extends WP_UnitTestCase
 
         $this->assertSame($wp_post, $model->object);
     }
+
+    /**
+     * @test
+     */
+    function it_can_create_a_new_post_with_shorthand_attributes()
+    {
+        $model = ModelTestShorthand::create([
+            'title'   => 'The Title',
+            'name'    => 'urlish-title',
+            'excerpt' => 'something cool'
+        ]);
+
+        $post = get_post($model->id);
+
+        $this->assertSame('The Title', $post->post_title);
+        $this->assertSame('urlish-title', $post->post_name);
+        $this->assertSame('something cool', $post->post_excerpt);
+    }
 }
 
 /**
@@ -77,4 +95,9 @@ class ModelTestEventTrait extends ModelTestEvent
      * Here the trait is overriden by the constant
      */
     use Silk\Post\ClassNameAsPostType;
+}
+
+class ModelTestShorthand extends Model
+{
+    use \Silk\Type\ShorthandProperties;
 }

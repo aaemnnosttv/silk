@@ -70,7 +70,6 @@ class PostTest extends WP_UnitTestCase
         ]);
 
         $this->assertSame('The Title', $model->post_title);
-        $this->assertSame('The Title', $model->title); // shorthand
     }
 
     /**
@@ -187,25 +186,6 @@ class PostTest extends WP_UnitTestCase
 
         $this->assertEquals($post->ID, $model->id);
     }
-
-    /**
-     * @test
-     */
-    function it_can_create_a_new_post_with_shorthand_attributes()
-    {
-        $model = Post::create([
-            'title'   => 'The Title',
-            'name'    => 'urlish-title',
-            'excerpt' => 'something cool'
-        ]);
-
-        $post = get_post($model->id);
-
-        $this->assertSame('The Title', $post->post_title);
-        $this->assertSame('urlish-title', $post->post_name);
-        $this->assertSame('something cool', $post->post_excerpt);
-    }
-
 
     /**
      * @test
