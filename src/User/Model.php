@@ -20,17 +20,6 @@ class Model extends BaseModel
     const ID_PROPERTY = 'ID';
 
     /**
-     * Type object property aliases
-     * @var array
-     */
-    protected $objectAliases = [
-        'email'    => 'user_email',
-        'slug'     => 'user_nicename',
-        'username' => 'user_login',
-        'password' => 'user_pass',
-    ];
-
-    /**
      * User Constructor.
      *
      * @param array|WP_User $user  User object or array of attributes
