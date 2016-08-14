@@ -89,8 +89,12 @@ abstract class Model
     public function fill(array $attributes)
     {
         foreach ($attributes as $key => $value) {
-            $expanded = $this->expandAlias($key);
-            $this->object->$expanded = $value;
+            if ($this->expandAlias($key)) {
+                $this->aliasSet($key, $value);
+                continue;
+            }
+
+            $this->object->$key = $value;
         }
 
         return $this;
@@ -165,20 +169,65 @@ abstract class Model
 
         return $this;
     }
+
+    /**
+     * Set a property on the aliased object.
+     *
+     * @param string $key   The alias name on the model
+     * @param mixed  $value The value to set on the aliased object
+     *
+     * @return bool          True if the alias was resolved and set; otherwise false
+     */
+    protected function aliasSet($key, $value)
+    {
+        if (! $expanded = $this->expandAlias($key)) {
+            return false;
+        }
+
+        if (is_object($aliased = $this->getAliasedObject())) {
+            $aliased->$expanded = $value;
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get a property from the aliased object by the model's key.
+     *
+     * @param $key
+     *
+     * @return mixed|null
+     */
+    protected function aliasGet($key)
+    {
+        if (! $expanded = $this->expandAlias($key)) {
+            return null;
+        }
+
+        return data_get($this->getAliasedObject(), $expanded);
+    }
+
+    /**
+     * Get the aliased object instance.
+     *
+     * @return object
+     */
+    protected function getAliasedObject()
+    {
+        return $this->object;
+    }
+
     /**
      * Expands an alias into its respective object property name.
      *
      * @param string $key  Alias key
      *
-     * @return mixed|string
+     * @return string|false  The expanded alias, or false no alias exists for the key.
      */
     protected function expandAlias($key)
     {
-        if (isset($this->objectAliases[$key])) {
-            return $this->objectAliases[$key];
-        }
-
-        return $key;
+        return data_get($this->objectAliases, $key, false);
     }
 
     /**
@@ -198,7 +247,9 @@ abstract class Model
             return $this->object;
         }
 
-        $property = $this->expandAlias($property);
+        if (! is_null($aliased = $this->aliasGet($property))) {
+            return $aliased;
+        }
 
         /**
          * Finally, hand-off the request to the wrapped object.
@@ -226,7 +277,9 @@ abstract class Model
      */
     public function __set($property, $value)
     {
-        $property = $this->expandAlias($property);
+        if ($this->aliasSet($property, $value)) {
+            return;
+        }
 
         $this->object->$property = $value;
     }
