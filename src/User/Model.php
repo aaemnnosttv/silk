@@ -43,7 +43,7 @@ class Model extends BaseModel
             $user = new WP_User();
         }
 
-        $this->object = $user;
+        $this->object = $this->normalizeData($user);
 
         $this->fill($attributes);
     }
@@ -182,7 +182,7 @@ class Model extends BaseModel
     public function delete()
     {
         if (wp_delete_user($this->id)) {
-            $this->object = new WP_User;
+            $this->setObject(new WP_User);
         }
 
         return $this;
@@ -195,8 +195,58 @@ class Model extends BaseModel
      */
     public function refresh()
     {
-        $this->object = new WP_User($this->id);
+        $this->setObject(new WP_User($this->id));
 
         return $this;
+    }
+
+    /**
+     * Set the WP_User object on the model.
+     *
+     * @param WP_User $user
+     *
+     * @return $this
+     */
+    protected function setObject($user)
+    {
+        $this->object = $this->normalizeData($user);
+
+        return $this;
+    }
+
+    /**
+     * Normalize the user data object on the given User.
+     *
+     * This is necessary for object aliases and shorthand properties to work properly
+     * due to the fact that the WP_User's data object is a plain object which
+     * does not always contain all properties as is the case with other WP objects.
+     *
+     * @param WP_User $user
+     *
+     * @return WP_User
+     */
+    protected function normalizeData(WP_User $user)
+    {
+        $properties = [
+            'ID',
+            'user_login',
+            'user_pass',
+            'user_nicename',
+            'user_email',
+            'user_registered',
+            'user_activation_key',
+            'user_status',
+            'display_name',
+            'spam',
+            'deleted',
+        ];
+
+        foreach ($properties as $property) {
+            if (! property_exists($user->data, $property)) {
+                $user->data->$property = null; // exists but ! isset
+            }
+        }
+
+        return $user;
     }
 }
