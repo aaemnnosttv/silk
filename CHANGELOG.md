@@ -8,7 +8,7 @@
 - `url` methods on `Post\Model` & `Term\Model`
 - `Model::make()` named constructor
 - `objectAliases` property, allowing for `$model->aliasName == $model->object->targetProperty`
-- Shorthand property names, Eg: `$postModel->{name} == $postModel->object->post_{name}`
+- Shorthand property aliases, Eg: `$postModel->{name} == $postModel->object->post_{name}` (opt-in via trait)
 
 ### Changed
 - `Hook` callbacks now automatically return the first argument passed if nothing is returned.
