@@ -10,7 +10,9 @@
 
 A modern API for WordPress.
 
-**This project is still in early development and may introduce breaking changes.**
+**The current API is still evolving as the project grows closer to v1.0 and may introduce breaking changes.**
+
+Use with confidence, upgrade with care.
 
 --
 
