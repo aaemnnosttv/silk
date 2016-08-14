@@ -8,6 +8,11 @@ use Silk\Contracts\BuildsQueries;
 abstract class Builder implements BuildsQueries
 {
     /**
+     * @var Model  The model instance
+     */
+    protected $model;
+
+    /**
      * Set the model for this query.
      *
      * @param Model $model

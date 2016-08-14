@@ -16,13 +16,6 @@ class QueryBuilder extends BaseBuilder
     protected $query;
 
     /**
-     * Post Model instance
-     *
-     * @var Model
-     */
-    protected $model;
-
-    /**
      * Builder constructor.
      *
      * @param WP_Query $query

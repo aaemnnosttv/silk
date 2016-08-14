@@ -10,12 +10,6 @@ use Illuminate\Support\Collection;
 class QueryBuilder extends BaseBuilder
 {
     /**
-     * The term model
-     * @var Model
-     */
-    protected $model;
-
-    /**
      * Collection of arguments
      * @var Collection
      */
