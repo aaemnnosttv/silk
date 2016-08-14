@@ -249,4 +249,16 @@ class Model extends BaseModel
 
         return $user;
     }
+
+    /**
+     * Get the aliased object.
+     *
+     * Most user data from the database is stored as an object on the user's `data` property.
+     *
+     * @return object|\stdClass
+     */
+    protected function getAliasedObject()
+    {
+        return $this->object->data;
+    }
 }
