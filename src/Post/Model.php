@@ -76,7 +76,7 @@ abstract class Model extends BaseModel
             throw new ModelPostTypeMismatchException(static::class, $post);
         }
 
-        $this->object = $post;
+        $this->setObject($post);
 
         $this->fill($attributes);
     }
@@ -264,10 +264,8 @@ abstract class Model extends BaseModel
      */
     public function refresh()
     {
-        $this->object = WP_Post::get_instance($this->id);
+        $this->setObject(WP_Post::get_instance($this->id));
 
         return $this;
     }
-
-
 }

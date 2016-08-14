@@ -60,7 +60,7 @@ abstract class Model extends BaseModel
             throw new TaxonomyMismatchException();
         }
 
-        $this->object = $term;
+        $this->setObject($term);
 
         $this->fill($attributes);
     }
@@ -236,7 +236,7 @@ abstract class Model extends BaseModel
     public function delete()
     {
         if (wp_delete_term($this->id, $this->taxonomy)) {
-            $this->object = new WP_Term(new stdClass);
+            $this->setObject(new WP_Term(new stdClass));
         }
 
         return $this;
@@ -249,7 +249,7 @@ abstract class Model extends BaseModel
      */
     public function refresh()
     {
-        $this->object = WP_Term::get_instance($this->id, $this->taxonomy);
+        $this->setObject(WP_Term::get_instance($this->id, $this->taxonomy));
 
         return $this;
     }
