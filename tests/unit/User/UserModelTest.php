@@ -1,8 +1,8 @@
 <?php
 
 use Silk\User\Model as User;
-
 use Silk\Contracts\BuildsQueries;
+use Silk\Type\ShorthandProperties;
 
 class UserModelTest extends WP_UnitTestCase
 {
@@ -127,24 +127,11 @@ class UserModelTest extends WP_UnitTestCase
     /**
      * @test
      */
-    public function it_aliases_some_properties_to_user_data()
-    {
-        $user = $this->factory->user->create_and_get();
-        $model = new User($user);
-
-        $this->assertSame($user->user_email, $model->email);
-        $this->assertSame($user->user_nicename, $model->slug);
-        $this->assertSame($user->user_login, $model->username);
-    }
-
-    /**
-     * @test
-     */
     public function it_can_create_a_new_user_from_a_new_instance()
     {
         $model = new User;
-        $model->username = 'bigbird';
-        $model->password = 'rub_a_dub_dub';
+        $model->user_login = 'bigbird';
+        $model->user_pass = 'rub_a_dub_dub';
         $model->save();
 
         $this->assertNotEmpty($model->id,
@@ -159,8 +146,8 @@ class UserModelTest extends WP_UnitTestCase
     public function it_blows_up_if_trying_to_create_a_user_without_a_username()
     {
         $model = new User;
-        $model->username = '';
-        $model->password = 'password';
+        $model->user_login = '';
+        $model->user_pass = 'password';
         $model->save();
     }
 
@@ -273,12 +260,62 @@ class UserModelTest extends WP_UnitTestCase
     function it_refreshes_the_user_object_on_save()
     {
         $model = new User;
-        $model->username = 'tester';
-        $model->password = 'password';
+        $model->user_login = 'tester';
+        $model->user_pass = 'password';
         $model->save();
         // Password is now hashed...
-        $this->assertNotSame('password', $model->password);
-        $this->assertTrue(wp_check_password('password', $model->password));
+        $this->assertNotSame('password', $model->user_pass);
+        $this->assertTrue(wp_check_password('password', $model->user_pass));
     }
 
+    /**
+     * @test
+     */
+    public function it_can_alias_some_properties_to_user_data()
+    {
+        $user = $this->factory->user->create_and_get();
+        $model = new UserWithAliases($user);
+
+        $this->assertSame($user->user_email, $model->email);
+        $this->assertSame($user->user_nicename, $model->slug);
+        $this->assertSame($user->user_login, $model->username);
+        $this->assertSame($user->user_pass, $model->password);
+    }
+
+    /**
+     * @test
+     */
+    function it_works_with_shorthand_too()
+    {
+        $model = new ShorthandUser([
+            'login' => 'admin',
+            'pass' => '12345'
+        ]);
+
+        $this->assertSame('admin', $model->user_login);
+        $this->assertSame('12345', $model->user_pass);
+        unset($model);
+
+        $model = new ShorthandUser(new WP_User);
+        $model->login = 'helper';
+        $model->pass  = '6789';
+
+        $this->assertSame('helper', $model->user_login);
+        $this->assertSame('6789', $model->user_pass);
+    }
+}
+
+class UserWithAliases extends User
+{
+    protected $objectAliases = [
+        'email'    => 'user_email',
+        'slug'     => 'user_nicename',
+        'username' => 'user_login',
+        'password' => 'user_pass',
+    ];
+}
+
+class ShorthandUser extends User
+{
+    use ShorthandProperties;
 }
