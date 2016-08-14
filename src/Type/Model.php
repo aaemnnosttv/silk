@@ -153,6 +153,19 @@ abstract class Model
     }
 
     /**
+     * Set the object for the model.
+     *
+     * @param $object
+     *
+     * @return $this
+     */
+    protected function setObject($object)
+    {
+        $this->object = $object;
+
+        return $this;
+    }
+    /**
      * Expands an alias into its respective object property name.
      *
      * @param string $key  Alias key
