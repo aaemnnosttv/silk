@@ -4,6 +4,7 @@ namespace Silk\User;
 
 use WP_User;
 use Silk\Type\Model as BaseModel;
+use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
 use Silk\User\Exception\UserNotFoundException;
 
@@ -216,7 +217,7 @@ class Model extends BaseModel
      */
     protected function normalizeData(WP_User $user)
     {
-        $properties = [
+        Collection::make([
             'ID',
             'user_login',
             'user_pass',
@@ -228,13 +229,10 @@ class Model extends BaseModel
             'display_name',
             'spam',
             'deleted',
-        ];
-
-        foreach ($properties as $property) {
-            if (! property_exists($user->data, $property)) {
+        ])->diff(array_keys((array) $user->data))
+            ->each(function ($property) use ($user) {
                 $user->data->$property = null; // exists but ! isset
-            }
-        }
+            });
 
         return $user;
     }
