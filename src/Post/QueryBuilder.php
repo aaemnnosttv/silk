@@ -119,7 +119,7 @@ class QueryBuilder extends BaseBuilder
             return $this->collectModels();
         }
 
-        return Collection::make($this->query->get_posts());
+        return new Collection($this->query->get_posts());
     }
 
     /**

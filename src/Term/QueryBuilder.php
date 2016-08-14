@@ -28,7 +28,7 @@ class QueryBuilder extends BaseBuilder
      */
     public function __construct(array $args = [])
     {
-        $this->args = Collection::make($args);
+        $this->args = new Collection($args);
     }
 
     /**
@@ -109,7 +109,7 @@ class QueryBuilder extends BaseBuilder
             $this->args->put('taxonomy', $this->taxonomy);
         }
 
-        return Collection::make($this->fetchTerms());
+        return new Collection($this->fetchTerms());
     }
 
     /**

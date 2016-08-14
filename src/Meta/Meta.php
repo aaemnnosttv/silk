@@ -55,7 +55,7 @@ class Meta
      */
     public function collect()
     {
-        return Collection::make($this->all());
+        return new Collection($this->all());
     }
 
     /**

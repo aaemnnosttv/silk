@@ -95,6 +95,6 @@ abstract class Shortcode
      */
     public function attributes()
     {
-        return Collection::make($this->attributes);
+        return new Collection($this->attributes);
     }
 }
