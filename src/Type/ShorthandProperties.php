@@ -15,14 +15,16 @@ trait ShorthandProperties
      */
     protected function expandAlias($key)
     {
-        if (is_object($this->object) || ! empty(static::OBJECT_TYPE)) {
+        $aliased = $this->getAliasedObject();
+
+        if (is_object($aliased) || ! empty(static::OBJECT_TYPE)) {
             /**
              * Automatically alias shorthand syntax for type_name
              * Eg: 'post_content' is aliased to 'content'
              */
             $expanded = static::OBJECT_TYPE . '_' . $key;
 
-            if (property_exists($this->object, $expanded)) {
+            if (property_exists($aliased, $expanded)) {
                 return $expanded;
             }
         }
