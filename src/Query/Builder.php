@@ -5,6 +5,10 @@ namespace Silk\Query;
 use Silk\Type\Model;
 use Silk\Contracts\BuildsQueries;
 
+/**
+ * @property-read object $query
+ * @property-read Model  $model
+ */
 abstract class Builder implements BuildsQueries
 {
     /**
@@ -34,5 +38,21 @@ abstract class Builder implements BuildsQueries
     public function getModel()
     {
         return $this->model;
+    }
+
+    /**
+     * Magic Getter.
+     *
+     * @param $property
+     *
+     * @return null
+     */
+    public function __get($property)
+    {
+        if (in_array($property, ['query','model'])) {
+            return $this->$property;
+        }
+
+        return null;
     }
 }
