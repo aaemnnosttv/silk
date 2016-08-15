@@ -51,4 +51,31 @@ class UserQueryBuilderTest extends WP_UnitTestCase
         $this->assertSame($user, $builder->getModel());
     }
 
+    /**
+     * @test
+     */
+    function it_can_accept_arbitrary_query_vars()
+    {
+        $builder = new QueryBuilder();
+        $builder->set('count_total', false);
+
+        $this->assertFalse($builder->query->get('count_total'));
+    }
+
+
+    /**
+     * @test
+     */
+    function it_returns_the_results_as_a_collection_of_model_instances_when_set()
+    {
+        $new_user_id = $this->factory->user->create();
+
+        $builder = new QueryBuilder();
+        $builder->setModel(new Model);
+        $results = $builder->results();
+
+        $this->assertInstanceOf(Model::class, $results->first());
+        $this->assertContains($new_user_id, $results->pluck('ID'));
+    }
+
 }
