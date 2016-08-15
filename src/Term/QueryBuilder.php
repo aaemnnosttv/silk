@@ -22,7 +22,7 @@ class QueryBuilder extends BaseBuilder
     protected $taxonomy;
 
     /**
-     * TermQueryBuilder Constructor.
+     * QueryBuilder Constructor.
      *
      * @param array $args
      */
