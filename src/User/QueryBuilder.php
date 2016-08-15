@@ -4,7 +4,6 @@ namespace Silk\User;
 
 use WP_User_Query;
 use Silk\Query\Builder as BaseBuilder;
-use Illuminate\Support\Collection;
 
 class QueryBuilder extends BaseBuilder
 {
@@ -41,12 +40,32 @@ class QueryBuilder extends BaseBuilder
     }
 
     /**
-     * Get the query results.
+     * Execute the query and return the raw results.
      *
-     * @return Collection
+     * @return array
      */
-    public function results()
+    protected function query()
     {
-        return Collection::make($this->query->get_results());
+        $this->set('fields', 'all');
+
+        $this->query->prepare_query();
+        $this->query->query();
+
+        return $this->query->get_results();
+    }
+
+    /**
+     * Set an arbitrary query parameter.
+     *
+     * @param $parameter
+     * @param $value
+     *
+     * @return $this
+     */
+    public function set($parameter, $value)
+    {
+        $this->query->set($parameter, $value);
+
+        return $this;
     }
 }

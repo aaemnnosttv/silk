@@ -2,7 +2,6 @@
 
 namespace Silk\Term;
 
-use WP_Term;
 use Silk\Query\Builder as BaseBuilder;
 use Silk\Exception\WP_ErrorException;
 use Illuminate\Support\Collection;
@@ -10,10 +9,10 @@ use Illuminate\Support\Collection;
 class QueryBuilder extends BaseBuilder
 {
     /**
-     * Collection of arguments
+     * Query arguments
      * @var Collection
      */
-    protected $args;
+    protected $query;
 
     /**
      * Taxonomy Identifier
@@ -28,7 +27,7 @@ class QueryBuilder extends BaseBuilder
      */
     public function __construct(array $args = [])
     {
-        $this->args = new Collection($args);
+        $this->query = new Collection($args);
     }
 
     /**
@@ -73,9 +72,7 @@ class QueryBuilder extends BaseBuilder
      */
     public function includeEmpty()
     {
-        $this->args->put('hide_empty', false);
-
-        return $this;
+        return $this->set('hide_empty', false);
     }
 
     /**
@@ -87,62 +84,44 @@ class QueryBuilder extends BaseBuilder
      */
     public function limit($max_results)
     {
-        $this->args->put('number', intval($max_results));
-
-        return $this;
+        return $this->set('number', intval($max_results));
     }
 
     /**
-     * Get the query results.
-     *
-     * @throws WP_ErrorException
-     *
-     * @return Collection
-     */
-    public function results()
-    {
-        if ($this->model) {
-            return $this->collectModels();
-        }
-
-        if ($this->taxonomy) {
-            $this->args->put('taxonomy', $this->taxonomy);
-        }
-
-        return new Collection($this->fetchTerms());
-    }
-
-    /**
-     * Get the results as a collection of models.
-     *
-     * @return Collection
-     */
-    protected function collectModels()
-    {
-        $this->args->put('taxonomy', $this->model->taxonomy);
-        $this->args->put('fields', 'all');
-
-        $modelClass = get_class($this->model);
-
-        return Collection::make($this->fetchTerms())
-            ->map(function (WP_Term $term) use ($modelClass) {
-                return new $modelClass($term);
-            });
-    }
-
-    /**
-     * Perform the term query and return the results.
+     * Execute the query and return the raw results.
      *
      * @throws WP_ErrorException
      *
      * @return array
      */
-    protected function fetchTerms()
+    protected function query()
     {
-        if (is_wp_error($terms = get_terms($this->args->toArray()))) {
+        if ($this->model) {
+            $this->set('taxonomy', $this->model->taxonomy)
+                 ->set('fields', 'all');
+        } elseif ($this->taxonomy) {
+            $this->set('taxonomy', $this->taxonomy);
+        }
+
+        if (is_wp_error($terms = get_terms($this->query->toArray()))) {
             throw new WP_ErrorException($terms);
         }
 
         return $terms;
+    }
+
+    /**
+     * Set an arbitrary query parameter.
+     *
+     * @param $parameter
+     * @param $value
+     *
+     * @return $this
+     */
+    public function set($parameter, $value)
+    {
+        $this->query->put($parameter, $value);
+
+        return $this;
     }
 }
