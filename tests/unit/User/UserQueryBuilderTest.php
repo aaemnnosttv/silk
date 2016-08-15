@@ -9,7 +9,7 @@ class UserQueryBuilderTest extends WP_UnitTestCase
     /**
      * @test
      */
-    public function it_requires_a_wp_user_query()
+    public function it_can_accept_an_existing_wp_user_query()
     {
         $this->assertInstanceOf(QueryBuilder::class, new QueryBuilder(new WP_User_Query));
     }
