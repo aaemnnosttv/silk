@@ -70,7 +70,7 @@ class PostType extends Type implements Registerable
      *
      * @return mixed
      */
-    static function build($id)
+    public static function build($id)
     {
         return new Builder($id);
     }
