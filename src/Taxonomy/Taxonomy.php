@@ -117,6 +117,14 @@ class Taxonomy extends Type implements Registerable
     }
 
     /**
+     * @return mixed
+     */
+    public function id()
+    {
+        return $this->object->name;
+    }
+
+    /**
      * Start a new query for terms of this taxonomy.
      *
      * @return QueryBuilder
