@@ -5,6 +5,13 @@ namespace Silk\Type;
 interface Registerable
 {
     /**
+     * Get the unique identifier for the type.
+     *
+     * @return string
+     */
+    public function id();
+
+    /**
      * Load an existing type instance.
      *
      * @param $id

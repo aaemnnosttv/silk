@@ -26,6 +26,8 @@ class TaxonomyTest extends WP_UnitTestCase
     {
         $object = get_taxonomy('category');
         $taxonomy = new Taxonomy($object);
+
+        $this->assertSame('category', $taxonomy->id());
     }
 
     /**

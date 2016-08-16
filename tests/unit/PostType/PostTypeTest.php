@@ -12,7 +12,9 @@ class PostTypeTest extends WP_UnitTestCase
     */
     function it_takes_a_post_type_object_in_the_constructor()
     {
-        new PostType(get_post_type_object('post'));
+        $postType = new PostType(get_post_type_object('post'));
+
+        $this->assertSame('post', $postType->id());
     }
 
     /**
