@@ -2,6 +2,7 @@
 
 namespace Silk\Taxonomy;
 
+use stdClass;
 use Silk\Type\Type;
 use Silk\PostType\PostType;
 use Silk\Term\QueryBuilder;
