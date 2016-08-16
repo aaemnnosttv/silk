@@ -19,16 +19,6 @@ abstract class Type
     protected $object;
 
     /**
-     * Get the type object.
-     *
-     * @return object
-     */
-    public function object()
-    {
-        return $this->object;
-    }
-
-    /**
      * @return array
      */
     protected function objectAliases()
