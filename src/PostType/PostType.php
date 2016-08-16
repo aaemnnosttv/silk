@@ -31,31 +31,31 @@ class PostType extends Type
      *
      * Loads an existing type, or returns a new builder for registering a new type.
      *
-     * @param  string $slug    The post type slug
+     * @param  string $id The post type identifier
      *
      * @return static|Builder  If the post type has been registered, a new static instance is returned.
      *                         Otherwise a new Builder is created for building a new post type to register.
      */
-    public static function make($slug)
+    public static function make($id)
     {
-        if (static::exists($slug)) {
-            return static::load($slug);
+        if (static::exists($id)) {
+            return static::load($id);
         }
 
-        return new Builder($slug);
+        return new Builder($id);
     }
 
     /**
      * Create a new instance from an existing type.
      *
-     * @param  string $slug  The post type slug
+     * @param  string $id  The post type identifier
      *
      * @return static
      */
-    public static function load($slug)
+    public static function load($id)
     {
-        if (! $object = get_post_type_object($slug)) {
-            throw new NonExistentPostTypeException("No post type exists with name '$slug'.");
+        if (! $object = get_post_type_object($id)) {
+            throw new NonExistentPostTypeException("No post type exists with name '$id'.");
         }
 
         return new static($object);
@@ -72,13 +72,13 @@ class PostType extends Type
     /**
      * Checks if a post type with this slug has been registered.
      *
-     * @param string $slug  The post type slug
+     * @param string $id The post type identifier
      *
      * @return bool
      */
-    public static function exists($slug)
+    public static function exists($id)
     {
-        return post_type_exists($slug);
+        return post_type_exists($id);
     }
 
     /**
@@ -97,7 +97,7 @@ class PostType extends Type
 
         return ! Collection::make($features)
             ->contains(function ($key, $feature) {
-                return ! post_type_supports($this->slug, $feature);
+                return ! post_type_supports($this->id(), $feature);
             });
     }
 
@@ -111,7 +111,7 @@ class PostType extends Type
      */
     public function addSupportFor($features)
     {
-        add_post_type_support($this->slug, is_array($features) ? $features : func_get_args());
+        add_post_type_support($this->id(), is_array($features) ? $features : func_get_args());
 
         return $this;
     }
@@ -128,7 +128,7 @@ class PostType extends Type
     {
         Collection::make(is_array($features) ? $features : func_get_args())
             ->each(function ($features) {
-                remove_post_type_support($this->slug, $features);
+                remove_post_type_support($this->id(), $features);
             });
 
         return $this;
@@ -144,11 +144,13 @@ class PostType extends Type
      */
     public function unregister()
     {
-        if (! static::exists($this->slug)) {
-            throw new NonExistentPostTypeException("No post type exists with name '{$this->slug}'.");
+        $id = $this->id();
+
+        if (! static::exists($id)) {
+            throw new NonExistentPostTypeException("No post type exists with name '{$id}'.");
         }
 
-        if (is_wp_error($error = unregister_post_type($this->slug))) {
+        if (is_wp_error($error = unregister_post_type($id))) {
             throw new WP_ErrorException($error);
         }
 
