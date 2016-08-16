@@ -33,8 +33,8 @@ abstract class Builder
     /**
      * Builder Constructor.
      *
-     * @param string $id   [description]
-     * @param array  $args [description]
+     * @param string $id   Type identifier
+     * @param array  $args Initial arguments
      */
     public function __construct($id, array $args = [])
     {
