@@ -5,6 +5,9 @@ namespace Silk\User;
 use WP_User_Query;
 use Silk\Query\Builder as BaseBuilder;
 
+/**
+ * @property Model $model
+ */
 class QueryBuilder extends BaseBuilder
 {
     /**

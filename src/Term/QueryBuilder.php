@@ -6,6 +6,9 @@ use Silk\Query\Builder as BaseBuilder;
 use Silk\Exception\WP_ErrorException;
 use Illuminate\Support\Collection;
 
+/**
+ * @property Model $model
+ */
 class QueryBuilder extends BaseBuilder
 {
     /**
