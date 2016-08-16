@@ -180,11 +180,9 @@ abstract class Model
      */
     protected function aliasSet($key, $value)
     {
-        if (! $expanded = $this->expandAlias($key)) {
-            return false;
-        }
+        $expanded = $this->expandAlias($key);
 
-        if (is_object($aliased = $this->getAliasedObject())) {
+        if ($expanded && is_object($aliased = $this->getAliasedObject())) {
             $aliased->$expanded = $value;
             return true;
         }
