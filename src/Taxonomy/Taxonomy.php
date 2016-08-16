@@ -131,7 +131,7 @@ class Taxonomy extends Type implements Registerable
      */
     public function terms()
     {
-        return (new QueryBuilder)->forTaxonomy($this->id);
+        return (new QueryBuilder)->forTaxonomy($this->id());
     }
 
     /**
@@ -157,11 +157,11 @@ class Taxonomy extends Type implements Registerable
      */
     public function unregister()
     {
-        if (! $this->exists($this->id)) {
+        if (! $this->exists($this->id())) {
             throw new NonExistentTaxonomyException;
         }
 
-        if (is_wp_error($error = unregister_taxonomy($this->id))) {
+        if (is_wp_error($error = unregister_taxonomy($this->id()))) {
             throw new WP_ErrorException($error);
         }
 
