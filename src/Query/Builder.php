@@ -82,20 +82,4 @@ abstract class Builder implements BuildsQueries
     {
         return $this->model;
     }
-
-    /**
-     * Magic Getter.
-     *
-     * @param $property
-     *
-     * @return null
-     */
-    public function __get($property)
-    {
-        if (in_array($property, ['query','model'])) {
-            return $this->$property;
-        }
-
-        return null;
-    }
 }

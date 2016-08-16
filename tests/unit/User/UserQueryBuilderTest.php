@@ -56,10 +56,12 @@ class UserQueryBuilderTest extends WP_UnitTestCase
      */
     function it_can_accept_arbitrary_query_vars()
     {
-        $builder = new QueryBuilder();
+        $query = Mockery::spy(WP_User_Query::class);
+
+        $builder = new QueryBuilder($query);
         $builder->set('count_total', false);
 
-        $this->assertFalse($builder->query->get('count_total'));
+        $query->shouldHaveReceived('set')->with('count_total', false);
     }
 
 
