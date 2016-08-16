@@ -76,7 +76,7 @@ class PostType extends Type implements Registerable
     }
 
     /**
-     * Get the post type identifier (aka: name/slug)
+     * Get the post type identifier (aka: name/slug).
      */
     public function id()
     {
@@ -131,7 +131,7 @@ class PostType extends Type implements Registerable
     }
 
     /**
-     * Deregister support of certain features for an existing post type.
+     * Un-register support of certain features for an existing post type.
      *
      * @param mixed $features string - single feature to remove
      *                        array - multiple features to remove
@@ -149,7 +149,7 @@ class PostType extends Type implements Registerable
     }
 
     /**
-     * Unregister the post type
+     * Unregister the post type.
      *
      * @throws NonExistentPostTypeException
      * @throws WP_ErrorException
