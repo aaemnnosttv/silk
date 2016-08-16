@@ -3,7 +3,6 @@
 namespace Silk\Type;
 
 use Silk\Meta\ObjectMeta;
-use Illuminate\Support\Collection;
 
 /**
  * @property-read int    $id
@@ -11,19 +10,13 @@ use Illuminate\Support\Collection;
  */
 abstract class Model
 {
+    use ObjectAliases;
+
     /**
      * The core model object
      * @var object
      */
     protected $object;
-
-    /**
-     * Type object property aliases
-     * @var array
-     */
-    protected $objectAliases = [
-        // 'aliasName' => 'propertyNameOnObject'
-    ];
 
     /**
      * The object type in WordPress
@@ -171,61 +164,19 @@ abstract class Model
     }
 
     /**
-     * Set a property on the aliased object.
-     *
-     * @param string $key   The alias name on the model
-     * @param mixed  $value The value to set on the aliased object
-     *
-     * @return bool          True if the alias was resolved and set; otherwise false
+     * @return array
      */
-    protected function aliasSet($key, $value)
+    protected function objectAliases()
     {
-        $expanded = $this->expandAlias($key);
-
-        if ($expanded && is_object($aliased = $this->getAliasedObject())) {
-            $aliased->$expanded = $value;
-            return true;
-        }
-
-        return false;
+        return [];
     }
 
     /**
-     * Get a property from the aliased object by the model's key.
-     *
-     * @param $key
-     *
-     * @return mixed|null
-     */
-    protected function aliasGet($key)
-    {
-        if (! $expanded = $this->expandAlias($key)) {
-            return null;
-        }
-
-        return data_get($this->getAliasedObject(), $expanded);
-    }
-
-    /**
-     * Get the aliased object instance.
-     *
      * @return object
      */
     protected function getAliasedObject()
     {
         return $this->object;
-    }
-
-    /**
-     * Expands an alias into its respective object property name.
-     *
-     * @param string $key  Alias key
-     *
-     * @return string|false  The expanded alias, or false no alias exists for the key.
-     */
-    protected function expandAlias($key)
-    {
-        return data_get($this->objectAliases, $key, false);
     }
 
     /**

@@ -307,12 +307,14 @@ class UserModelTest extends WP_UnitTestCase
 
 class UserWithAliases extends User
 {
-    protected $objectAliases = [
-        'email'    => 'user_email',
-        'slug'     => 'user_nicename',
-        'username' => 'user_login',
-        'password' => 'user_pass',
-    ];
+    protected function objectAliases() {
+        return [
+            'email'    => 'user_email',
+            'slug'     => 'user_nicename',
+            'username' => 'user_login',
+            'password' => 'user_pass',
+        ];
+    }
 }
 
 class ShorthandUser extends User
