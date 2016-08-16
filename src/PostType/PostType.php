@@ -4,11 +4,12 @@ namespace Silk\PostType;
 
 use stdClass;
 use Silk\Type\Type;
+use Silk\Type\Registerable;
 use Illuminate\Support\Collection;
 use Silk\Exception\WP_ErrorException;
 use Silk\PostType\Exception\NonExistentPostTypeException;
 
-class PostType extends Type
+class PostType extends Type implements Registerable
 {
     /**
      * PostType Constructor
@@ -42,7 +43,7 @@ class PostType extends Type
             return static::load($id);
         }
 
-        return new Builder($id);
+        return static::build($id);
     }
 
     /**
@@ -59,6 +60,19 @@ class PostType extends Type
         }
 
         return new static($object);
+    }
+
+
+    /**
+     * Build a new type to be registered.
+     *
+     * @param $id
+     *
+     * @return mixed
+     */
+    static function build($id)
+    {
+        return new Builder($id);
     }
 
     /**

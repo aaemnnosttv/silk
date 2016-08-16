@@ -4,6 +4,7 @@ namespace Silk\Taxonomy;
 
 use stdClass;
 use Silk\Type\Type;
+use Silk\Type\Registerable;
 use Silk\PostType\PostType;
 use Silk\Term\QueryBuilder;
 use Illuminate\Support\Collection;
@@ -33,7 +34,7 @@ use Silk\Taxonomy\Exception\NonExistentTaxonomyException;
  * @property-read bool     $show_ui
  * @property-read callable $update_count_callback
  */
-class Taxonomy extends Type
+class Taxonomy extends Type implements Registerable
 {
     /**
      * Taxonomy Constructor.
@@ -54,45 +55,57 @@ class Taxonomy extends Type
     /**
      * Create a new instance using the taxonomy identifier.
      *
-     * @param  string $identifier Taxonomy name/identifier
+     * @param  string $id Taxonomy name/identifier
      *
      * @throws InvalidTaxonomyNameException
      *
      * @return static|Builder
      */
-    public static function make($identifier)
+    public static function make($id)
     {
-        if (static::exists($identifier)) {
-            return static::load($identifier);
+        if (static::exists($id)) {
+            return static::load($id);
         }
 
-        if (! $identifier || strlen($identifier) > 32) {
+        if ( ! $id || strlen($id) > 32) {
             throw new InvalidTaxonomyNameException('Taxonomy names must be between 1 and 32 characters in length.');
         }
 
-        return new Builder($identifier);
+        return static::build($id);
     }
 
     /**
      * Create a new instance from an existing taxonomy.
      *
-     * @param  string $identifier  The taxonomy identifier
+     * @param  string $id The taxonomy identifier
      *
      * @throws NonExistentTaxonomyException
      *
      * @return static
      */
-    public static function load($identifier)
+    public static function load($id)
     {
-        if (! $object = get_taxonomy($identifier)) {
-            throw new NonExistentTaxonomyException("No taxonomy exists with name '$identifier'.");
+        if (! $object = get_taxonomy($id)) {
+            throw new NonExistentTaxonomyException("No taxonomy exists with name '$id'.");
         }
 
         return new static($object);
     }
 
     /**
-     * Check if the given taxonomy exists.
+     * Build a new Taxonomy to be registered.
+     *
+     * @param $id
+     *
+     * @return Builder
+     */
+    public static function build($id)
+    {
+        return new Builder($id);
+    }
+
+    /**
+     * Check if a Taxonomy exists for the given identifier.
      *
      * @param  string $id The taxonomy key/identifier
      *
