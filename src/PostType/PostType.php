@@ -80,7 +80,7 @@ class PostType extends Type implements Registerable
      */
     public function id()
     {
-        return data_get($this->object, 'name');
+        return $this->object->name;
     }
 
     /**
