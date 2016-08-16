@@ -62,6 +62,14 @@ class PostType extends Type
     }
 
     /**
+     * Get the post type identifier (aka: name/slug)
+     */
+    public function id()
+    {
+        return data_get($this->object, 'name');
+    }
+
+    /**
      * Checks if a post type with this slug has been registered.
      *
      * @param string $slug  The post type slug
