@@ -67,7 +67,7 @@ class Taxonomy extends Type implements Registerable
             return static::load($id);
         }
 
-        if ( ! $id || strlen($id) > 32) {
+        if (! $id || strlen($id) > 32) {
             throw new InvalidTaxonomyNameException('Taxonomy names must be between 1 and 32 characters in length.');
         }
 
