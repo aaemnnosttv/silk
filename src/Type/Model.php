@@ -211,6 +211,8 @@ abstract class Model
     /**
      * Magic Isset Checker.
      *
+     * @param $property
+     *
      * @return bool
      */
     public function __isset($property)
