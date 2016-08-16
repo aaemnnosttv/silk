@@ -27,7 +27,7 @@ interface Registerable
      *
      * @param $id
      *
-     * @return mixed
+     * @return bool
      */
     static function exists($id);
 }
