@@ -6,6 +6,7 @@
 - `User\Model`
 - `User\QueryBuilder`
 - `url` methods on `Post\Model` & `Term\Model`
+- `Term\Model->children()`
 - `Model::make()` named constructor
 - `objectAliases` property, allowing for `$model->aliasName == $model->object->targetProperty`
 - Shorthand property aliases, Eg: `$postModel->{name} == $postModel->object->post_{name}` (opt-in via trait)
@@ -14,7 +15,7 @@
 - `Hook` callbacks now automatically return the first argument passed if nothing is returned.
 - `ObjectMeta` now has a fluent `set(key, value)` method.
 - Deprecated `Post\Model::fromWpPost()` and `Term\Model::fromWpTerm()` (use `::make()` instead)
-- Simplified internals of `Model::save()`, `::delete()` and `::refresh()`
+- Simplified internals of `Model->save()`, `->delete()` and `->refresh()`
 
 ## v0.10.1 (2016-07-22)
 
