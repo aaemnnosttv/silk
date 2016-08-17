@@ -169,6 +169,17 @@ abstract class Model extends BaseModel
     }
 
     /**
+     * Get all children of this term as a collection.
+     *
+     * @return Collection
+     */
+    public function children()
+    {
+        return Collection::make(get_term_children($this->id, static::TAXONOMY))
+             ->map([static::class, 'fromID']);
+    }
+
+    /**
      * Get the Taxonomy model.
      *
      * @return Taxonomy|\Silk\Taxonomy\Builder

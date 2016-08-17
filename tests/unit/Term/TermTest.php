@@ -278,6 +278,32 @@ class TermTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_can_get_all_of_its_children_as_model_instances_of_the_same_class()
+    {
+        $grand = Category::create([
+            'name' => 'Grandparent'
+        ]);
+        $parent = Category::create([
+            'name' => 'Parent',
+            'parent' => $grand->id
+        ]);
+        $child = Category::create([
+            'name' => 'Child',
+            'parent' => $parent->id
+        ]);
+
+        $children = $grand->children();
+
+        $this->assertCount(2, $children);
+        $this->assertInstanceOf(Category::class, $children[0]);
+        $this->assertInstanceOf(Category::class, $children[1]);
+        $this->assertSame($parent->id, $children[0]->id);
+        $this->assertSame($child->id, $children[1]->id);
+    }
+
+    /**
+     * @test
+     */
     public function it_can_query_terms_of_the_same_type()
     {
         $post_id = $this->factory->post->create();
