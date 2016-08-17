@@ -89,7 +89,7 @@ abstract class Model extends BaseModel
      */
     public static function fromID($id)
     {
-        if (! $term = get_term_by('id', (int) $id, static::TAXONOMY)) {
+        if (! $term = WP_Term::get_instance($id, static::TAXONOMY)) {
             throw new TermNotFoundException("No term found with ID $id.");
         }
 
