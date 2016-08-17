@@ -254,7 +254,7 @@ class TermTest extends WP_UnitTestCase
     /**
      * @test
      */
-    function it_has_a_method_for_getting_a_collection_of_all_term_ancestors()
+    function it_can_get_all_of_its_ancestors_as_model_instances_of_the_same_class()
     {
         $grand = Category::create([
             'name' => 'Grandparent'
@@ -268,11 +268,13 @@ class TermTest extends WP_UnitTestCase
             'parent' => $parent->id
         ]);
 
-        $ancestor_ids = $child->ancestors()->pluck('term_id');
+        $ancestors = $child->ancestors();
 
-        $this->assertCount(2, $ancestor_ids);
-        $this->assertContains($grand->id, $ancestor_ids);
-        $this->assertContains($parent->id, $ancestor_ids);
+        $this->assertCount(2, $ancestors);
+        $this->assertInstanceOf(Category::class, $ancestors[0]);
+        $this->assertInstanceOf(Category::class, $ancestors[1]);
+        $this->assertSame($parent->id, $ancestors[0]->id);
+        $this->assertSame($grand->id, $ancestors[1]->id);
     }
 
     /**

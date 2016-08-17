@@ -163,9 +163,7 @@ abstract class Model extends BaseModel
     public function ancestors()
     {
         return Collection::make(get_ancestors($this->id, static::TAXONOMY, 'taxonomy'))
-            ->map(function ($term_ID) {
-                return static::fromID($term_ID);
-            });
+            ->map([static::class, 'fromID']);
     }
 
     /**
