@@ -18,7 +18,7 @@ interface Registerable
      *
      * @return mixed
      */
-    static function load($id);
+    public static function load($id);
 
     /**
      * Build a new type to be registered.
@@ -27,7 +27,7 @@ interface Registerable
      *
      * @return mixed
      */
-    static function build($id);
+    public static function build($id);
 
     /**
      * Check to see if a type exists with the given identifier.
@@ -36,5 +36,5 @@ interface Registerable
      *
      * @return bool
      */
-    static function exists($id);
+    public static function exists($id);
 }
