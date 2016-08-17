@@ -5,10 +5,10 @@ namespace Silk\Post;
 trait ClassNameAsPostType
 {
     /**
-     * Class name derived post type identifiers
-     * @var array  className => post_type
+     * Class name derived post type identifier
+     * @var string
      */
-    protected static $classNamePostType = [];
+    protected static $classNamePostType;
 
     /**
      * Get the post type identifier for this model
@@ -35,8 +35,8 @@ trait ClassNameAsPostType
      */
     protected static function getPostTypeFromName()
     {
-        if (isset(static::$classNamePostType[static::class])) {
-            return static::$classNamePostType[static::class];
+        if (static::$classNamePostType) {
+            return static::$classNamePostType;
         }
 
         /**
@@ -53,6 +53,6 @@ trait ClassNameAsPostType
             $name = strtolower(preg_replace('/(.)(?=[A-Z])/u', '$1_', $name));
         }
 
-        return static::$classNamePostType[static::class] = $name;
+        return static::$classNamePostType = $name;
     }
 }
