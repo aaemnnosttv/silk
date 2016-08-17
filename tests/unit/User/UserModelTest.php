@@ -1,7 +1,7 @@
 <?php
 
 use Silk\User\Model as User;
-use Silk\Contracts\BuildsQueries;
+use Silk\Contracts\Query\BuildsQueries;
 use Silk\Type\ShorthandProperties;
 
 class UserModelTest extends WP_UnitTestCase

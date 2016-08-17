@@ -3,7 +3,7 @@
 use Silk\Term\Category;
 use Silk\Taxonomy\Builder;
 use Silk\Taxonomy\Taxonomy;
-use Silk\Contracts\BuildsQueries;
+use Silk\Contracts\Query\BuildsQueries;
 use Illuminate\Support\Collection;
 
 

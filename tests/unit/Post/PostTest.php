@@ -1,7 +1,7 @@
 <?php
 
 use Silk\WordPress\Post\Post;
-use Silk\Contracts\BuildsQueries;
+use Silk\Contracts\Query\BuildsQueries;
 
 class PostTest extends WP_UnitTestCase
 {

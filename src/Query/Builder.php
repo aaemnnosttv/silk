@@ -3,7 +3,7 @@
 namespace Silk\Query;
 
 use Silk\Type\Model;
-use Silk\Contracts\BuildsQueries;
+use Silk\Contracts\Query\BuildsQueries;
 use Illuminate\Support\Collection;
 
 /**

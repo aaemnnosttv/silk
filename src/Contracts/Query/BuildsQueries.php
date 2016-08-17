@@ -1,6 +1,6 @@
 <?php
 
-namespace Silk\Contracts;
+namespace Silk\Contracts\Query;
 
 use Illuminate\Support\Collection;
 
