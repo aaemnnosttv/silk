@@ -62,6 +62,18 @@ class PostModelTest extends WP_UnitTestCase
         $this->assertSame('something cool', $post->post_excerpt);
         $this->assertSame('Some content', $post->post_content);
     }
+
+    /**
+     * @test
+     */
+    function it_has_models_for_all_builtin_post_types()
+    {
+        $this->assertSame('attachment'      , \Silk\WordPress\Post\Attachment::postTypeId());
+        $this->assertSame('nav_menu_item'   , \Silk\WordPress\Post\NavMenuItem::postTypeId());
+        $this->assertSame('page'            , \Silk\WordPress\Post\Page::postTypeId());
+        $this->assertSame('post'            , \Silk\WordPress\Post\Post::postTypeId());
+        $this->assertSame('revision'        , \Silk\WordPress\Post\Revision::postTypeId());
+    }
 }
 
 /**
