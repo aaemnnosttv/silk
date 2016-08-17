@@ -4,7 +4,7 @@ namespace Silk\Taxonomy;
 
 use stdClass;
 use Silk\Type\Type;
-use Silk\Type\Registerable;
+use Silk\Contracts\Type\Registerable;
 use Silk\PostType\PostType;
 use Silk\Term\QueryBuilder;
 use Illuminate\Support\Collection;

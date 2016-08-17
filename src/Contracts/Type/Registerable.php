@@ -1,6 +1,6 @@
 <?php
 
-namespace Silk\Type;
+namespace Silk\Contracts\Type;
 
 interface Registerable
 {
