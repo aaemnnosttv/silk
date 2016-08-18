@@ -69,4 +69,23 @@ class ObjectMetaTest extends WP_UnitTestCase
 
         $this->assertNull($meta->non_existent);
     }
+
+    /**
+     * @test
+     */
+    public function it_has_a_fluent_setter()
+    {
+        $meta = new ObjectMeta('post', 123);
+
+        $meta->set('a', 'b')
+            ->set('foo', 'bar');
+
+        $this->assertSame([
+                'a'   => ['b'],
+                'foo' => ['bar']
+            ],
+            get_metadata('post', 123)
+        );
+    }
+
 }

@@ -5,7 +5,7 @@ use Silk\Term\QueryBuilder;
 use Silk\WordPress\Term\Category;
 use Illuminate\Support\Collection;
 
-class QueryBuilderTest extends WP_UnitTestCase
+class TermQueryBuilderTest extends WP_UnitTestCase
 {
     use TermFactoryHelpers;
 
@@ -58,6 +58,31 @@ class QueryBuilderTest extends WP_UnitTestCase
 
         $this->assertCount(6, $results);
     }
+
+    /**
+     * @test
+     */
+    public function it_can_query_all_terms()
+    {
+        $post_id = $this->factory->post->create();
+
+        $this->createManyTags(2); // empties
+        $this->createManyTagsForPost(3, $post_id); // assigned
+
+        $tags = (new QueryBuilder)->forTaxonomy('post_tag')->all()->results();
+        $this->assertCount(2 + 3, $tags);
+
+        $this->createManyCats(4); // empties
+        $this->createManyCatsForPost(5, $post_id); // assigned
+
+        $cats = (new QueryBuilder)->forTaxonomy('category')->all()->results();
+        // +1 cat for Uncategorized
+        $this->assertCount(4 + 5 + 1, $cats);
+
+        $alls = (new QueryBuilder)->all()->results();
+        $this->assertCount(2 + 3 + 4 + 5 + 1, $alls);
+    }
+
 
     /**
      * @test

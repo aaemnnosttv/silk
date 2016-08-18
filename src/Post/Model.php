@@ -4,10 +4,9 @@ namespace Silk\Post;
 
 use stdClass;
 use WP_Post;
-use WP_Query;
-use Illuminate\Support\Collection;
 use Silk\Type\Model as BaseModel;
 use Silk\PostType\PostType;
+use Silk\Exception\WP_ErrorException;
 use Silk\Post\Exception\PostNotFoundException;
 use Silk\Post\Exception\ModelPostTypeMismatchException;
 
@@ -62,20 +61,29 @@ abstract class Model extends BaseModel
     /**
      * Create a new instance
      *
-     * @param WP_Post $post  Post object to model
+     * @param array|WP_Post $post  Post object or array of attributes
+     *
+     * @throws ModelPostTypeMismatchException
      */
-    public function __construct(WP_Post $post = null)
+    public function __construct($post = [])
     {
-        if (! $post) {
+        $attributes = is_array($post) ? $post : [];
+
+        if (! $post instanceof WP_Post) {
             $post = new WP_Post(new stdClass);
             $post->post_type = static::postTypeId();
+        } elseif ($post->post_type !== static::postTypeId()) {
+            throw new ModelPostTypeMismatchException(static::class, $post);
         }
 
-        $this->object = $post;
+        $this->setObject($post);
+
+        $this->fill($attributes);
     }
 
     /**
      * Create a new instance from the given WP_Post object
+     * @deprecated - use static::make()
      *
      * @param  WP_Post $post
      *
@@ -105,7 +113,7 @@ abstract class Model extends BaseModel
             throw new PostNotFoundException("No post found with ID {$id}");
         }
 
-        return static::fromWpPost($post);
+        return new static($post);
     }
 
     /**
@@ -137,26 +145,7 @@ abstract class Model extends BaseModel
             throw new PostNotFoundException('Global $post not an instance of WP_Post');
         }
 
-        return static::fromWpPost($GLOBALS['post']);
-    }
-
-    /**
-     * Create a new post of the model's type
-     *
-     * @param  array $attributes
-     *
-     * @return static
-     */
-    public static function create($attributes = [])
-    {
-        $post = new WP_Post((object)
-            Collection::make($attributes)
-                ->except(static::ID_PROPERTY)
-                ->put('post_type', static::postTypeId())
-                ->all()
-        );
-
-        return static::fromWpPost($post)->save();
+        return new static($GLOBALS['post']);
     }
 
     /**
@@ -178,6 +167,16 @@ abstract class Model extends BaseModel
     public static function postType()
     {
         return PostType::make(static::postTypeId());
+    }
+
+    /**
+     * Get the permalink URL.
+     *
+     * @return string|bool  The permalink URL, or false if the post does not exist.
+     */
+    public function url()
+    {
+        return get_permalink($this->id);
     }
 
     /**
@@ -217,20 +216,56 @@ abstract class Model extends BaseModel
      */
     public function newQuery()
     {
-        return (new QueryBuilder(new WP_Query))->setModel($this);
+        return QueryBuilder::make()->setModel($this);
     }
 
     /**
-     * Get the array of actions and their respective handler classes.
+     * Save the post to the database.
      *
-     * @return array
+     * @throws WP_ErrorException
+     *
+     * @return $this
      */
-    protected function actionClasses()
+    public function save()
     {
-        return [
-            'save'   => Action\PostSaver::class,
-            'load'   => Action\PostLoader::class,
-            'delete' => Action\PostDeleter::class,
-        ];
+        if (! $this->id) {
+            $result = wp_insert_post($this->object->to_array(), true);
+        } else {
+            $result = wp_update_post($this->object, true);
+        }
+
+        if (is_wp_error($result)) {
+            throw new WP_ErrorException($result);
+        }
+
+        $this->setId($result)->refresh();
+
+        return $this;
+    }
+
+    /**
+     * Permanently delete the post from the database.
+     *
+     * @return $this
+     */
+    public function delete()
+    {
+        if (wp_delete_post($this->id, true)) {
+            $this->refresh();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Update the modeled object with the current state from the database.
+     *
+     * @return $this
+     */
+    public function refresh()
+    {
+        $this->setObject(WP_Post::get_instance($this->id));
+
+        return $this;
     }
 }

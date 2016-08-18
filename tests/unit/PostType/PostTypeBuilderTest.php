@@ -29,9 +29,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
     {
         $this->assertPostTypeNotExists('some-post-type');
 
-        $object = Builder::make('some-post-type')->register()->object();
-
-        $this->assertSame($object, get_post_type_object('some-post-type'));
+        Builder::make('some-post-type')->register();
 
         $this->assertPostTypeExists('some-post-type');
     }
@@ -113,7 +111,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
      */
     function it_has_methods_for_setting_the_labels()
     {
-        $book = Builder::make('book')
+        Builder::make('book')
             // override a default value
             ->setLabel('archives', 'All the Bookz')
             // override a default with a new placeholder
@@ -126,7 +124,8 @@ class PostTypeBuilderTest extends WP_UnitTestCase
             ->manyAre('Books')
             ->register();
 
-        $labels = get_post_type_labels($book->object());
+        $book = get_post_type_object('book');
+        $labels = get_post_type_labels($book);
 
         $this->assertSame('Book', $labels->singular_name);
         $this->assertSame('Books', $labels->name);

@@ -1,7 +1,7 @@
 <?php
 
 use Silk\WordPress\Post\Post;
-use Silk\Post\QueryBuilder;
+use Silk\Contracts\Query\BuildsQueries;
 
 class PostTest extends WP_UnitTestCase
 {
@@ -23,12 +23,53 @@ class PostTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_can_create_a_new_instance_using_a_wp_post_object()
+    {
+        $wp_post = $this->factory->post->create_and_get();
+
+        $model = new Post($wp_post);
+
+        $this->assertSame($wp_post, $model->object);
+    }
+
+    /**
+     * @test
+     * @expectedException \Silk\Post\Exception\ModelPostTypeMismatchException
+     */
+    function it_blows_up_if_instantiated_with_a_post_of_a_different_post_type()
+    {
+        $wp_post = $this->factory->post->create_and_get(['post_type' => 'page']);
+
+        $this->assertSame('page', $wp_post->post_type);
+
+        new Post($wp_post);
+    }
+
+
+    /**
+     * @test
+     */
     function it_can_be_instantiated_from_a_wp_post_object()
     {
         $post = $this->factory->post->create_and_get();
         $model = Post::fromWpPost($post);
 
         $this->assertSame($post->ID, $model->id);
+
+        $model = Post::make($post);
+        $this->assertSame($post, $model->object);
+    }
+
+    /**
+     * @test
+     */
+    function it_can_be_instantiated_with_an_array_of_attributes()
+    {
+        $model = new Post([
+            'post_title' => 'The Title'
+        ]);
+
+        $this->assertSame('The Title', $model->post_title);
     }
 
     /**
@@ -146,7 +187,6 @@ class PostTest extends WP_UnitTestCase
         $this->assertEquals($post->ID, $model->id);
     }
 
-
     /**
      * @test
      * @expectedException Silk\Exception\WP_ErrorException
@@ -249,7 +289,8 @@ class PostTest extends WP_UnitTestCase
      */
     function it_offers_static_methods_for_querying()
     {
-        $this->assertInstanceOf(QueryBuilder::class, Post::query());
+        $this->assertInstanceOf(BuildsQueries::class, Post::query());
+        $this->assertInstanceOf(BuildsQueries::class, (new Post)->newQuery());
     }
 
     /**
@@ -268,8 +309,22 @@ class PostTest extends WP_UnitTestCase
     function it_proxies_non_existent_static_methods_to_the_builder()
     {
         $this->assertInstanceOf(
-            QueryBuilder::class,
+            BuildsQueries::class,
             Post::limit(1)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function it_has_a_method_for_the_permalink()
+    {
+        $post = $this->factory->post->create_and_get();
+        $model = Post::fromWpPost($post);
+
+        $this->assertSame(
+            get_permalink($post->ID),
+            $model->url()
         );
     }
 

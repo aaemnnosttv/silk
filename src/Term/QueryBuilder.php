@@ -2,24 +2,20 @@
 
 namespace Silk\Term;
 
-use WP_Term;
-use Silk\Contracts\BuildsQueries;
+use Silk\Query\Builder as BaseBuilder;
 use Silk\Exception\WP_ErrorException;
 use Illuminate\Support\Collection;
 
-class QueryBuilder implements BuildsQueries
+/**
+ * @property Model $model
+ */
+class QueryBuilder extends BaseBuilder
 {
     /**
-     * The term model
-     * @var Model
-     */
-    protected $model;
-
-    /**
-     * Collection of arguments
+     * Query arguments
      * @var Collection
      */
-    protected $args;
+    protected $query;
 
     /**
      * Taxonomy Identifier
@@ -28,13 +24,23 @@ class QueryBuilder implements BuildsQueries
     protected $taxonomy;
 
     /**
-     * TermQueryBuilder Constructor.
+     * QueryBuilder Constructor.
      *
      * @param array $args
      */
     public function __construct(array $args = [])
     {
-        $this->args = Collection::make($args);
+        $this->query = new Collection($args);
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @return static
+     */
+    public static function make()
+    {
+        return new static;
     }
 
     /**
@@ -52,15 +58,24 @@ class QueryBuilder implements BuildsQueries
     }
 
     /**
+     * Get all terms.
+     *
+     * @return $this
+     */
+    public function all()
+    {
+        return $this->includeEmpty()
+            ->limit('all');
+    }
+
+    /**
      * Include terms that have no related objects in the results.
      *
      * @return $this
      */
     public function includeEmpty()
     {
-        $this->args->put('hide_empty', false);
-
-        return $this;
+        return $this->set('hide_empty', false);
     }
 
     /**
@@ -72,86 +87,44 @@ class QueryBuilder implements BuildsQueries
      */
     public function limit($max_results)
     {
-        $this->args->put('number', intval($max_results));
-
-        return $this;
+        return $this->set('number', intval($max_results));
     }
 
     /**
-     * Get the query results.
-     *
-     * @throws WP_ErrorException
-     *
-     * @return Collection
-     */
-    public function results()
-    {
-        if ($this->model) {
-            return $this->collectModels();
-        }
-
-        if ($this->taxonomy) {
-            $this->args->put('taxonomy', $this->taxonomy);
-        }
-
-        return Collection::make($this->fetchTerms());
-    }
-
-    /**
-     * Get the results as a collection of models.
-     *
-     * @return Collection
-     */
-    protected function collectModels()
-    {
-        $this->args->put('taxonomy', $this->model->taxonomy);
-        $this->args->put('fields', 'all');
-
-        $modelClass = get_class($this->model);
-
-        return Collection::make($this->fetchTerms())
-            ->map(function (WP_Term $term) use ($modelClass) {
-                return new $modelClass($term);
-            });
-    }
-
-    /**
-     * Set the model for this query.
-     *
-     * @param mixed $model
-     *
-     * @return $this
-     */
-    public function setModel($model)
-    {
-        $this->model = $model;
-
-        return $this;
-    }
-
-    /**
-     * Get the model.
-     *
-     * @return mixed Model
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
-    /**
-     * Perform the term query and return the results.
+     * Execute the query and return the raw results.
      *
      * @throws WP_ErrorException
      *
      * @return array
      */
-    protected function fetchTerms()
+    protected function query()
     {
-        if (is_wp_error($terms = get_terms($this->args->toArray()))) {
+        if ($this->model) {
+            $this->set('taxonomy', $this->model->taxonomy)
+                 ->set('fields', 'all');
+        } elseif ($this->taxonomy) {
+            $this->set('taxonomy', $this->taxonomy);
+        }
+
+        if (is_wp_error($terms = get_terms($this->query->toArray()))) {
             throw new WP_ErrorException($terms);
         }
 
         return $terms;
+    }
+
+    /**
+     * Set an arbitrary query parameter.
+     *
+     * @param $parameter
+     * @param $value
+     *
+     * @return $this
+     */
+    public function set($parameter, $value)
+    {
+        $this->query->put($parameter, $value);
+
+        return $this;
     }
 }

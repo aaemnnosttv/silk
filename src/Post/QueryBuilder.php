@@ -3,10 +3,12 @@
 namespace Silk\Post;
 
 use WP_Query;
-use Illuminate\Support\Collection;
-use Silk\Contracts\BuildsQueries;
+use Silk\Query\Builder as BaseBuilder;
 
-class QueryBuilder implements BuildsQueries
+/**
+ * @property Model $model
+ */
+class QueryBuilder extends BaseBuilder
 {
     /**
      * WP_Query instance
@@ -16,20 +18,29 @@ class QueryBuilder implements BuildsQueries
     protected $query;
 
     /**
-     * Post Model instance
-     *
-     * @var Model
-     */
-    protected $model;
-
-    /**
      * Builder constructor.
      *
      * @param WP_Query $query
      */
-    public function __construct(WP_Query $query)
+    public function __construct(WP_Query $query = null)
     {
+        if (! $query) {
+            $query = new WP_Query();
+        }
+
         $this->query = $query;
+    }
+
+    /**
+     * Create a new instance.
+     *
+     * @param WP_Query $query
+     *
+     * @return static
+     */
+    public static function make(WP_Query $query = null)
+    {
+        return new static($query);
     }
 
     /**
@@ -42,9 +53,7 @@ class QueryBuilder implements BuildsQueries
      */
     public function limit($limit)
     {
-        $this->query->set('posts_per_page', (int) $limit);
-
-        return $this;
+        return $this->set('posts_per_page', (int) $limit);
     }
 
     /**
@@ -66,9 +75,7 @@ class QueryBuilder implements BuildsQueries
      */
     public function order($order)
     {
-        $this->query->set('order', strtoupper($order));
-
-        return $this;
+        return $this->set('order', strtoupper($order));
     }
 
     /**
@@ -80,9 +87,7 @@ class QueryBuilder implements BuildsQueries
      */
     public function whereStatus($status)
     {
-        $this->query->set('post_status', $status);
-
-        return $this;
+        return $this->set('post_status', $status);
     }
 
     /**
@@ -94,40 +99,7 @@ class QueryBuilder implements BuildsQueries
      */
     public function whereSlug($slug)
     {
-        $this->query->set('name', $slug);
-
-        return $this;
-    }
-
-    /**
-     * Get the results as a collection
-     *
-     * @return Collection
-     */
-    public function results()
-    {
-        if ($this->model) {
-            return $this->collectModels();
-        }
-
-        return Collection::make($this->query->get_posts());
-    }
-
-    /**
-     * Get the results as a collection of post model instances
-     *
-     * @return Collection
-     */
-    protected function collectModels()
-    {
-        $this->query->set('post_type', $this->model->post_type);
-        $this->query->set('fields', ''); // as WP_Post objects
-        $modelClass = get_class($this->model);
-
-        return Collection::make($this->query->get_posts())
-            ->map(function ($post) use ($modelClass) {
-                return new $modelClass($post);
-            });
+        return $this->set('name', $slug);
     }
 
     /**
@@ -146,27 +118,17 @@ class QueryBuilder implements BuildsQueries
     }
 
     /**
-     * Set the model for this query.
+     * Execute the query and return the raw results.
      *
-     * @param Model $model
-     *
-     * @return $this
+     * @return array
      */
-    public function setModel(Model $model)
+    protected function query()
     {
-        $this->model = $model;
+        if ($this->model) {
+            $this->set('post_type', $this->model->post_type)
+                 ->set('fields', ''); // as WP_Post objects
+        }
 
-        return $this;
+        return $this->query->get_posts();
     }
-
-    /**
-     * Get the model
-     *
-     * @return Model
-     */
-    public function getModel()
-    {
-        return $this->model;
-    }
-
 }

@@ -3,9 +3,6 @@
 namespace Silk\Type;
 
 use Silk\Meta\ObjectMeta;
-use Silk\Database\NullAction;
-use Silk\Contracts\Executable;
-use Illuminate\Support\Collection;
 
 /**
  * @property-read int    $id
@@ -13,6 +10,8 @@ use Illuminate\Support\Collection;
  */
 abstract class Model
 {
+    use ObjectAliases;
+
     /**
      * The core model object
      * @var object
@@ -30,63 +29,92 @@ abstract class Model
     const ID_PROPERTY = '';
 
     /**
-     * Get the map of action => class for resolving active actions.
-     *
-     * @return array
-     */
-    abstract protected function actionClasses();
-
-    /**
     * Get a new query builder for the model.
     *
-    * @return \Silk\Contracts\BuildsQueries
+    * @return \Silk\Contracts\Query\BuildsQueries
     */
     abstract public function newQuery();
-
-    /**
-     * Create a new query builder instance for this model type.
-     *
-     * @return \Silk\Contracts\BuildsQueries
-     */
-    public static function query()
-    {
-        return (new static)->newQuery();
-    }
 
     /**
      * Save the changes to the database.
      *
      * @return $this
      */
-    public function save()
+    abstract public function save();
+
+    /**
+     * Delete the modeled record from the database.
+     *
+     * @return $this
+     */
+    abstract public function delete();
+
+    /**
+     * Reload the object from the database.
+     *
+     * @return $this
+     */
+    abstract public function refresh();
+
+    /**
+     * Make new instance.
+     *
+     * All provided arguments are forwarded to the constructor of the called class.
+     *
+     * @return static
+     */
+    public static function make()
     {
-        $this->activeAction('save');
+        if ($arguments = func_get_args()) {
+            return (new \ReflectionClass(static::class))->newInstanceArgs($arguments);
+        }
+
+        return new static;
+    }
+
+    /**
+     * Fill the model with an array of attributes.
+     *
+     * @param  array  $attributes
+     *
+     * @return $this
+     */
+    public function fill(array $attributes)
+    {
+        foreach ($attributes as $key => $value) {
+            if ($this->expandAlias($key)) {
+                $this->aliasSet($key, $value);
+                continue;
+            }
+
+            $this->object->$key = $value;
+        }
 
         return $this;
     }
 
     /**
-     * Delete the record from the database.
+     * Create a new model of the model's type, and save it to the database.
      *
-     * @return $this
+     * @param  array $attributes
+     *
+     * @return static
      */
-    public function delete()
+    public static function create($attributes = [])
     {
-        $this->activeAction('delete');
+        $model = new static($attributes);
 
-        return $this;
+        return $model->save();
     }
 
     /**
-     * Load and set the object from the database.
+     * Create a new query builder instance for this model type.
      *
-     * @return $this
+     * @return \Silk\Contracts\Query\BuildsQueries
      */
-    public function refresh()
+    public static function query()
     {
-        $this->activeAction('load');
-
-        return $this;
+        return (new static)->newQuery();
     }
 
     /**
@@ -108,27 +136,13 @@ abstract class Model
     }
 
     /**
-     * Update the core object
-     *
-     * @param object $object
-     *
-     * @return $this
-     */
-    public function setObject($object)
-    {
-        $this->object = $object;
-
-        return $this;
-    }
-
-    /**
      * Set the primary ID on the model.
      *
      * @param string|int $id  The model's ID
      *
      * @return $this
      */
-    public function setId($id)
+    protected function setId($id)
     {
         $this->object->{static::ID_PROPERTY} = (int) $id;
 
@@ -136,29 +150,33 @@ abstract class Model
     }
 
     /**
-     * Perform a database action.
+     * Set the object for the model.
      *
-     * @return void
+     * @param $object
+     *
+     * @return $this
      */
-    protected function activeAction($action)
+    protected function setObject($object)
     {
-        $actionClass = Collection::make(
-            $this->actionClasses()
-        )->get($action, NullAction::class);
+        $this->object = $object;
 
-        $this->executeAction(new $actionClass($this));
+        return $this;
     }
 
     /**
-     * Execute the active action
-     *
-     * @param Executable $action
-     *
-     * @return void
+     * @return array
      */
-    protected function executeAction(Executable $action)
+    protected function objectAliases()
     {
-        $action->execute();
+        return [];
+    }
+
+    /**
+     * @return object
+     */
+    protected function getAliasedObject()
+    {
+        return $this->object;
     }
 
     /**
@@ -178,11 +196,22 @@ abstract class Model
             return $this->object;
         }
 
+        if (! is_null($aliased = $this->aliasGet($property))) {
+            return $aliased;
+        }
+
+        /**
+         * Finally, hand-off the request to the wrapped object.
+         * We don't check for existence as we leverage the magic __get
+         * on the wrapped object as well.
+         */
         return $this->object->$property;
     }
 
     /**
      * Magic Isset Checker.
+     *
+     * @param $property
      *
      * @return bool
      */
@@ -199,9 +228,11 @@ abstract class Model
      */
     public function __set($property, $value)
     {
-        if (property_exists($this->object, $property)) {
-            $this->object->$property = $value;
+        if ($this->aliasSet($property, $value)) {
+            return;
         }
+
+        $this->object->$property = $value;
     }
 
     /**

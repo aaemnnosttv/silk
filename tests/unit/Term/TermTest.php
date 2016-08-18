@@ -29,6 +29,19 @@ class TermTest extends WP_UnitTestCase
     /**
      * @test
      */
+    function it_can_be_instantiated_with_an_array_of_attributes()
+    {
+        $model = new Category([
+            'name' => 'Blue'
+        ]);
+
+        $this->assertSame('Blue', $model->object->name);
+        $this->assertSame('Blue', $model->name);
+    }
+
+    /**
+     * @test
+     */
     function it_can_create_a_new_instance_from_a_wp_term()
     {
         wp_insert_term('Blue', 'category');
@@ -109,6 +122,7 @@ class TermTest extends WP_UnitTestCase
 
         $term = get_term_by('slug', 'meat-eater', 'category');
 
+        $this->assertSame($term->term_id, $model->id);
         $this->assertSame('meat-eater', $model->slug);
     }
 
@@ -240,7 +254,7 @@ class TermTest extends WP_UnitTestCase
     /**
      * @test
      */
-    function it_has_a_method_for_getting_a_collection_of_all_term_ancestors()
+    function it_can_get_all_of_its_ancestors_as_model_instances_of_the_same_class()
     {
         $grand = Category::create([
             'name' => 'Grandparent'
@@ -254,11 +268,39 @@ class TermTest extends WP_UnitTestCase
             'parent' => $parent->id
         ]);
 
-        $ancestor_ids = $child->ancestors()->pluck('term_id');
+        $ancestors = $child->ancestors();
 
-        $this->assertCount(2, $ancestor_ids);
-        $this->assertContains($grand->id, $ancestor_ids);
-        $this->assertContains($parent->id, $ancestor_ids);
+        $this->assertCount(2, $ancestors);
+        $this->assertInstanceOf(Category::class, $ancestors[0]);
+        $this->assertInstanceOf(Category::class, $ancestors[1]);
+        $this->assertSame($parent->id, $ancestors[0]->id);
+        $this->assertSame($grand->id, $ancestors[1]->id);
+    }
+
+    /**
+     * @test
+     */
+    function it_can_get_all_of_its_children_as_model_instances_of_the_same_class()
+    {
+        $grand = Category::create([
+            'name' => 'Grandparent'
+        ]);
+        $parent = Category::create([
+            'name' => 'Parent',
+            'parent' => $grand->id
+        ]);
+        $child = Category::create([
+            'name' => 'Child',
+            'parent' => $parent->id
+        ]);
+
+        $children = $grand->children();
+
+        $this->assertCount(2, $children);
+        $this->assertInstanceOf(Category::class, $children[0]);
+        $this->assertInstanceOf(Category::class, $children[1]);
+        $this->assertSame($parent->id, $children[0]->id);
+        $this->assertSame($child->id, $children[1]->id);
     }
 
     /**
@@ -313,6 +355,27 @@ class TermTest extends WP_UnitTestCase
         $this->assertInstanceOf(Builder::class, NewTerm::taxonomy());
     }
 
+    /**
+     * @test
+     */
+    public function it_has_a_method_for_getting_the_term_archive_url()
+    {
+        $model = $model = Category::create(['name' => 'Awesome']);
+
+        $this->assertSame(
+            get_term_link($model->id, $model->taxonomy),
+            $model->url()
+        );
+    }
+
+    /**
+     * @test
+     * @expectedException Silk\Exception\WP_ErrorException
+     */
+    public function it_blows_up_if_getting_a_term_url_for_a_non_existent_term()
+    {
+        (new Category)->url();
+    }
 }
 
 class NewTerm extends Model

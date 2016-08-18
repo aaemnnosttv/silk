@@ -10,6 +10,8 @@ namespace Silk\Type;
  */
 abstract class Type
 {
+    use ObjectAliases;
+
     /**
      * The type object
      * @var object
@@ -17,22 +19,22 @@ abstract class Type
     protected $object;
 
     /**
-     * Type object property aliases
-     * @var array
+     * @return array
      */
-    protected $objectAliases = [
-        'id'   => 'name',
-        'slug' => 'name',
-        'one'  => 'labels.singular_name',
-        'many' => 'labels.name',
-    ];
+    protected function objectAliases()
+    {
+        return [
+            'id'   => 'name',
+            'slug' => 'name',
+            'one'  => 'labels.singular_name',
+            'many' => 'labels.name',
+        ];
+    }
 
     /**
-     * Get the type object.
-     *
      * @return object
      */
-    public function object()
+    protected function getAliasedObject()
     {
         return $this->object;
     }
@@ -46,15 +48,11 @@ abstract class Type
      */
     public function __get($property)
     {
-        if (isset($this->object->$property)) {
-            return $this->object->$property;
+        if (! is_null($aliased = $this->aliasGet($property))) {
+            return $aliased;
         }
 
-        if (! array_key_exists($property, $this->objectAliases)) {
-            return null;
-        }
-
-        return data_get($this->object, $this->objectAliases[$property]);
+        return data_get($this->object, $property);
     }
 
     /**

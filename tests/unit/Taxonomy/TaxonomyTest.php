@@ -3,7 +3,7 @@
 use Silk\Term\Category;
 use Silk\Taxonomy\Builder;
 use Silk\Taxonomy\Taxonomy;
-use Silk\Contracts\BuildsQueries;
+use Silk\Contracts\Query\BuildsQueries;
 use Illuminate\Support\Collection;
 
 
@@ -26,6 +26,8 @@ class TaxonomyTest extends WP_UnitTestCase
     {
         $object = get_taxonomy('category');
         $taxonomy = new Taxonomy($object);
+
+        $this->assertSame('category', $taxonomy->id());
     }
 
     /**
