@@ -1,6 +1,6 @@
 # Release Notes
 
-## v0.11.0 (2016-??-??)
+## v0.11.0 (2016-18-08)
 
 ### Added
 - `User\Model`
