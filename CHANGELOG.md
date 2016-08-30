@@ -1,5 +1,10 @@
 # Release Notes
 
+## v0.11.1 (2016-30-08)
+
+### Changed
+- Restrict `tightenco/collect` to 5.2
+
 ## v0.11.0 (2016-18-08)
 
 ### Added
