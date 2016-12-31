@@ -19,7 +19,7 @@ matrix:
       env: WP_VERSION=latest
 
   allow_failures:
-    env: WP_VERSION=trunk
+    - env: WP_VERSION=trunk
 
 before_install:
     - composer self-update --stable
