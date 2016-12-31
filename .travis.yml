@@ -6,11 +6,11 @@ matrix:
       env: WP_VERSION=4.5.3
     - php: 5.6
       env: WP_VERSION=latest
-    - php: 5.6
-      env: WP_VERSION=trunk
 
     - php: 7.0
       env: WP_VERSION=latest
+    - php: 7.0
+      env: WP_VERSION=trunk
 
     - php: hhvm
       env: WP_VERSION=latest
