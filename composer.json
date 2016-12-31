@@ -28,5 +28,8 @@
     "autoload": {
         "psr-4": {"Silk\\":"src"},
         "files": ["src/functions.php"]
+    },
+    "scripts": {
+        "install-tests": "tests/bin/install-wp-tests.sh"
     }
 }
