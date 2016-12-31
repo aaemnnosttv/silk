@@ -3,6 +3,7 @@
 namespace Silk\Event;
 
 use Silk\Support\Callback;
+use Silk\Support\NegatedCallback;
 use Illuminate\Support\Collection;
 
 class Hook
@@ -248,6 +249,20 @@ class Hook
     public function onlyIf(callable $condition)
     {
         $this->conditions()->push(new Callback($condition));
+
+        return $this;
+    }
+
+    /**
+     * Add a negated condition to control the invocation of the callback.
+     *
+     * @param callable $condition
+     *
+     * @return $this
+     */
+    public function onlyIfNot(callable $condition)
+    {
+        $this->conditions()->push(new NegatedCallback($condition));
 
         return $this;
     }

@@ -357,6 +357,29 @@ class HookTest extends WP_UnitTestCase
     /**
      * @test
      */
+    public function it_can_accept_a_condition_to_control_the_invocation_of_the_callback_unless_true()
+    {
+        $count = 0;
+        // execute the callback, unless the given param meets the criteria
+        on('only_if_not_test', function() use (&$count) {
+            $count++;
+        })->onlyIfNot(function ($given) {
+            return $given === 'foo';
+        });
+
+        do_action('only_if_not_test');
+        do_action('only_if_not_test', 'bar');
+        do_action('only_if_not_test', 'foo'); // will not trigger callback
+        do_action('only_if_not_test', 'doobie', 'do');
+        do_action('only_if_not_test', 'dooder');
+
+        $this->assertEquals(4, $count);
+    }
+
+
+    /**
+     * @test
+     */
     public function it_returns_the_first_parameter_if_the_callback_returns_nothing()
     {
         $spy = 'spy';
