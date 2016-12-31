@@ -21,6 +21,8 @@ matrix:
   allow_failures:
     - env: WP_VERSION=trunk
 
+  fast_finish: true
+
 before_install:
     - composer self-update --stable
     - composer validate --strict
