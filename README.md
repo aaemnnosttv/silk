@@ -6,6 +6,7 @@
 [![HHVM (branch)](https://img.shields.io/hhvm/silk/silk/master.svg)](http://hhvm.h4cc.de/package/silk/silk)
 [![Gitter](https://img.shields.io/gitter/room/aaemnnosttv/silk.svg)](https://gitter.im/aaemnnosttv/silk)
 [![Packagist](https://img.shields.io/packagist/v/silk/silk.svg)](https://packagist.org/packages/silk/silk)
+[![Packagist](https://img.shields.io/packagist/l/silk/silk.svg)](https://packagist.org/packages/silk/silk)
 
 
 A modern API for WordPress.
@@ -28,7 +29,7 @@ Or check out the [API documentation](https://api.silk.aaemnnost.tv/master/) if y
 
 #### Via Composer (Recommended)
 ```
-composer require silk/silk:^0.10
+composer require silk/silk:^0.11
 ```
 
 ## Contributing
