@@ -13,6 +13,7 @@ class WP_ErrorException extends \RuntimeException
      */
     public function __construct(WP_Error $error)
     {
+        $this->code = $error->get_error_code();
         $this->message = $error->get_error_message();
     }
 }
