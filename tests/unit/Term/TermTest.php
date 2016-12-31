@@ -1,5 +1,6 @@
 <?php
 
+use Silk\Exception\WP_ErrorException;
 use Silk\Term\Model;
 use Silk\Meta\Meta;
 use Silk\Meta\ObjectMeta;
@@ -370,11 +371,20 @@ class TermTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Exception\WP_ErrorException
      */
     public function it_blows_up_if_getting_a_term_url_for_a_non_existent_term()
     {
-        (new Category)->url();
+        $category = new Category;
+        $this->assertFalse((bool) $category->exists());
+
+        try {
+            $category->url();
+        } catch (WP_ErrorException $exception) {
+            $this->assertSame('invalid_term', $exception->getCode());
+            return;
+        }
+
+        $this->fail('Failed to assert that getting the URL for a non-existent term throws a WP_ErrorException.');
     }
 }
 
