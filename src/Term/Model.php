@@ -194,7 +194,7 @@ abstract class Model extends BaseModel
      */
     public function url()
     {
-        $url = get_term_link($this->id, $this->taxonomy);
+        $url = get_term_link((int) $this->id, $this->taxonomy);
 
         if (is_wp_error($url)) {
             throw new WP_ErrorException($url);
