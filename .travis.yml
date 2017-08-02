@@ -18,9 +18,6 @@ matrix:
     - php: 7.1
       env: WP_VERSION=latest
 
-    - php: hhvm
-      env: WP_VERSION=latest
-
 before_install:
     - composer self-update --stable
     - composer validate --strict
