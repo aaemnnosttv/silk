@@ -42,7 +42,7 @@ deploy:
     access_key_id: AKIAIUOEMT3YXWAPTEJA
     secret_access_key:
         secure: Wqmlzs52YkR3mzmW4tvFSFincFyiJnFJvtpxsiP7wdbOqefjYiZlF5jCn6rpXvwfm3OUSFzplSDzeWUKbHjPPDkIP82Zk6jbdFPHqDurkoBdfdkIkD/X/yfQsMTDVfchRZbWaNj/+IiykuHBDkljvhbaZtepODJMIkBjkZom4Yb3pjOUARgBGy2gtI4WhaVyg4oZ1Xm0o4S6i5AUGxIZjOBfCwePhsioEZFDsaV8QVWfa7K3ttlJtpGFDLhFzB29mMVXLWbTc8I7DoEu8ghJ0bq2ilO/dRxqy3IZN7ZkLockKbg+UM4xyp/b+yQtIvmN5DMM2m3aswyz8snLqrhtKRE1QjH4/UJUunLkvn79UotXm6Vl9HTnDYG5DimsMOGxVGEuWUsY/pN0tRqPA9HGjSqOeEzgj+OjOIlUssv/E1+5+OYtpBGOnvl6tzyAffQdhdhJ+wZgOsLs9U5zRnp+t3+TAvfN6+SPmG/SQX0T7mRIZNVhICH9p/gpqjtljBJy724Xx/ZquW/tkFLB6X/M97p4OBEtX+MvwCE0L/lV2/uT2fZV3BqdYYX7fCakpWVwEA7c2pxW8VyjZf97iindxh9HQrGAu7QT3lOGyIRYsCfWgfC4yPJcMWjJZj6d5uQvVrJtMOQzVo4y9HQ9b0iXe9LYQrjdLa4xBDgLatZw2W8=
-    bucket: aaemnnosttv-silk-api-docs
+    bucket: api.silk.aaemnnost.tv
     acl: public_read
     skip_cleanup: true
     local_dir: ../silk-api-docs
