@@ -45,7 +45,7 @@ deploy:
     local_dir: ../silk-api-docs
     on:
         branch: master
-        php: 5.6
+        php: 7.0
         condition: $WP_VERSION = latest
 
 cache:
