@@ -61,7 +61,9 @@ abstract class Model
      *
      * All provided arguments are forwarded to the constructor of the called class.
      *
-     * @return static
+     * @throws \ReflectionException
+     *
+     * @return object|Model
      */
     public static function make()
     {
