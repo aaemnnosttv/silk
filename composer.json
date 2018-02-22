@@ -27,5 +27,9 @@
     "autoload": {
         "psr-4": {"Silk\\":"src"},
         "files": ["src/functions.php"]
+    },
+    "scripts": {
+        "test": "phpunit",
+        "coverage": "coveralls"
     }
 }
