@@ -3,7 +3,7 @@
 use Silk\Post\Model;
 use Silk\Post\QueryBuilder;
 use Silk\WordPress\Post\Post;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 class PostQueryBuilderTest extends WP_UnitTestCase
 {

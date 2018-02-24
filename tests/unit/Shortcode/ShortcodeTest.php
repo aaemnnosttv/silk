@@ -1,7 +1,7 @@
 <?php
 
 use Silk\Support\Shortcode;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 class ShortcodeTest extends WP_UnitTestCase
 {

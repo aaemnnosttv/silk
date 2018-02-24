@@ -2,7 +2,7 @@
 
 use Silk\User\Model;
 use Silk\User\QueryBuilder;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 class UserQueryBuilderTest extends WP_UnitTestCase
 {

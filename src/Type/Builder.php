@@ -2,7 +2,7 @@
 
 namespace Silk\Type;
 
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 abstract class Builder
 {

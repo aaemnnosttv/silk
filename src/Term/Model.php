@@ -6,7 +6,7 @@ use stdClass;
 use WP_Term;
 use Silk\Taxonomy\Taxonomy;
 use Silk\Type\Model as BaseModel;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 use Silk\Exception\WP_ErrorException;
 use Silk\Term\Exception\TermNotFoundException;
 use Silk\Term\Exception\TaxonomyMismatchException;

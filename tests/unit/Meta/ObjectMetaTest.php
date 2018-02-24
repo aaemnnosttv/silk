@@ -2,7 +2,7 @@
 
 use Silk\Meta\Meta;
 use Silk\Meta\ObjectMeta;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 class ObjectMetaTest extends WP_UnitTestCase
 {

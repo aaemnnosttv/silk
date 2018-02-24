@@ -4,7 +4,7 @@ namespace Silk\Term;
 
 use Silk\Query\Builder as BaseBuilder;
 use Silk\Exception\WP_ErrorException;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 /**
  * @property Model $model

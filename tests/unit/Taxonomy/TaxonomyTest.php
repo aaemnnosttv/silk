@@ -4,7 +4,7 @@ use Silk\Term\Category;
 use Silk\Taxonomy\Builder;
 use Silk\Taxonomy\Taxonomy;
 use Silk\Contracts\Query\BuildsQueries;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 
 class TaxonomyTest extends WP_UnitTestCase

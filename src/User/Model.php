@@ -4,7 +4,7 @@ namespace Silk\User;
 
 use WP_User;
 use Silk\Type\Model as BaseModel;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 use Silk\Exception\WP_ErrorException;
 use Silk\User\Exception\UserNotFoundException;
 

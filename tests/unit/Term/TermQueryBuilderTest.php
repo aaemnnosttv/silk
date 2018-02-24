@@ -3,7 +3,7 @@
 use Silk\Taxonomy\Taxonomy;
 use Silk\Term\QueryBuilder;
 use Silk\WordPress\Term\Category;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 class TermQueryBuilderTest extends WP_UnitTestCase
 {

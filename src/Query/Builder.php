@@ -4,7 +4,7 @@ namespace Silk\Query;
 
 use Silk\Type\Model;
 use Silk\Contracts\Query\BuildsQueries;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 /**
  * @property-read object $query

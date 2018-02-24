@@ -2,7 +2,7 @@
 
 namespace Silk\Contracts\Query;
 
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 interface BuildsQueries
 {

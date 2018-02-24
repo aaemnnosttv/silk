@@ -2,7 +2,7 @@
 
 namespace Silk\Support;
 
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 abstract class Shortcode
 {

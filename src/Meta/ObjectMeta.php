@@ -2,7 +2,7 @@
 
 namespace Silk\Meta;
 
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 /**
  * @property-read string $type

@@ -2,7 +2,7 @@
 
 namespace Silk\Meta;
 
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 class Meta
 {

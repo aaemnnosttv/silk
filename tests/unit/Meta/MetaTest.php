@@ -1,7 +1,7 @@
 <?php
 
 use Silk\Meta\Meta;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 class MetaTest extends WP_UnitTestCase
 {

@@ -3,7 +3,7 @@
 namespace Silk\Event;
 
 use Silk\Support\Callback;
-use Illuminate\Support\Collection;
+use Silk\Support\Collection;
 
 class Hook
 {
