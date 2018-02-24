@@ -157,6 +157,26 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         $this->fail('Expected a BadMethodCallException due to missing query scope');
     }
 
+    /** @test */
+    function scopes_can_pass_parameters_to_the_model_methods()
+    {
+        $model = new ModelTestScope();
+        $parent_id = $this->factory()->post->create([
+            'post_type' => $model->post_type,
+        ]);
+
+        $children = $this->factory()->post->create_many(3, [
+            'post_type' => $model->post_type,
+            'post_parent' => $parent_id,
+        ]);
+
+        $builder = new QueryBuilder(new WP_Query);
+        $builder->setModel($model);
+
+        $this->assertCount(3, $builder->childOf($parent_id)->results());
+        $this->assertEqualSets($children, $builder->childOf($parent_id)->results()->pluck('id')->all());
+    }
+
 }
 
 class CustomCPT extends Model
@@ -180,5 +200,9 @@ class ModelTestScope extends Model
     public function scopeRevision(QueryBuilder $builder)
     {
         return $builder->whereStatus('inherit');
+    }
+    public function scopeChildOf(QueryBuilder $builder, $parent)
+    {
+        return $builder->set('post_parent', $parent);
     }
 }
