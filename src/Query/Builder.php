@@ -82,4 +82,21 @@ abstract class Builder implements BuildsQueries
     {
         return $this->model;
     }
+
+    /**
+     * Handle dynamic method calls on the builder.
+     *
+     * @param string $name      Method name
+     * @param array  $arguments
+     *
+     * @return mixed
+     */
+    public function __call($name, $arguments)
+    {
+        if (method_exists($this->model, 'scope' . ucfirst($name))) {
+            return $this->model->{'scope' . ucfirst($name)}($this, ...$arguments);
+        }
+
+        throw new \BadMethodCallException("No '$name' method exists on " . static::class);
+    }
 }

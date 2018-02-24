@@ -108,9 +108,103 @@ class PostQueryBuilderTest extends WP_UnitTestCase
 
         $this->assertSame('donut', $query->get('foo'));
     }
+
+    /** @test */
+    function it_delegates_query_scopes_to_the_model()
+    {
+        $model = new ModelTestScope();
+        $this->factory()->post->create_many(3, [
+            'post_type' => $model->post_type,
+            'post_status' => 'publish',
+        ]);
+        $this->factory()->post->create_many(4, [
+            'post_type' => $model->post_type,
+            'post_status' => 'draft',
+        ]);
+        $this->factory()->post->create_many(5, [
+            'post_type' => $model->post_type,
+            'post_status' => 'inherit',
+        ]);
+
+        $builder = new QueryBuilder(new WP_Query);
+        $builder->setModel($model);
+
+        $this->assertCount(3, $builder->published()->results());
+        $this->assertCount(4, $builder->draft()->results());
+        $this->assertCount(5, $builder->revision()->results());
+    }
+
+    /** @test */
+    function undefined_scopes_throw_method_not_found_exception()
+    {
+        $model = new ModelTestScope();
+        $this->factory()->post->create_many(3, [
+            'post_type' => $model->post_type,
+            'post_status' => 'publish',
+        ]);
+
+        $builder = new QueryBuilder(new WP_Query);
+        $builder->setModel($model);
+
+        $this->assertFalse(method_exists($model, 'scopeNonExistentScope'));
+
+        try {
+            $builder->nonExistentScope();
+        } catch (\BadMethodCallException $e) {
+            return;
+        }
+
+        $this->fail('Expected a BadMethodCallException due to missing query scope');
+    }
+
+    /** @test */
+    function scopes_can_pass_parameters_to_the_model_methods()
+    {
+        $model = new ModelTestScope();
+        $parent_id = $this->factory()->post->create([
+            'post_type' => $model->post_type,
+        ]);
+
+        $children = $this->factory()->post->create_many(3, [
+            'post_type' => $model->post_type,
+            'post_parent' => $parent_id,
+        ]);
+
+        $builder = new QueryBuilder(new WP_Query);
+        $builder->setModel($model);
+
+        $this->assertCount(3, $builder->childOf($parent_id)->results());
+        $this->assertEqualSets($children, $builder->childOf($parent_id)->results()->pluck('id')->all());
+    }
+
 }
 
 class CustomCPT extends Model
 {
     const POST_TYPE = 'custom';
+}
+
+class ModelTestScope extends Model
+{
+    const POST_TYPE = 'custom';
+
+    public function scopeDraft(QueryBuilder $builder)
+    {
+        return $builder->whereStatus('draft');
+    }
+
+    public function scopePublished(QueryBuilder $builder)
+    {
+        return $builder->whereStatus('publish');
+    }
+
+    public function scopeRevision(QueryBuilder $builder)
+    {
+        return $builder->whereStatus('inherit');
+    }
+
+    public function scopeChildOf(QueryBuilder $builder, $parent)
+    {
+        return $builder->set('post_parent', $parent);
+    }
 }
