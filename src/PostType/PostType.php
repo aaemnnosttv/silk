@@ -110,7 +110,7 @@ class PostType extends Type implements Registerable
         }
 
         return ! Collection::make($features)
-            ->contains(function ($key, $feature) {
+            ->contains(function ($feature) {
                 return ! post_type_supports($this->id(), $feature);
             });
     }
