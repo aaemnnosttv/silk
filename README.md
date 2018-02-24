@@ -26,9 +26,8 @@ Or check out the [API documentation](https://api.silk.aaemnnost.tv/master/) if y
 
 ## Installation
 
-#### Via Composer (Recommended)
-```
-composer require silk/silk:^0.11
+```bash
+composer require silk/silk
 ```
 
 ## Contributing
