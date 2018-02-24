@@ -192,15 +192,17 @@ class ModelTestScope extends Model
     {
         return $builder->whereStatus('draft');
     }
+
     public function scopePublished(QueryBuilder $builder)
     {
-        $builder->whereStatus('publish');
-        return $builder;
+        return $builder->whereStatus('publish');
     }
+
     public function scopeRevision(QueryBuilder $builder)
     {
         return $builder->whereStatus('inherit');
     }
+
     public function scopeChildOf(QueryBuilder $builder, $parent)
     {
         return $builder->set('post_parent', $parent);
