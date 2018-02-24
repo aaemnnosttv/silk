@@ -41,7 +41,7 @@ class TermTest extends WP_UnitTestCase
         wp_insert_term('Blue', 'category');
         $term = get_term_by('name', 'Blue', 'category');
 
-        $model = Category::fromWpTerm($term);
+        $model = new Category($term);
 
         $this->assertInstanceOf(Category::class, $model);
         $this->assertSame($term->term_id, $model->id);
@@ -77,7 +77,7 @@ class TermTest extends WP_UnitTestCase
         wp_insert_term('Green', 'post_tag');
         $tag_term = get_term_by('name', 'Green', 'post_tag');
 
-        Category::fromWpTerm($tag_term);
+        new Category($tag_term);
     }
 
     /** @test */

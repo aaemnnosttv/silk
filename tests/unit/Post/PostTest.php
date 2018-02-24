@@ -41,19 +41,6 @@ class PostTest extends WP_UnitTestCase
         new Post($wp_post);
     }
 
-
-    /** @test */
-    function it_can_be_instantiated_from_a_wp_post_object()
-    {
-        $post = $this->factory->post->create_and_get();
-        $model = Post::fromWpPost($post);
-
-        $this->assertSame($post->ID, $model->id);
-
-        $model = Post::make($post);
-        $this->assertSame($post, $model->object);
-    }
-
     /** @test */
     function it_can_be_instantiated_with_an_array_of_attributes()
     {
@@ -282,7 +269,7 @@ class PostTest extends WP_UnitTestCase
     public function it_has_a_method_for_the_permalink()
     {
         $post = $this->factory->post->create_and_get();
-        $model = Post::fromWpPost($post);
+        $model = Post::make($post);
 
         $this->assertSame(
             get_permalink($post->ID),

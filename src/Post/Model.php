@@ -82,23 +82,6 @@ abstract class Model extends BaseModel
     }
 
     /**
-     * Create a new instance from the given WP_Post object
-     * @deprecated - use static::make()
-     *
-     * @param  WP_Post $post
-     *
-     * @return static
-     */
-    public static function fromWpPost(WP_Post $post)
-    {
-        if ($post->post_type !== static::postTypeId()) {
-            throw new ModelPostTypeMismatchException(static::class, $post);
-        }
-
-        return new static($post);
-    }
-
-    /**
      * Create a new instance from a Post with the given ID
      *
      * @param  int|string $id  Post ID of post to create the instance from
