@@ -12,7 +12,7 @@ class PageTest extends WP_UnitTestCase
         $page = $this->factory->post->create_and_get(['post_type' => 'page']);
 
         $model_from_id = Page::fromID($page->ID);
-        $model_from_obj = Page::fromWpPost($page);
+        $model_from_obj = Page::make($page);
         $model_from_slug = Page::fromSlug($page->post_name);
 
         $this->assertSame($page->ID, $model_from_id->id);

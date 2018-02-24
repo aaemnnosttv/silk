@@ -66,19 +66,6 @@ abstract class Model extends BaseModel
     }
 
     /**
-     * Create a new instance from a WP_Term object.
-     * @deprecated - use static::make()
-     *
-     * @param  WP_Term $term [description]
-     *
-     * @return static
-     */
-    public static function fromWpTerm(WP_Term $term)
-    {
-        return new static($term);
-    }
-
-    /**
      * Create a new instance from a term ID.
      *
      * @param  int|string $id  Term ID
