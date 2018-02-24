@@ -6,9 +6,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
 {
     use PostTypeAssertions;
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_be_constructed_with_a_slug()
     {
         new Builder('some-type');
@@ -22,9 +20,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
         $this->assertInstanceOf(Builder::class, Builder::make('new-type'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_register_the_post_type()
     {
         $this->assertPostTypeNotExists('some-post-type');
@@ -52,9 +48,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
         Builder::make('')->register();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_accepts_an_array_or_parameters_for_supported_features()
     {
         Builder::make('bread')->supports(['flour', 'water'])->register();
@@ -68,9 +62,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
         $this->assertTrue(post_type_supports('butter', 'spreading'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_get_and_set_arbitrary_values_for_the_registration_arguments()
     {
         $type = Builder::make('stuff')
@@ -82,9 +74,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
         $this->assertSame('happy', $object->mood);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_dedicated_methods_for_public_visibility()
     {
         $public = Builder::make('a-public-type')->open();
@@ -94,9 +84,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
         $this->assertFalse($private->get('public'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_dedicated_methods_for_user_interface()
     {
         $ui = Builder::make('ui-having')->withUI();
@@ -106,9 +94,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
         $this->assertFalse($no_ui->get('show_ui'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_methods_for_setting_the_labels()
     {
         Builder::make('book')

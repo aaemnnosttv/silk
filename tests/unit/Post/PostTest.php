@@ -5,9 +5,7 @@ use Silk\Contracts\Query\BuildsQueries;
 
 class PostTest extends WP_UnitTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_create_a_post_from_a_new_instance()
     {
         $model = new Post();
@@ -20,9 +18,7 @@ class PostTest extends WP_UnitTestCase
         $this->assertNotEmpty($model->post->ID);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_create_a_new_instance_using_a_wp_post_object()
     {
         $wp_post = $this->factory->post->create_and_get();
@@ -46,9 +42,7 @@ class PostTest extends WP_UnitTestCase
     }
 
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_be_instantiated_from_a_wp_post_object()
     {
         $post = $this->factory->post->create_and_get();
@@ -60,9 +54,7 @@ class PostTest extends WP_UnitTestCase
         $this->assertSame($post, $model->object);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_be_instantiated_with_an_array_of_attributes()
     {
         $model = new Post([
@@ -72,9 +64,7 @@ class PostTest extends WP_UnitTestCase
         $this->assertSame('The Title', $model->post_title);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_find_a_post_by_the_id()
     {
         $post_id = $this->factory->post->create();
@@ -85,9 +75,7 @@ class PostTest extends WP_UnitTestCase
         $this->assertEquals($post_id, $model->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_find_a_post_by_the_slug()
     {
         $the_slug = 'foo-bar-slug';
@@ -115,9 +103,7 @@ class PostTest extends WP_UnitTestCase
         Post::fromID(123958723409817209872350872395872304);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_be_created_from_the_global_post()
     {
         global $post;
@@ -137,9 +123,7 @@ class PostTest extends WP_UnitTestCase
         Post::fromGlobal();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_proxies_property_access_to_the_post_if_not_available_on_the_instance()
     {
         $post = $this->factory->post->create_and_get();
@@ -155,9 +139,7 @@ class PostTest extends WP_UnitTestCase
         $this->assertSame('awesome', $model->some_property);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_provides_an_object_for_interacting_with_the_post_meta()
     {
         $post_id = $this->factory->post->create();
@@ -171,9 +153,7 @@ class PostTest extends WP_UnitTestCase
         $this->assertInstanceOf(Silk\Meta\Meta::class, $model->meta('new_meta'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_create_a_new_post()
     {
         $model = Post::create([
@@ -196,9 +176,7 @@ class PostTest extends WP_UnitTestCase
         Post::create();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_creates_a_post_of_the_models_type()
     {
         $model = CustomTypeStub::create(['post_title' => 'This is just a test']);
@@ -206,9 +184,7 @@ class PostTest extends WP_UnitTestCase
         $this->assertEquals(CustomTypeStub::POST_TYPE, $model->post_type);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_delete_itself()
     {
         $post_id = $this->factory->post->create();
@@ -224,9 +200,7 @@ class PostTest extends WP_UnitTestCase
     }
 
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_handles_trashing_and_untrashing()
     {
         $model = Post::create([
@@ -245,9 +219,7 @@ class PostTest extends WP_UnitTestCase
         $this->assertEquals('publish', get_post_status($model->id));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_a_method_for_refreshing_the_wrapped_post()
     {
         $model = Post::create([
@@ -268,9 +240,7 @@ class PostTest extends WP_UnitTestCase
         $this->assertEquals('Changed', $model->post_title);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_save_changes_back_to_the_database()
     {
         $model = Post::create([
@@ -284,18 +254,14 @@ class PostTest extends WP_UnitTestCase
         $this->assertEquals('Changed', get_the_title($model->id));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_offers_static_methods_for_querying()
     {
         $this->assertInstanceOf(BuildsQueries::class, Post::query());
         $this->assertInstanceOf(BuildsQueries::class, (new Post)->newQuery());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_a_static_method_for_starting_a_new_query_for_all_posts_of_type()
     {
         $this->factory->post->create_many(15);
@@ -303,9 +269,7 @@ class PostTest extends WP_UnitTestCase
         $this->assertCount(15, Post::all()->results());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_proxies_non_existent_static_methods_to_the_builder()
     {
         $this->assertInstanceOf(
@@ -314,9 +278,7 @@ class PostTest extends WP_UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_a_method_for_the_permalink()
     {
         $post = $this->factory->post->create_and_get();

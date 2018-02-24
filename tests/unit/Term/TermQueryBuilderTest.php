@@ -9,9 +9,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
 {
     use TermFactoryHelpers;
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_the_results_as_a_collection()
     {
         $query = new QueryBuilder;
@@ -19,9 +17,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
         $this->assertInstanceOf(Collection::class, $query->results());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_limit_the_results_to_a_given_taxonomy()
     {
         /**
@@ -41,9 +37,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
         $this->assertSame(['post_tag','post_tag','post_tag'], $results->pluck('taxonomy')->all());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_include_unattached_terms()
     {
         $post_id = $this->factory->post->create();
@@ -59,9 +53,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
         $this->assertCount(6, $results);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_query_all_terms()
     {
         $post_id = $this->factory->post->create();
@@ -84,9 +76,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     }
 
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_limit_the_maximum_number_of_results_to_a_given_number()
     {
         $this->createManyTags(7);
@@ -109,9 +99,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
             ->results();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_accept_and_return_a_model()
     {
         $model = new Category;

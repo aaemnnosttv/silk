@@ -44,18 +44,14 @@ class PostTypeTest extends WP_UnitTestCase
         PostType::load('non-existent-type');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function the_make_method_returns_a_new_instance_for_existing_types_otherwise_a_builder_instance()
     {
         $this->assertInstanceOf(PostType::class, PostType::make('post'));
         $this->assertInstanceOf(Builder::class, PostType::make('mega-post'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_unregister_the_post_type()
     {
         $type = PostType::make('temporary')->register();
@@ -89,18 +85,14 @@ class PostTypeTest extends WP_UnitTestCase
         PostType::load('post')->unregister();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_check_if_the_post_type_exists()
     {
         $this->assertTrue(PostType::exists('post'));
         $this->assertFalse(PostType::exists('post-it-note'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_methods_for_adding_and_removing_support_for_post_type_features()
     {
         $type = PostType::load('post')
@@ -115,9 +107,7 @@ class PostTypeTest extends WP_UnitTestCase
         $this->assertTrue($type->supports('euros'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_readonly_magic_properties()
     {
         $type = PostType::load('post');

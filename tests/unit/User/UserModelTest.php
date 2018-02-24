@@ -6,17 +6,13 @@ use Silk\Type\ShorthandProperties;
 
 class UserModelTest extends WP_UnitTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_be_constructed_with_no_parameters()
     {
         new User;
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_takes_a_wp_user_or_array_of_user_attributes_in_the_constructor()
     {
         $blankUser = new WP_User;
@@ -34,9 +30,7 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertSame('iheartkate', $modelFromAtts->object->user_pass);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_create_a_new_instance_from_a_user_id()
     {
         $user_id = $this->factory->user->create();
@@ -57,9 +51,7 @@ class UserModelTest extends WP_UnitTestCase
     }
 
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_create_a_new_instance_from_a_username()
     {
         $user = $this->factory->user->create_and_get();
@@ -80,9 +72,7 @@ class UserModelTest extends WP_UnitTestCase
     }
 
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_create_a_new_instance_from_the_users_email_address()
     {
         $user = $this->factory->user->create_and_get();
@@ -102,9 +92,7 @@ class UserModelTest extends WP_UnitTestCase
         User::fromEmail('non-existent@user.com');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_create_a_new_instance_from_the_user_slug()
     {
         $user = $this->factory->user->create_and_get();
@@ -124,9 +112,7 @@ class UserModelTest extends WP_UnitTestCase
         User::fromSlug('non-existent');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_create_a_new_user_from_a_new_instance()
     {
         $model = new User;
@@ -151,9 +137,7 @@ class UserModelTest extends WP_UnitTestCase
         $model->save();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_update_an_existing_user()
     {
         $user = $this->factory->user->create_and_get();
@@ -169,9 +153,7 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertSame('Fivefingers', $updated->last_name);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_delete_the_modeled_user()
     {
         $user = $this->factory->user->create_and_get();
@@ -183,9 +165,7 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertFalse(get_user_by('ID', $user->ID));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_exposes_the_meta_api_for_users()
     {
         $user = $this->factory->user->create_and_get();
@@ -203,17 +183,13 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertSame('pizza', $model->favorite_food);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function the_query_method_fulfills_the_contract()
     {
         $this->assertInstanceOf(BuildsQueries::class, User::query());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_a_method_to_get_the_url_for_the_users_posts()
     {
         $user = $this->factory->user->create_and_get(['nicename' => 'franky']);
@@ -225,9 +201,7 @@ class UserModelTest extends WP_UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_create_a_new_user()
     {
         $model = User::create([
@@ -241,9 +215,7 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertSame('ralph', $user->user_login);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_create_a_new_instance_from_the_current_authenticated_user()
     {
         $user_id = $this->factory->user->create();
@@ -254,9 +226,7 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertSame($user_id, $model->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_refreshes_the_user_object_on_save()
     {
         $model = new User;
@@ -268,9 +238,7 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertTrue(wp_check_password('password', $model->user_pass));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_alias_some_properties_to_user_data()
     {
         $user = $this->factory->user->create_and_get();
@@ -282,9 +250,7 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertSame($user->user_pass, $model->password);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_works_with_shorthand_too()
     {
         $model = new ShorthandUser([

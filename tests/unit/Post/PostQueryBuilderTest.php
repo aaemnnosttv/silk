@@ -7,17 +7,13 @@ use Illuminate\Support\Collection;
 
 class PostQueryBuilderTest extends WP_UnitTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     public function it_requires_a_wp_query_to_be_constructed()
     {
         $this->assertInstanceOf(QueryBuilder::class, new QueryBuilder(new WP_Query));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_the_results_as_a_collection()
     {
         $builder = new QueryBuilder(new WP_Query);
@@ -25,9 +21,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         $this->assertInstanceOf(Collection::class, $builder->results());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function the_results_can_be_limited_to_the_integer_provided()
     {
         $this->factory->post->create_many(10);
@@ -38,9 +32,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         $this->assertCount(5, $builder->results());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_getters_and_setters_for_holding_the_model_instance()
     {
         $model = new CustomCPT;
@@ -51,9 +43,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         $this->assertSame($model, $builder->getModel());
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     function it_returns_results_as_a_collection_of_models()
     {
         register_post_type(CustomCPT::POST_TYPE);
@@ -66,9 +56,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         $this->assertInstanceOf(CustomCPT::class, $results[0]);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_methods_for_setting_the_order_of_results()
     {
         $first_id = $this->factory->post->create();
@@ -89,9 +77,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         $this->assertSame($last_id, $resultsAsc->first()->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_query_by_status()
     {
         $this->factory->post->create_many(5, ['post_status' => 'doggie']);
@@ -101,9 +87,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         $this->assertCount(5, $doggies);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_query_by_slug()
     {
         $post_id = $this->factory->post->create(['post_name' => 'sluggy']);
@@ -113,10 +97,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         $this->assertSame($post_id, $builder->results()->first()->ID);
     }
 
-
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_set_arbitrary_query_vars()
     {
         $query = new WP_Query('foo=bar');

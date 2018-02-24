@@ -9,9 +9,7 @@ use Illuminate\Support\Collection;
 
 class TaxonomyTest extends WP_UnitTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_staticly_check_the_existence_of_a_given_taxonomy()
     {
         $this->assertTrue(Taxonomy::exists('category'));
@@ -19,9 +17,7 @@ class TaxonomyTest extends WP_UnitTestCase
         $this->assertFalse(Taxonomy::exists('non-existent'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_takes_the_taxonomy_object_to_construct()
     {
         $object = get_taxonomy('category');
@@ -30,9 +26,7 @@ class TaxonomyTest extends WP_UnitTestCase
         $this->assertSame('category', $taxonomy->id());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_a_named_constructor_which_takes_the_taxonomy_identifier()
     {
         $this->assertInstanceOf(Taxonomy::class, Taxonomy::make('category'));
@@ -74,9 +68,7 @@ class TaxonomyTest extends WP_UnitTestCase
         Taxonomy::make('thisismorethanthirtytwocharacters');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_unregister_the_taxonomy()
     {
         $this->assertFalse(Taxonomy::exists('temp'));
@@ -116,17 +108,13 @@ class TaxonomyTest extends WP_UnitTestCase
         $taxonomy->unregister();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_a_method_for_fetching_terms()
     {
         $this->assertInstanceOf(BuildsQueries::class, Taxonomy::make('category')->terms());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_proxies_properties_to_the_taxonomy_object()
     {
         $model = Taxonomy::make('category');
@@ -134,9 +122,7 @@ class TaxonomyTest extends WP_UnitTestCase
         $this->assertSame('Categories', $model->label);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_readonly_properties()
     {
         $model = Taxonomy::make('category');
@@ -144,9 +130,7 @@ class TaxonomyTest extends WP_UnitTestCase
         $this->assertSame('category', $model->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_return_a_collection_of_post_types_associated_with_it()
     {
         register_taxonomy('breed', ['dog', 'cat']);
@@ -161,9 +145,7 @@ class TaxonomyTest extends WP_UnitTestCase
         $this->assertContains('cat', $types->pluck('id'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_readonly_magic_properties()
     {
         $type = Taxonomy::make('category');
@@ -175,17 +157,13 @@ class TaxonomyTest extends WP_UnitTestCase
         $this->assertNull($type->nonExistentProperty);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function non_existent_properties_return_null()
     {
         $this->assertNull(Taxonomy::make('category')->non_existent);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_a_new_builder_for_its_taxonomy_if_not_registered_yet()
     {
         $this->assertInstanceOf(Builder::class, Taxonomy::make('non_existent_tax'));

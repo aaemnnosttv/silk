@@ -5,9 +5,7 @@ use Illuminate\Support\Collection;
 
 class ShortcodeTest extends WP_UnitTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_register_many_shortcodes_for_the_same_class()
     {
         SomeShortcode::register('one');
@@ -17,18 +15,14 @@ class ShortcodeTest extends WP_UnitTestCase
         $this->assertSame(do_shortcode('[two]'), 'SomeShortcode::handler');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function there_is_a_method_naming_convention_for_a_dedicated_handler_method()
     {
         SomeShortcode::register('foo');
         $this->assertSame(do_shortcode('[foo]'), 'bar');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function there_is_a_method_for_getting_the_attributes_as_a_collection()
     {
         $shortcode = new SomeShortcode(['test' => 'ok'], '', 'testing');
@@ -38,9 +32,7 @@ class ShortcodeTest extends WP_UnitTestCase
         $this->assertCount(1, $shortcode->attributes());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_returns_an_emtpy_string_if_no_handler_is_implemented()
     {
         $shortcode = new TestShortcode([], '', 'test');

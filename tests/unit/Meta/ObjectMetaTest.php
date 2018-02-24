@@ -6,9 +6,7 @@ use Illuminate\Support\Collection;
 
 class ObjectMetaTest extends WP_UnitTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_get_a_dedicated_meta_object_for_a_given_key()
     {
         $post_id = $this->factory->post->create();
@@ -18,9 +16,7 @@ class ObjectMetaTest extends WP_UnitTestCase
         $this->assertInstanceOf(Meta::class, $postMeta->get('some_meta_key'));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_return_all_meta_as_a_collection()
     {
         $post_id = $this->factory->post->create();
@@ -34,9 +30,7 @@ class ObjectMetaTest extends WP_UnitTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_return_all_meta_as_an_array()
     {
         /**
@@ -57,9 +51,7 @@ class ObjectMetaTest extends WP_UnitTestCase
         );
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_readonly_properties()
     {
         $meta = new ObjectMeta('post', 123);
@@ -70,9 +62,7 @@ class ObjectMetaTest extends WP_UnitTestCase
         $this->assertNull($meta->non_existent);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_a_fluent_setter()
     {
         $meta = new ObjectMeta('post', 123);

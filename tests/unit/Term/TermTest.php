@@ -12,9 +12,7 @@ class TermTest extends WP_UnitTestCase
 {
     use TermFactoryHelpers;
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_create_a_term_from_a_new_instance()
     {
         $model = new Category();
@@ -26,9 +24,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertSame($model->id, $term->term_id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_be_instantiated_with_an_array_of_attributes()
     {
         $model = new Category([
@@ -39,9 +35,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertSame('Blue', $model->name);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_create_a_new_instance_from_a_wp_term()
     {
         wp_insert_term('Blue', 'category');
@@ -53,9 +47,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertSame($term->term_id, $model->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_create_a_new_instance_from_a_term_slug()
     {
         wp_insert_term('Green', 'category');
@@ -88,9 +80,7 @@ class TermTest extends WP_UnitTestCase
         Category::fromWpTerm($tag_term);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_create_a_new_instance_from_a_term_id()
     {
         $ids = wp_insert_term('Purple', 'category');
@@ -110,9 +100,7 @@ class TermTest extends WP_UnitTestCase
         Category::fromID(0);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_a_named_constructor_for_creating_a_new_instance_and_term_at_the_same_time()
     {
         $model = Category::create([
@@ -126,9 +114,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertSame('meat-eater', $model->slug);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_method_for_checking_if_the_term_exists()
     {
         $model = new Category;
@@ -140,9 +126,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertTrue($model->exists());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_a_method_for_checking_if_the_term_is_a_child_of_another_term()
     {
         $parent = Category::create([
@@ -158,9 +142,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertTrue($child->isChildOf($parent));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_save_changes_to_the_database()
     {
         $model = Category::create(['name' => 'Initial Name']);
@@ -189,9 +171,7 @@ class TermTest extends WP_UnitTestCase
         $model->save();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_delete_itself()
     {
         $model = Category::create(['name' => 'Doomed']);
@@ -204,27 +184,21 @@ class TermTest extends WP_UnitTestCase
         $this->assertEmpty($model->term_taxonomy_id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_blows_up_if_it_tries_to_delete_a_non_existent_term()
     {
         $model = new Category; // does not exist yet
         $model->delete();
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function that_non_existent_properties_return_null()
     {
         $model = new Category;
         $this->assertNull($model->non_existent_property);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_reports_proxied_properties_as_set()
     {
         $model = new Category;
@@ -234,9 +208,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertTrue(isset($model->taxonomy));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_has_a_method_for_returning_the_parent_instance()
     {
         $parent = Category::create([
@@ -251,9 +223,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertSame($child->parent, $child->parent()->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_get_all_of_its_ancestors_as_model_instances_of_the_same_class()
     {
         $grand = Category::create([
@@ -277,9 +247,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertSame($grand->id, $ancestors[1]->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_get_all_of_its_children_as_model_instances_of_the_same_class()
     {
         $grand = Category::create([
@@ -303,9 +271,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertSame($child->id, $children[1]->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_can_query_terms_of_the_same_type()
     {
         $post_id = $this->factory->post->create();
@@ -321,9 +287,7 @@ class TermTest extends WP_UnitTestCase
         }
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_a_method_for_returning_the_taxonomy_model()
     {
         $term = new Category;
@@ -332,9 +296,7 @@ class TermTest extends WP_UnitTestCase
         $this->assertSame('category', $term->taxonomy()->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_a_method_for_accessing_the_meta_api()
     {
         $model = Category::create(['name' => 'Testing']);
@@ -347,17 +309,13 @@ class TermTest extends WP_UnitTestCase
         $this->assertSame('single value', get_term_meta($model->id, 'some-key', true));
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_a_new_builder_for_its_taxonomy_if_not_registered_yet()
     {
         $this->assertInstanceOf(Builder::class, NewTerm::taxonomy());
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_a_method_for_getting_the_term_archive_url()
     {
         $model = $model = Category::create(['name' => 'Awesome']);

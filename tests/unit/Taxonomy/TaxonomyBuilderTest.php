@@ -5,17 +5,13 @@ use Silk\Taxonomy\Taxonomy;
 
 class TaxonomyBuilderTest extends WP_UnitTestCase
 {
-    /**
-     * @test
-     */
+    /** @test */
     function it_takes_the_taxonomy_name_to_construct()
     {
         new Builder('new_tax');
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_a_named_constructor_also()
     {
         $this->assertInstanceOf(Builder::class, Builder::make('new_tax'));
@@ -40,9 +36,7 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
     }
 
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_returns_a_new_taxonomy_instance_after_registering()
     {
         $registered = Builder::make('new_tax')->register();
@@ -51,9 +45,7 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
         $this->assertSame('new_tax', $registered->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_has_methods_for_setting_the_labels()
     {
         $registered = Builder::make('genre')
@@ -64,9 +56,7 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
         $this->assertSame('All Genres', $registered->labels->all_items);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     public function it_registers_the_taxonomy_for_the_given_types()
     {
         Builder::make('new_tax')

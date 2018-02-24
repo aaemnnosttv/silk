@@ -20,9 +20,7 @@ class PageTest extends WP_UnitTestCase
         $this->assertSame($page->ID, $model_from_slug->id);
     }
 
-    /**
-     * @test
-     */
+    /** @test */
     function it_can_create_a_page_from_a_new_instance()
     {
         $model = new Page;
