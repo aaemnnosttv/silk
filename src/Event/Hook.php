@@ -156,7 +156,7 @@ class Hook
          * Check if any of the conditions returns false,
          * if so, do not invoke.
          */
-        return ! $this->conditions()->contains(function ($key, $callback) use ($arguments) {
+        return ! $this->conditions()->contains(function ($callback) use ($arguments) {
             return false === $callback->callArray($arguments);
         });
     }
