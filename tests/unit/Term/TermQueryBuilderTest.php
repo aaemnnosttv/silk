@@ -1,6 +1,5 @@
 <?php
 
-use Silk\Taxonomy\Taxonomy;
 use Silk\Term\QueryBuilder;
 use Silk\WordPress\Term\Category;
 use Silk\Support\Collection;
