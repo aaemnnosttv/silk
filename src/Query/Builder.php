@@ -6,10 +6,6 @@ use Silk\Type\Model;
 use Silk\Contracts\Query\BuildsQueries;
 use Silk\Support\Collection;
 
-/**
- * @property-read object $query
- * @property-read Model  $model
- */
 abstract class Builder implements BuildsQueries
 {
     /**
