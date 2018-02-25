@@ -12,7 +12,7 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_has_a_named_constructor_also()
+    function it_has_a_named_constructor_also()
     {
         $this->assertInstanceOf(Builder::class, Builder::make('new_tax'));
     }
@@ -21,7 +21,7 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Taxonomy\Exception\InvalidTaxonomyNameException
      */
-    public function it_blows_up_if_the_taxononmy_name_is_too_short()
+    function it_blows_up_if_the_taxononmy_name_is_too_short()
     {
         Builder::make('')->register();
     }
@@ -30,13 +30,13 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Taxonomy\Exception\InvalidTaxonomyNameException
      */
-    public function it_blows_up_if_the_taxononmy_name_is_too_long()
+    function it_blows_up_if_the_taxononmy_name_is_too_long()
     {
         Builder::make('thisismorethanthirtytwocharacters')->register();
     }
 
     /** @test */
-    public function it_returns_a_new_taxonomy_instance_after_registering()
+    function it_returns_a_new_taxonomy_instance_after_registering()
     {
         $registered = Builder::make('new_tax')->register();
 
@@ -45,7 +45,7 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_has_methods_for_setting_the_labels()
+    function it_has_methods_for_setting_the_labels()
     {
         $registered = Builder::make('genre')
             ->oneIs('Genre')
@@ -56,7 +56,7 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_registers_the_taxonomy_for_the_given_types()
+    function it_registers_the_taxonomy_for_the_given_types()
     {
         Builder::make('new_tax')
             ->forTypes('post')

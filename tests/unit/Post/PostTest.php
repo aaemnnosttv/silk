@@ -52,7 +52,7 @@ class PostTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_find_a_post_by_the_id()
+    function it_can_find_a_post_by_the_id()
     {
         $post_id = $this->factory()->post->create();
         $model   = Post::fromID($post_id);
@@ -63,7 +63,7 @@ class PostTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_find_a_post_by_the_slug()
+    function it_can_find_a_post_by_the_slug()
     {
         $the_slug = 'foo-bar-slug';
         $post_id  = $this->factory()->post->create(['post_name' => $the_slug]);
@@ -76,7 +76,7 @@ class PostTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Post\Exception\PostNotFoundException
      */
-    public function it_blows_up_if_no_post_is_found_for_given_slug()
+    function it_blows_up_if_no_post_is_found_for_given_slug()
     {
         Post::fromSlug('no-post-here');
     }
@@ -85,7 +85,7 @@ class PostTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Post\Exception\PostNotFoundException
      */
-    public function it_blows_up_if_no_post_exists_for_given_id()
+    function it_blows_up_if_no_post_exists_for_given_id()
     {
         Post::fromID(123958723409817209872350872395872304);
     }
@@ -111,7 +111,7 @@ class PostTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_proxies_property_access_to_the_post_if_not_available_on_the_instance()
+    function it_proxies_property_access_to_the_post_if_not_available_on_the_instance()
     {
         $post = $this->factory()->post->create_and_get();
         $model = new Post($post);
@@ -127,7 +127,7 @@ class PostTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_provides_an_object_for_interacting_with_the_post_meta()
+    function it_provides_an_object_for_interacting_with_the_post_meta()
     {
         $post_id = $this->factory()->post->create();
         update_post_meta($post_id, 'new_meta', 'so fresh');
@@ -141,7 +141,7 @@ class PostTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_create_a_new_post()
+    function it_can_create_a_new_post()
     {
         $model = Post::create([
             'post_title' => 'Foo'
@@ -158,7 +158,7 @@ class PostTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Exception\WP_ErrorException
      */
-    public function it_blows_up_if_required_attributes_are_not_passed_when_created()
+    function it_blows_up_if_required_attributes_are_not_passed_when_created()
     {
         Post::create();
     }
@@ -188,7 +188,7 @@ class PostTest extends WP_UnitTestCase
 
 
     /** @test */
-    public function it_handles_trashing_and_untrashing()
+    function it_handles_trashing_and_untrashing()
     {
         $model = Post::create([
             'post_title' => 'Yay, I\'m Alive!',
@@ -207,7 +207,7 @@ class PostTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_has_a_method_for_refreshing_the_wrapped_post()
+    function it_has_a_method_for_refreshing_the_wrapped_post()
     {
         $model = Post::create([
             'post_title' => 'OG Title'
@@ -228,7 +228,7 @@ class PostTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_save_changes_back_to_the_database()
+    function it_can_save_changes_back_to_the_database()
     {
         $model = Post::create([
             'post_title' => 'OG Title'
@@ -266,7 +266,7 @@ class PostTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_has_a_method_for_the_permalink()
+    function it_has_a_method_for_the_permalink()
     {
         $post = $this->factory()->post->create_and_get();
         $model = Post::make($post);

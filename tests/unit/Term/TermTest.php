@@ -272,7 +272,7 @@ class TermTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_query_terms_of_the_same_type()
+    function it_can_query_terms_of_the_same_type()
     {
         $post_id = $this->factory()->post->create();
 
@@ -288,7 +288,7 @@ class TermTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_has_a_method_for_returning_the_taxonomy_model()
+    function it_has_a_method_for_returning_the_taxonomy_model()
     {
         $term = new Category;
 
@@ -297,7 +297,7 @@ class TermTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_has_a_method_for_accessing_the_meta_api()
+    function it_has_a_method_for_accessing_the_meta_api()
     {
         $model = Category::create(['name' => 'Testing']);
 
@@ -310,13 +310,13 @@ class TermTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_returns_a_new_builder_for_its_taxonomy_if_not_registered_yet()
+    function it_returns_a_new_builder_for_its_taxonomy_if_not_registered_yet()
     {
         $this->assertInstanceOf(Builder::class, NewTerm::taxonomy());
     }
 
     /** @test */
-    public function it_has_a_method_for_getting_the_term_archive_url()
+    function it_has_a_method_for_getting_the_term_archive_url()
     {
         $model = $model = Category::create(['name' => 'Awesome']);
 
@@ -330,7 +330,7 @@ class TermTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Exception\WP_ErrorException
      */
-    public function it_blows_up_if_getting_a_term_url_for_a_non_existent_term()
+    function it_blows_up_if_getting_a_term_url_for_a_non_existent_term()
     {
         (new Category)->url();
     }

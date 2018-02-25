@@ -9,7 +9,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     use TermFactoryHelpers;
 
     /** @test */
-    public function it_returns_the_results_as_a_collection()
+    function it_returns_the_results_as_a_collection()
     {
         $query = new QueryBuilder;
 
@@ -37,7 +37,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_include_unattached_terms()
+    function it_can_include_unattached_terms()
     {
         $post_id = $this->factory()->post->create();
         $this->createManyTags(3); // empties
@@ -53,7 +53,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_query_all_terms()
+    function it_can_query_all_terms()
     {
         $post_id = $this->factory()->post->create();
 
@@ -75,7 +75,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_limit_the_maximum_number_of_results_to_a_given_number()
+    function it_can_limit_the_maximum_number_of_results_to_a_given_number()
     {
         $this->createManyTags(7);
 
@@ -90,7 +90,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Exception\WP_ErrorException
      */
-    public function it_blows_up_if_trying_to_query_terms_of_a_non_taxonomy()
+    function it_blows_up_if_trying_to_query_terms_of_a_non_taxonomy()
     {
         (new QueryBuilder)
             ->forTaxonomy('non-existent')
@@ -98,7 +98,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_accept_and_return_a_model()
+    function it_can_accept_and_return_a_model()
     {
         $model = new Category;
         $builder = (new QueryBuilder)->setModel($model);

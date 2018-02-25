@@ -6,7 +6,7 @@ use Silk\Support\Collection;
 class MetaTest extends WP_UnitTestCase
 {
     /** @test */
-    public function it_gets_the_single_value_for_a_post_meta_key()
+    function it_gets_the_single_value_for_a_post_meta_key()
     {
         update_post_meta(123, 'some_meta_key', 'the value');
 
@@ -16,7 +16,7 @@ class MetaTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_sets_the_single_value_for_a_post_meta_key()
+    function it_sets_the_single_value_for_a_post_meta_key()
     {
         $meta = new Meta('post', 123, 'some_meta_key');
 
@@ -28,7 +28,7 @@ class MetaTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_update_a_single_value()
+    function it_can_update_a_single_value()
     {
         $meta = new Meta('post', 123, 'many');
 
@@ -43,7 +43,7 @@ class MetaTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_check_for_the_existence_of_any_value()
+    function it_can_check_for_the_existence_of_any_value()
     {
         $meta = new Meta('post', 123, 'some_nonexistent_meta_key');
 
@@ -55,7 +55,7 @@ class MetaTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_add_meta_for_keys_with_multiple_values()
+    function it_can_add_meta_for_keys_with_multiple_values()
     {
         $meta = new Meta('post', 123, 'many_values');
         $this->assertCount(0, $meta->all());
@@ -68,7 +68,7 @@ class MetaTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_delete_meta_for_a_key()
+    function it_can_delete_meta_for_a_key()
     {
         $meta = new Meta('post', 123, 'temp');
         $meta->set('this value is about to be deleted');
@@ -92,7 +92,7 @@ class MetaTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_return_all_meta_as_an_array_or_a_collection()
+    function it_can_return_all_meta_as_an_array_or_a_collection()
     {
         $meta = new Meta('post', 123, 'many_values');
         $meta->add('one')

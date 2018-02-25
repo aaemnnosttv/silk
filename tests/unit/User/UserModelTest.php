@@ -13,7 +13,7 @@ class UserModelTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_takes_a_wp_user_or_array_of_user_attributes_in_the_constructor()
+    function it_takes_a_wp_user_or_array_of_user_attributes_in_the_constructor()
     {
         $blankUser = new WP_User;
 
@@ -31,7 +31,7 @@ class UserModelTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_create_a_new_instance_from_a_user_id()
+    function it_can_create_a_new_instance_from_a_user_id()
     {
         $user_id = $this->factory()->user->create();
 
@@ -45,14 +45,14 @@ class UserModelTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\User\Exception\UserNotFoundException
      */
-    public function it_blows_up_if_unable_to_locate_a_user_by_id()
+    function it_blows_up_if_unable_to_locate_a_user_by_id()
     {
         User::fromID(0);
     }
 
 
     /** @test */
-    public function it_can_create_a_new_instance_from_a_username()
+    function it_can_create_a_new_instance_from_a_username()
     {
         $user = $this->factory()->user->create_and_get();
 
@@ -66,14 +66,14 @@ class UserModelTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\User\Exception\UserNotFoundException
      */
-    public function it_blows_up_if_no_user_is_found_with_the_given_username()
+    function it_blows_up_if_no_user_is_found_with_the_given_username()
     {
         User::fromUsername('non-existent-username');
     }
 
 
     /** @test */
-    public function it_can_create_a_new_instance_from_the_users_email_address()
+    function it_can_create_a_new_instance_from_the_users_email_address()
     {
         $user = $this->factory()->user->create_and_get();
 
@@ -87,13 +87,13 @@ class UserModelTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\User\Exception\UserNotFoundException
      */
-    public function it_blows_up_if_no_user_is_found_with_the_given_email()
+    function it_blows_up_if_no_user_is_found_with_the_given_email()
     {
         User::fromEmail('non-existent@user.com');
     }
 
     /** @test */
-    public function it_can_create_a_new_instance_from_the_user_slug()
+    function it_can_create_a_new_instance_from_the_user_slug()
     {
         $user = $this->factory()->user->create_and_get();
 
@@ -107,13 +107,13 @@ class UserModelTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\User\Exception\UserNotFoundException
      */
-    public function it_blows_up_if_no_user_is_found_with_the_given_slug()
+    function it_blows_up_if_no_user_is_found_with_the_given_slug()
     {
         User::fromSlug('non-existent');
     }
 
     /** @test */
-    public function it_can_create_a_new_user_from_a_new_instance()
+    function it_can_create_a_new_user_from_a_new_instance()
     {
         $model = new User;
         $model->user_login = 'bigbird';
@@ -129,7 +129,7 @@ class UserModelTest extends WP_UnitTestCase
      * @test
      * @expectedException \Silk\Exception\WP_ErrorException
      */
-    public function it_blows_up_if_trying_to_create_a_user_without_a_username()
+    function it_blows_up_if_trying_to_create_a_user_without_a_username()
     {
         $model = new User;
         $model->user_login = '';
@@ -138,7 +138,7 @@ class UserModelTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_update_an_existing_user()
+    function it_can_update_an_existing_user()
     {
         $user = $this->factory()->user->create_and_get();
 
@@ -154,7 +154,7 @@ class UserModelTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_delete_the_modeled_user()
+    function it_can_delete_the_modeled_user()
     {
         $user = $this->factory()->user->create_and_get();
 
@@ -166,7 +166,7 @@ class UserModelTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_exposes_the_meta_api_for_users()
+    function it_exposes_the_meta_api_for_users()
     {
         $user = $this->factory()->user->create_and_get();
 
@@ -184,13 +184,13 @@ class UserModelTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function the_query_method_fulfills_the_contract()
+    function the_query_method_fulfills_the_contract()
     {
         $this->assertInstanceOf(BuildsQueries::class, User::query());
     }
 
     /** @test */
-    public function it_has_a_method_to_get_the_url_for_the_users_posts()
+    function it_has_a_method_to_get_the_url_for_the_users_posts()
     {
         $user = $this->factory()->user->create_and_get(['nicename' => 'franky']);
         $model = new User($user);
@@ -239,7 +239,7 @@ class UserModelTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_alias_some_properties_to_user_data()
+    function it_can_alias_some_properties_to_user_data()
     {
         $user = $this->factory()->user->create_and_get();
         $model = new UserWithAliases($user);

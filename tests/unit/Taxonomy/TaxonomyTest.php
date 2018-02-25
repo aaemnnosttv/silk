@@ -18,7 +18,7 @@ class TaxonomyTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_takes_the_taxonomy_object_to_construct()
+    function it_takes_the_taxonomy_object_to_construct()
     {
         $object = get_taxonomy('category');
         $taxonomy = new Taxonomy($object);
@@ -27,7 +27,7 @@ class TaxonomyTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_has_a_named_constructor_which_takes_the_taxonomy_identifier()
+    function it_has_a_named_constructor_which_takes_the_taxonomy_identifier()
     {
         $this->assertInstanceOf(Taxonomy::class, Taxonomy::make('category'));
     }
@@ -36,7 +36,7 @@ class TaxonomyTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Taxonomy\Exception\NonExistentTaxonomyException
      */
-    public function it_blows_up_if_constructed_with_a_nonexistent_taxonomy()
+    function it_blows_up_if_constructed_with_a_nonexistent_taxonomy()
     {
         new Taxonomy(get_taxonomy('non-existent'));
     }
@@ -45,7 +45,7 @@ class TaxonomyTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Taxonomy\Exception\NonExistentTaxonomyException
      */
-    public function it_blows_up_when_attempting_to_load_an_unregistered_taxonomy()
+    function it_blows_up_when_attempting_to_load_an_unregistered_taxonomy()
     {
         Taxonomy::load('boom');
     }
@@ -54,7 +54,7 @@ class TaxonomyTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Taxonomy\Exception\InvalidTaxonomyNameException
      */
-    public function it_blows_up_if_the_taxononmy_name_is_too_short()
+    function it_blows_up_if_the_taxononmy_name_is_too_short()
     {
         Taxonomy::make('');
     }
@@ -63,13 +63,13 @@ class TaxonomyTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Taxonomy\Exception\InvalidTaxonomyNameException
      */
-    public function it_blows_up_if_the_taxononmy_name_is_too_long()
+    function it_blows_up_if_the_taxononmy_name_is_too_long()
     {
         Taxonomy::make('thisismorethanthirtytwocharacters');
     }
 
     /** @test */
-    public function it_can_unregister_the_taxonomy()
+    function it_can_unregister_the_taxonomy()
     {
         $this->assertFalse(Taxonomy::exists('temp'));
 
@@ -87,7 +87,7 @@ class TaxonomyTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Taxonomy\Exception\NonExistentTaxonomyException
      */
-    public function it_blows_up_if_trying_to_unregister_a_nonexistent_taxonomy()
+    function it_blows_up_if_trying_to_unregister_a_nonexistent_taxonomy()
     {
         register_taxonomy('temp', []);
 
@@ -102,20 +102,20 @@ class TaxonomyTest extends WP_UnitTestCase
      * @test
      * @expectedException Silk\Exception\WP_ErrorException
      */
-    public function it_blows_up_if_attempting_to_unregister_a_builtin_taxonomy()
+    function it_blows_up_if_attempting_to_unregister_a_builtin_taxonomy()
     {
         $taxonomy = new Taxonomy(get_taxonomy('category'));
         $taxonomy->unregister();
     }
 
     /** @test */
-    public function it_has_a_method_for_fetching_terms()
+    function it_has_a_method_for_fetching_terms()
     {
         $this->assertInstanceOf(BuildsQueries::class, Taxonomy::make('category')->terms());
     }
 
     /** @test */
-    public function it_proxies_properties_to_the_taxonomy_object()
+    function it_proxies_properties_to_the_taxonomy_object()
     {
         $model = Taxonomy::make('category');
 
@@ -123,7 +123,7 @@ class TaxonomyTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_has_readonly_properties()
+    function it_has_readonly_properties()
     {
         $model = Taxonomy::make('category');
 
@@ -131,7 +131,7 @@ class TaxonomyTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function it_can_return_a_collection_of_post_types_associated_with_it()
+    function it_can_return_a_collection_of_post_types_associated_with_it()
     {
         register_taxonomy('breed', ['dog', 'cat']);
         register_post_type('dog', ['taxonomies' => (array) 'breed']);
@@ -158,13 +158,13 @@ class TaxonomyTest extends WP_UnitTestCase
     }
 
     /** @test */
-    public function non_existent_properties_return_null()
+    function non_existent_properties_return_null()
     {
         $this->assertNull(Taxonomy::make('category')->non_existent);
     }
 
     /** @test */
-    public function it_returns_a_new_builder_for_its_taxonomy_if_not_registered_yet()
+    function it_returns_a_new_builder_for_its_taxonomy_if_not_registered_yet()
     {
         $this->assertInstanceOf(Builder::class, Taxonomy::make('non_existent_tax'));
     }
