@@ -3,7 +3,6 @@
 namespace Silk\Post\Exception;
 
 use WP_Post;
-use Silk\Models\Post;
 
 class ModelPostTypeMismatchException extends \RuntimeException
 {
@@ -14,7 +13,7 @@ class ModelPostTypeMismatchException extends \RuntimeException
      * @var string
      */
     protected $modelClass;
-    
+
     /**
      * The post object
      * @var WP_Post

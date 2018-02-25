@@ -147,10 +147,10 @@ class Model extends BaseModel
     }
 
     /**
-    * Get a new query builder for the model.
-    *
-    * @return QueryBuilder
-    */
+     * Get a new query builder for the model.
+     *
+     * @return QueryBuilder
+     */
     public function newQuery()
     {
         return QueryBuilder::make()->setModel($this);
