@@ -33,7 +33,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     public function it_can_create_a_new_instance_from_a_user_id()
     {
-        $user_id = $this->factory->user->create();
+        $user_id = $this->factory()->user->create();
 
         $model = User::fromID($user_id);
 
@@ -54,7 +54,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     public function it_can_create_a_new_instance_from_a_username()
     {
-        $user = $this->factory->user->create_and_get();
+        $user = $this->factory()->user->create_and_get();
 
         $model = User::fromUsername($user->user_login);
 
@@ -75,7 +75,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     public function it_can_create_a_new_instance_from_the_users_email_address()
     {
-        $user = $this->factory->user->create_and_get();
+        $user = $this->factory()->user->create_and_get();
 
         $model = User::fromEmail($user->user_email);
 
@@ -95,7 +95,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     public function it_can_create_a_new_instance_from_the_user_slug()
     {
-        $user = $this->factory->user->create_and_get();
+        $user = $this->factory()->user->create_and_get();
 
         $model = User::fromSlug($user->user_nicename);
 
@@ -140,7 +140,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     public function it_can_update_an_existing_user()
     {
-        $user = $this->factory->user->create_and_get();
+        $user = $this->factory()->user->create_and_get();
 
         $model = new User($user);
         $model->first_name = 'Franky';
@@ -156,7 +156,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     public function it_can_delete_the_modeled_user()
     {
-        $user = $this->factory->user->create_and_get();
+        $user = $this->factory()->user->create_and_get();
 
         $model = new User($user);
 
@@ -168,7 +168,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     public function it_exposes_the_meta_api_for_users()
     {
-        $user = $this->factory->user->create_and_get();
+        $user = $this->factory()->user->create_and_get();
 
         $model = new User($user);
 
@@ -192,7 +192,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     public function it_has_a_method_to_get_the_url_for_the_users_posts()
     {
-        $user = $this->factory->user->create_and_get(['nicename' => 'franky']);
+        $user = $this->factory()->user->create_and_get(['nicename' => 'franky']);
         $model = new User($user);
 
         $this->assertSame(
@@ -218,7 +218,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     function it_can_create_a_new_instance_from_the_current_authenticated_user()
     {
-        $user_id = $this->factory->user->create();
+        $user_id = $this->factory()->user->create();
         wp_set_current_user($user_id);
 
         $model = User::auth();
@@ -241,7 +241,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     public function it_can_alias_some_properties_to_user_data()
     {
-        $user = $this->factory->user->create_and_get();
+        $user = $this->factory()->user->create_and_get();
         $model = new UserWithAliases($user);
 
         $this->assertSame($user->user_email, $model->email);

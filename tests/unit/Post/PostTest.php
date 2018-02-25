@@ -21,7 +21,7 @@ class PostTest extends WP_UnitTestCase
     /** @test */
     function it_can_create_a_new_instance_using_a_wp_post_object()
     {
-        $wp_post = $this->factory->post->create_and_get();
+        $wp_post = $this->factory()->post->create_and_get();
 
         $model = new Post($wp_post);
 
@@ -34,7 +34,7 @@ class PostTest extends WP_UnitTestCase
      */
     function it_blows_up_if_instantiated_with_a_post_of_a_different_post_type()
     {
-        $wp_post = $this->factory->post->create_and_get(['post_type' => 'page']);
+        $wp_post = $this->factory()->post->create_and_get(['post_type' => 'page']);
 
         $this->assertSame('page', $wp_post->post_type);
 
@@ -54,7 +54,7 @@ class PostTest extends WP_UnitTestCase
     /** @test */
     public function it_can_find_a_post_by_the_id()
     {
-        $post_id = $this->factory->post->create();
+        $post_id = $this->factory()->post->create();
         $model   = Post::fromID($post_id);
 
         $this->assertInstanceOf(Post::class, $model);
@@ -66,7 +66,7 @@ class PostTest extends WP_UnitTestCase
     public function it_can_find_a_post_by_the_slug()
     {
         $the_slug = 'foo-bar-slug';
-        $post_id  = $this->factory->post->create(['post_name' => $the_slug]);
+        $post_id  = $this->factory()->post->create(['post_name' => $the_slug]);
         $model    = Post::fromSlug($the_slug);
 
         $this->assertEquals($post_id, $model->id);
@@ -95,7 +95,7 @@ class PostTest extends WP_UnitTestCase
     {
         global $post;
 
-        $post = $this->factory->post->create_and_get();
+        $post = $this->factory()->post->create_and_get();
         $model = Post::fromGlobal();
 
         $this->assertSame($post->ID, $model->id);
@@ -113,7 +113,7 @@ class PostTest extends WP_UnitTestCase
     /** @test */
     public function it_proxies_property_access_to_the_post_if_not_available_on_the_instance()
     {
-        $post = $this->factory->post->create_and_get();
+        $post = $this->factory()->post->create_and_get();
         $model = new Post($post);
 
         $this->assertEquals($post->post_date, $model->post_date);
@@ -129,7 +129,7 @@ class PostTest extends WP_UnitTestCase
     /** @test */
     public function it_provides_an_object_for_interacting_with_the_post_meta()
     {
-        $post_id = $this->factory->post->create();
+        $post_id = $this->factory()->post->create();
         update_post_meta($post_id, 'new_meta', 'so fresh');
 
         $post_meta = get_post_custom($post_id);
@@ -174,7 +174,7 @@ class PostTest extends WP_UnitTestCase
     /** @test */
     function it_can_delete_itself()
     {
-        $post_id = $this->factory->post->create();
+        $post_id = $this->factory()->post->create();
         $model = Post::fromID($post_id);
 
         $this->assertSame($post_id, $model->id);
@@ -251,7 +251,7 @@ class PostTest extends WP_UnitTestCase
     /** @test */
     function it_has_a_static_method_for_starting_a_new_query_for_all_posts_of_type()
     {
-        $this->factory->post->create_many(15);
+        $this->factory()->post->create_many(15);
 
         $this->assertCount(15, Post::all()->results());
     }
@@ -268,7 +268,7 @@ class PostTest extends WP_UnitTestCase
     /** @test */
     public function it_has_a_method_for_the_permalink()
     {
-        $post = $this->factory->post->create_and_get();
+        $post = $this->factory()->post->create_and_get();
         $model = Post::make($post);
 
         $this->assertSame(

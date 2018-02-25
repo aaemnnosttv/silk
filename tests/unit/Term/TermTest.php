@@ -274,7 +274,7 @@ class TermTest extends WP_UnitTestCase
     /** @test */
     public function it_can_query_terms_of_the_same_type()
     {
-        $post_id = $this->factory->post->create();
+        $post_id = $this->factory()->post->create();
 
         $this->createManyTagsForPost(5, $post_id);
 

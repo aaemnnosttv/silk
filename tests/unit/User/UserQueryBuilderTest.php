@@ -56,7 +56,7 @@ class UserQueryBuilderTest extends WP_UnitTestCase
     /** @test */
     function it_returns_the_results_as_a_collection_of_model_instances_when_set()
     {
-        $new_user_id = $this->factory->user->create();
+        $new_user_id = $this->factory()->user->create();
 
         $builder = new QueryBuilder();
         $builder->setModel(new Model);

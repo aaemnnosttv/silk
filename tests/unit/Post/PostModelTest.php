@@ -29,7 +29,7 @@ class PostModelTest extends WP_UnitTestCase
     /** @test */
     public function the_make_method_passes_its_arguments_to_the_constructor()
     {
-        $wp_post = $this->factory->post->create_and_get(['post_type' => 'event']);
+        $wp_post = $this->factory()->post->create_and_get(['post_type' => 'event']);
         $model = ModelTestEvent::make($wp_post);
 
         $this->assertSame($wp_post, $model->object);

@@ -9,7 +9,7 @@ class PageTest extends WP_UnitTestCase
      **/
     function it_works()
     {
-        $page = $this->factory->post->create_and_get(['post_type' => 'page']);
+        $page = $this->factory()->post->create_and_get(['post_type' => 'page']);
 
         $model_from_id = Page::fromID($page->ID);
         $model_from_obj = Page::make($page);
@@ -38,7 +38,7 @@ class PageTest extends WP_UnitTestCase
      */
     function it_blows_up_if_instantiated_with_a_non_page_post_type()
     {
-        $post_id = $this->factory->post->create(['post_type' => 'post']);
+        $post_id = $this->factory()->post->create(['post_type' => 'post']);
 
         // this will blow up since the post id is for a post_type of `post`
         Page::fromID($post_id);

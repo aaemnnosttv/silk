@@ -24,7 +24,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
     /** @test */
     public function the_results_can_be_limited_to_the_integer_provided()
     {
-        $this->factory->post->create_many(10);
+        $this->factory()->post->create_many(10);
 
         $builder = new QueryBuilder(new WP_Query);
         $builder->limit(5);
@@ -59,9 +59,9 @@ class PostQueryBuilderTest extends WP_UnitTestCase
     /** @test */
     function it_has_methods_for_setting_the_order_of_results()
     {
-        $first_id = $this->factory->post->create();
-        $this->factory->post->create_many(5);
-        $last_id = $this->factory->post->create();
+        $first_id = $this->factory()->post->create();
+        $this->factory()->post->create_many(5);
+        $last_id = $this->factory()->post->create();
 
         $builder = new QueryBuilder(new WP_Query);
         $builder->setModel(new Post);
@@ -80,7 +80,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
     /** @test */
     function it_can_query_by_status()
     {
-        $this->factory->post->create_many(5, ['post_status' => 'doggie']);
+        $this->factory()->post->create_many(5, ['post_status' => 'doggie']);
         $builder = new QueryBuilder(new WP_Query);
 
         $doggies = $builder->whereStatus('doggie')->results();
@@ -90,7 +90,7 @@ class PostQueryBuilderTest extends WP_UnitTestCase
     /** @test */
     function it_can_query_by_slug()
     {
-        $post_id = $this->factory->post->create(['post_name' => 'sluggy']);
+        $post_id = $this->factory()->post->create(['post_name' => 'sluggy']);
         $builder = new QueryBuilder(new WP_Query);
         $builder->whereSlug('sluggy');
 

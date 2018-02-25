@@ -24,7 +24,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
          *
          * We will limit the query to tags, but to be sure, assign all terms to a post.
          */
-        $post_id = $this->factory->post->create();
+        $post_id = $this->factory()->post->create();
         $this->createManyTagsForPost(3, $post_id);
         $this->createManyCatsForPost(3, $post_id);
 
@@ -39,7 +39,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     /** @test */
     public function it_can_include_unattached_terms()
     {
-        $post_id = $this->factory->post->create();
+        $post_id = $this->factory()->post->create();
         $this->createManyTags(3); // empties
         $this->createManyTagsForPost(3, $post_id); // assigned
 
@@ -55,7 +55,7 @@ class TermQueryBuilderTest extends WP_UnitTestCase
     /** @test */
     public function it_can_query_all_terms()
     {
-        $post_id = $this->factory->post->create();
+        $post_id = $this->factory()->post->create();
 
         $this->createManyTags(2); // empties
         $this->createManyTagsForPost(3, $post_id); // assigned
