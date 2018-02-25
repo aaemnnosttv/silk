@@ -57,6 +57,7 @@ class Taxonomy extends Type implements Registerable
      *
      * @param  string $id Taxonomy name/identifier
      *
+     * @throws NonExistentTaxonomyException
      * @throws InvalidTaxonomyNameException
      *
      * @return static|Builder
