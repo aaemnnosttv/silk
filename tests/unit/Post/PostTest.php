@@ -73,7 +73,7 @@ class PostTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Post\Exception\PostNotFoundException
+     * @expectedException \Silk\Post\Exception\PostNotFoundException
      */
     function it_blows_up_if_no_post_is_found_for_given_slug()
     {
@@ -82,7 +82,7 @@ class PostTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Post\Exception\PostNotFoundException
+     * @expectedException \Silk\Post\Exception\PostNotFoundException
      */
     function it_blows_up_if_no_post_exists_for_given_id()
     {
@@ -102,7 +102,7 @@ class PostTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Post\Exception\PostNotFoundException
+     * @expectedException \Silk\Post\Exception\PostNotFoundException
      */
     function it_blows_up_if_instantiated_from_an_empty_global_post()
     {

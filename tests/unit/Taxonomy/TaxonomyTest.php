@@ -33,7 +33,7 @@ class TaxonomyTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Taxonomy\Exception\NonExistentTaxonomyException
+     * @expectedException \Silk\Taxonomy\Exception\NonExistentTaxonomyException
      */
     function it_blows_up_if_constructed_with_a_nonexistent_taxonomy()
     {
@@ -42,7 +42,7 @@ class TaxonomyTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Taxonomy\Exception\NonExistentTaxonomyException
+     * @expectedException \Silk\Taxonomy\Exception\NonExistentTaxonomyException
      */
     function it_blows_up_when_attempting_to_load_an_unregistered_taxonomy()
     {
@@ -51,7 +51,7 @@ class TaxonomyTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     * @expectedException \Silk\Taxonomy\Exception\InvalidTaxonomyNameException
      */
     function it_blows_up_if_the_taxononmy_name_is_too_short()
     {
@@ -60,7 +60,7 @@ class TaxonomyTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Taxonomy\Exception\InvalidTaxonomyNameException
+     * @expectedException \Silk\Taxonomy\Exception\InvalidTaxonomyNameException
      */
     function it_blows_up_if_the_taxononmy_name_is_too_long()
     {
@@ -84,7 +84,7 @@ class TaxonomyTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Taxonomy\Exception\NonExistentTaxonomyException
+     * @expectedException \Silk\Taxonomy\Exception\NonExistentTaxonomyException
      */
     function it_blows_up_if_trying_to_unregister_a_nonexistent_taxonomy()
     {

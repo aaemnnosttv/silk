@@ -61,7 +61,7 @@ class TermTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Term\Exception\TermNotFoundException
+     * @expectedException \Silk\Term\Exception\TermNotFoundException
      */
     function it_blows_up_if_the_term_cannot_be_found_by_slug()
     {
@@ -70,7 +70,7 @@ class TermTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Term\Exception\TaxonomyMismatchException
+     * @expectedException \Silk\Term\Exception\TaxonomyMismatchException
      */
     function it_blows_up_if_the_terms_taxonomy_does_not_match_the_models()
     {
@@ -93,7 +93,7 @@ class TermTest extends WP_UnitTestCase
 
     /**
      * @test
-     * @expectedException Silk\Term\Exception\TermNotFoundException
+     * @expectedException \Silk\Term\Exception\TermNotFoundException
      */
     function it_blows_up_if_the_term_cannot_be_found_by_id()
     {
