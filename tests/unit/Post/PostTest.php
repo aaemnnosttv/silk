@@ -277,6 +277,34 @@ class PostTest extends WP_UnitTestCase
         );
     }
 
+    /** @test */
+    function it_has_a_method_for_soft_retrieving_the_model_by_its_primary_id()
+    {
+        $post_id = $this->factory()->post->create();
+
+        try {
+            $model = Post::find($post_id);
+        } catch (\Exception $e) {
+            $this->fail("Exception thrown while finding post with ID $post_id. " . $e->getMessage());
+        }
+
+        $this->assertEquals($post_id, $model->id);
+    }
+
+    /** @test */
+    function find_returns_null_if_the_model_cannot_be_found()
+    {
+        $post_id = 0;
+
+        try {
+            $model = Post::find($post_id);
+        } catch (\Exception $e) {
+            $this->fail("Exception thrown while finding post with ID $post_id. " . $e->getMessage());
+        }
+
+        $this->assertNull($model);
+    }
+
 }
 
 class CustomTypeStub extends Post

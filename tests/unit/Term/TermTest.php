@@ -334,6 +334,34 @@ class TermTest extends WP_UnitTestCase
     {
         (new Category)->url();
     }
+
+    /** @test */
+    function it_has_a_method_for_soft_retrieving_the_model_by_its_primary_id()
+    {
+        $term_id = $this->factory()->category->create();
+
+        try {
+            $model = Category::find($term_id);
+        } catch (\Exception $e) {
+            $this->fail("Exception thrown while finding term with ID $term_id. " . $e->getMessage());
+        }
+
+        $this->assertEquals($term_id, $model->id);
+    }
+
+    /** @test */
+    function find_returns_null_if_the_model_cannot_be_found()
+    {
+        $term_id = 0;
+
+        try {
+            $model = Category::find($term_id);
+        } catch (\Exception $e) {
+            $this->fail("Exception thrown while finding term with ID $term_id. " . $e->getMessage());
+        }
+
+        $this->assertNull($model);
+    }
 }
 
 class NewTerm extends Model

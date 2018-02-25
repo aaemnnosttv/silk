@@ -82,6 +82,22 @@ abstract class Model extends BaseModel
     }
 
     /**
+     * Retrieve a new instance by the ID.
+     *
+     * @param int|string $id Primary ID
+     *
+     * @return null|static
+     */
+    public static function find($id)
+    {
+        try {
+            return static::fromID($id);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
      * Create a new instance from a Post with the given ID
      *
      * @param  int|string $id  Post ID of post to create the instance from

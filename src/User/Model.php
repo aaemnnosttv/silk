@@ -39,6 +39,22 @@ class Model extends BaseModel
     }
 
     /**
+     * Retrieve a new instance by the ID.
+     *
+     * @param int|string $id Primary ID
+     *
+     * @return null|static
+     */
+    public static function find($id)
+    {
+        try {
+            return static::fromID($id);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
      * Create a new instance from the user ID.
      *
      * @param  string|int $id  User ID
