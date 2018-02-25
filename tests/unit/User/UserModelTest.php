@@ -269,6 +269,34 @@ class UserModelTest extends WP_UnitTestCase
         $this->assertSame('helper', $model->user_login);
         $this->assertSame('6789', $model->user_pass);
     }
+
+    /** @test */
+    function it_has_a_method_for_soft_retrieving_the_model_by_its_primary_id()
+    {
+        $user_id = $this->factory()->user->create();
+
+        try {
+            $model = User::find($user_id);
+        } catch (\Exception $e) {
+            $this->fail("Exception thrown while finding user with ID $user_id. " . $e->getMessage());
+        }
+
+        $this->assertEquals($user_id, $model->id);
+    }
+
+    /** @test */
+    function find_returns_null_if_the_model_cannot_be_found()
+    {
+        $user_id = 0;
+
+        try {
+            $model = User::find($user_id);
+        } catch (\Exception $e) {
+            $this->fail("Exception thrown while finding user with ID $user_id. " . $e->getMessage());
+        }
+
+        $this->assertNull($model);
+    }
 }
 
 class UserWithAliases extends User
