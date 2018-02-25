@@ -29,10 +29,10 @@ abstract class Model
     const ID_PROPERTY = '';
 
     /**
-    * Get a new query builder for the model.
-    *
-    * @return \Silk\Contracts\Query\BuildsQueries
-    */
+     * Get a new query builder for the model.
+     *
+     * @return \Silk\Query\Builder
+     */
     abstract public function newQuery();
 
     /**
@@ -112,7 +112,7 @@ abstract class Model
     /**
      * Create a new query builder instance for this model type.
      *
-     * @return \Silk\Contracts\Query\BuildsQueries
+     * @return \Silk\Query\Builder
      */
     public static function query()
     {

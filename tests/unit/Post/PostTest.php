@@ -1,7 +1,6 @@
 <?php
 
 use Silk\WordPress\Post\Post;
-use Silk\Contracts\Query\BuildsQueries;
 
 class PostTest extends WP_UnitTestCase
 {
@@ -244,8 +243,8 @@ class PostTest extends WP_UnitTestCase
     /** @test */
     function it_offers_static_methods_for_querying()
     {
-        $this->assertInstanceOf(BuildsQueries::class, Post::query());
-        $this->assertInstanceOf(BuildsQueries::class, (new Post)->newQuery());
+        $this->assertInstanceOf(\Silk\Query\Builder::class, Post::query());
+        $this->assertInstanceOf(\Silk\Query\Builder::class, (new Post)->newQuery());
     }
 
     /** @test */
@@ -260,7 +259,7 @@ class PostTest extends WP_UnitTestCase
     function it_proxies_non_existent_static_methods_to_the_builder()
     {
         $this->assertInstanceOf(
-            BuildsQueries::class,
+            \Silk\Query\Builder::class,
             Post::limit(1)
         );
     }

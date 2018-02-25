@@ -3,7 +3,6 @@
 use Silk\Term\Category;
 use Silk\Taxonomy\Builder;
 use Silk\Taxonomy\Taxonomy;
-use Silk\Contracts\Query\BuildsQueries;
 use Silk\Support\Collection;
 
 
@@ -111,7 +110,7 @@ class TaxonomyTest extends WP_UnitTestCase
     /** @test */
     function it_has_a_method_for_fetching_terms()
     {
-        $this->assertInstanceOf(BuildsQueries::class, Taxonomy::make('category')->terms());
+        $this->assertInstanceOf(\Silk\Query\Builder::class, Taxonomy::make('category')->terms());
     }
 
     /** @test */

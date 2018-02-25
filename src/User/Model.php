@@ -149,7 +149,7 @@ class Model extends BaseModel
     /**
     * Get a new query builder for the model.
     *
-    * @return \Silk\Contracts\Query\BuildsQueries
+    * @return QueryBuilder
     */
     public function newQuery()
     {

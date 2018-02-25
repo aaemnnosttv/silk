@@ -1,7 +1,6 @@
 <?php
 
 use Silk\User\Model as User;
-use Silk\Contracts\Query\BuildsQueries;
 use Silk\Type\ShorthandProperties;
 
 class UserModelTest extends WP_UnitTestCase
@@ -186,7 +185,7 @@ class UserModelTest extends WP_UnitTestCase
     /** @test */
     function the_query_method_fulfills_the_contract()
     {
-        $this->assertInstanceOf(BuildsQueries::class, User::query());
+        $this->assertInstanceOf(\Silk\Query\Builder::class, User::query());
     }
 
     /** @test */

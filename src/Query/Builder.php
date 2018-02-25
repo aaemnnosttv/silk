@@ -3,10 +3,9 @@
 namespace Silk\Query;
 
 use Silk\Type\Model;
-use Silk\Contracts\Query\BuildsQueries;
 use Silk\Support\Collection;
 
-abstract class Builder implements BuildsQueries
+abstract class Builder
 {
     /**
      * The query instance
