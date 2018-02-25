@@ -177,6 +177,15 @@ class PostQueryBuilderTest extends WP_UnitTestCase
         $this->assertEqualSets($children, $builder->childOf($parent_id)->results()->pluck('id')->all());
     }
 
+    /** @test */
+    function it_provides_readonly_access_to_the_wrapped_query_object()
+    {
+        $query   = new WP_Query;
+        $builder = new QueryBuilder($query);
+
+        $this->assertSame($query, $builder->getQuery());
+    }
+
 }
 
 class CustomCPT extends Model

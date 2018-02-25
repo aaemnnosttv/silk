@@ -80,6 +80,16 @@ abstract class Builder implements BuildsQueries
     }
 
     /**
+     * Get the query object.
+     *
+     * @return object
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
      * Handle dynamic method calls on the builder.
      *
      * @param string $name      Method name
