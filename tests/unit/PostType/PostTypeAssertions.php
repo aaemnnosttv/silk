@@ -5,7 +5,6 @@ trait PostTypeAssertions
     /**
      * [assertPostTypeExists description]
      * @param  [type] $slug [description]
-     * @return [type]       [description]
      */
     protected function assertPostTypeExists($slug)
     {
@@ -15,7 +14,6 @@ trait PostTypeAssertions
     /**
      * [assertPostTypeExists description]
      * @param  [type] $slug [description]
-     * @return [type]       [description]
      */
     protected function assertPostTypeNotExists($slug)
     {

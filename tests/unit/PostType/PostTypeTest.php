@@ -7,9 +7,7 @@ class PostTypeTest extends WP_UnitTestCase
 {
     use PostTypeAssertions;
 
-    /**
-    * @test
-    */
+    /** @test */
     function it_takes_a_post_type_object_in_the_constructor()
     {
         $postType = new PostType(get_post_type_object('post'));
@@ -26,9 +24,7 @@ class PostTypeTest extends WP_UnitTestCase
         new PostType(new WP_Term(new stdClass));
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     function it_has_a_named_constructor_for_creating_a_new_instance_from_an_existing_post_type()
     {
         $this->assertInstanceOf(PostType::class, PostType::load('post'));

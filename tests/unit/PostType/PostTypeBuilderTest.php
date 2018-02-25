@@ -12,9 +12,7 @@ class PostTypeBuilderTest extends WP_UnitTestCase
         new Builder('some-type');
     }
 
-    /**
-    * @test
-    */
+    /** @test */
     function it_has_a_named_constructor_for_creating_a_new_instance()
     {
         $this->assertInstanceOf(Builder::class, Builder::make('new-type'));
@@ -31,18 +29,18 @@ class PostTypeBuilderTest extends WP_UnitTestCase
     }
 
     /**
-    * @test
-    * @expectedException Silk\PostType\Exception\InvalidPostTypeNameException
-    */
+     * @test
+     * @expectedException Silk\PostType\Exception\InvalidPostTypeNameException
+     */
     function it_blows_up_if_the_post_type_slug_is_too_long()
     {
         Builder::make('twenty-character-limit')->register();
     }
 
     /**
-    * @test
-    * @expectedException Silk\PostType\Exception\InvalidPostTypeNameException
-    */
+     * @test
+     * @expectedException Silk\PostType\Exception\InvalidPostTypeNameException
+     */
     function it_blows_up_if_the_post_type_slug_is_too_short()
     {
         Builder::make('')->register();

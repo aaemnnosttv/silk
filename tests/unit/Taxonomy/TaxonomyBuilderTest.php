@@ -35,7 +35,6 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
         Builder::make('thisismorethanthirtytwocharacters')->register();
     }
 
-
     /** @test */
     public function it_returns_a_new_taxonomy_instance_after_registering()
     {

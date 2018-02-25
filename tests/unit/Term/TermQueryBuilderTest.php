@@ -75,7 +75,6 @@ class TermQueryBuilderTest extends WP_UnitTestCase
         $this->assertCount(2 + 3 + 4 + 5 + 1, $alls);
     }
 
-
     /** @test */
     public function it_can_limit_the_maximum_number_of_results_to_a_given_number()
     {
