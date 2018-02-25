@@ -47,7 +47,7 @@ class ObjectMetaTest extends WP_UnitTestCase
                 'a' => ['1'],
                 'b' => ['2']
             ],
-            get_metadata('post', $post_id)
+            $meta->toArray()
         );
     }
 
