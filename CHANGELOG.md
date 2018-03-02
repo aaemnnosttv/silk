@@ -1,5 +1,21 @@
 # Release Notes
 
+## v0.12.0 (2018-03-02)
+
+### Added
+- [Query scopes](https://github.com/aaemnnosttv/silk/issues/24) for model queries
+- [Soft `Model::find(id)` retrieval method](https://github.com/aaemnnosttv/silk/issues/25)
+- `\Silk\Silk::VERSION` Version constant
+
+## Changed
+- Raised minimum PHP version to 5.6
+- [Updated `tightenco/collect` Collection library](https://github.com/aaemnnosttv/silk/issues/27)  
+**_Breaking change from previous version with some methods_** (see issue)
+- [Removed deprecated methods](https://github.com/aaemnnosttv/silk/issues/28) **Breaking Change**
+  - `Silk\Post\Model::fromWpPost`
+  - `Silk\Term\Model::fromWpTerm`
+- Removed `Silk\Contracts\Query\BuildsQueries` interface
+
 ## v0.11.1 (2016-30-08)
 
 ### Changed
