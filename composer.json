@@ -28,6 +28,11 @@
         "psr-4": {"Silk\\":"src"},
         "files": ["src/functions.php"]
     },
+    "autoload-dev": {
+        "classmap": [
+            "tests/src"
+        ]
+    },
     "scripts": {
         "test": "phpunit",
         "coverage": "coveralls"
