@@ -36,5 +36,11 @@
     "scripts": {
         "test": "phpunit",
         "coverage": "coveralls"
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "5.6.36"
+        }
     }
 }
