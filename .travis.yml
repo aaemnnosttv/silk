@@ -9,11 +9,11 @@ env:
 matrix:
   include:
     - php: 7.2
-      env: WP_VERSION=*
+      env: WP_VERSION=* BUILD_DOCS=1
     - php: 7.1
       env: WP_VERSION=*
     - php: 7.0
-      env: WP_VERSION=* BUILD_DOCS=1
+      env: WP_VERSION=*
     - php: 5.6
       env: WP_VERSION=*
     - php: 5.6
@@ -49,7 +49,7 @@ deploy:
   local_dir: ../silk-api-docs
   on:
     branch: master
-    php: 7.0
+    php: 7.2
     condition: $BUILD_DOCS
 
 cache:
