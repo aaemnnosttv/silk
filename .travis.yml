@@ -27,8 +27,8 @@ install:
   - composer require --dev --update-with-dependencies johnpbloch/wordpress:$WP_VERSION wp-phpunit/wp-phpunit:$WP_VERSION
 
 before_script:
-  - mysql -u root -e "GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO ${WP_DB_USER} IDENTIFIED BY '{$WP_DB_PASS}';"
-  - mysql -u root -e "CREATE DATABASE {$WP_DB_NAME};"
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
+  - mysql -u root -e "CREATE DATABASE ${WP_DB_NAME};"
   - mkdir -p build/logs
 
 script: composer test
