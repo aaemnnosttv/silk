@@ -1,5 +1,10 @@
 # Release Notes
 
+## v0.12.1 (2018-08-06)
+
+- Fix location of `UserNotFoundException`
+- Formatting tweaks
+
 ## v0.12.0 (2018-03-02)
 
 ### Added
