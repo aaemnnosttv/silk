@@ -2,8 +2,6 @@
 
 namespace Silk\Support;
 
-use Silk\Support\Collection;
-
 abstract class Shortcode
 {
     /**
@@ -17,7 +15,7 @@ abstract class Shortcode
      * @var string
      */
     protected $content;
-    
+
     /**
      * The shortcode tag that was called
      * @var string
