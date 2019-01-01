@@ -56,7 +56,7 @@ class Builder extends BaseBuilder
      */
     public function open()
     {
-        return $this->set('public', true);
+        return $this->public();
     }
 
     /**
@@ -66,7 +66,7 @@ class Builder extends BaseBuilder
      */
     public function closed()
     {
-        return $this->set('public', false);
+        return $this->private();
     }
 
     /**

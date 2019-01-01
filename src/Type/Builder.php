@@ -131,6 +131,26 @@ abstract class Builder
     }
 
     /**
+     * Set the type as publicly available.
+     *
+     * @return $this
+     */
+    public function public()
+    {
+        return $this->set('public', true);
+    }
+
+    /**
+     * Set the type as non-publicly available.
+     *
+     * @return $this
+     */
+    public function private()
+    {
+        return $this->set('public', false);
+    }
+
+    /**
      * Setter for post type arguments.
      *
      * @param string $key
