@@ -60,6 +60,7 @@ class Builder extends TypeBuilder
      * Register and return the new taxonomy.
      *
      * @throws InvalidTaxonomyNameException
+     * @throws Exception\NonExistentTaxonomyException
      *
      * @return Taxonomy
      */

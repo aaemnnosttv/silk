@@ -38,6 +38,10 @@ use Silk\Post\Exception\ModelPostTypeMismatchException;
  * @property string $post_title
  * @property string $post_type
  * @property string $to_ping
+ *
+ * @method static QueryBuilder query()
+ * @method static QueryBuilder whereSlug(string $slug)
+ * @method static QueryBuilder whereStatus(string $slug)
  */
 abstract class Model extends BaseModel
 {

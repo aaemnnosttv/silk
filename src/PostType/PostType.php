@@ -8,13 +8,14 @@ use Silk\Contracts\Type\Registerable;
 use Silk\Support\Collection;
 use Silk\Exception\WP_ErrorException;
 use Silk\PostType\Exception\NonExistentPostTypeException;
+use WP_Post_Type;
 
 class PostType extends Type implements Registerable
 {
     /**
      * PostType Constructor
      *
-     * @param stdClass $object  The WordPress post type object
+     * @param stdClass|WP_Post_Type $object  The WordPress post type object
      *
      * @throws \InvalidArgumentException
      */
@@ -68,7 +69,7 @@ class PostType extends Type implements Registerable
      *
      * @param $id
      *
-     * @return mixed
+     * @return Builder
      */
     public static function build($id)
     {

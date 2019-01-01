@@ -22,6 +22,8 @@ use Silk\Term\Exception\TaxonomyMismatchException;
  * @property string $description
  * @property int    $parent
  * @property int    $count
+ *
+ * @method static QueryBuilder query()
  */
 abstract class Model extends BaseModel
 {

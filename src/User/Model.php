@@ -8,6 +8,22 @@ use Silk\Support\Collection;
 use Silk\Exception\WP_ErrorException;
 use Silk\User\Exception\UserNotFoundException;
 
+/**
+ * @property-read WP_User user
+ * @property-read int ID
+ * @property string user_login
+ * @property string user_pass
+ * @property string user_nicename
+ * @property string user_email
+ * @property string user_registered
+ * @property string user_activation_key
+ * @property string user_status
+ * @property string display_name
+ * @property string spam
+ * @property string deleted
+ *
+ * @method static QueryBuilder query()
+ */
 class Model extends BaseModel
 {
     /**
