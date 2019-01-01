@@ -5,26 +5,27 @@ env:
     - WP_DB_USER=wp
     - WP_DB_PASS=password
     - WP_DB_NAME=wp_tests
+    - WP_VERSION=*
+
+php:
+  - 7.3
+  - 7.2
+  - 7.1
+  - 7.0
 
 matrix:
   include:
     - php: 7.2
       env: WP_VERSION=* BUILD_DOCS=1
-    - php: 7.1
-      env: WP_VERSION=*
     - php: 7.0
-      env: WP_VERSION=*
-    - php: 5.6
-      env: WP_VERSION=*
-    - php: 5.6
-      env: WP_VERSION=4.5.3
+      env: WP_VERSION=4.8.0
 
 before_install:
   - composer validate --strict
 
 install:
+  - composer require --dev --no-update johnpbloch/wordpress:$WP_VERSION wp-phpunit/wp-phpunit:$WP_VERSION
   - composer install
-  - composer require --dev --update-with-dependencies johnpbloch/wordpress:$WP_VERSION wp-phpunit/wp-phpunit:$WP_VERSION
   - composer show
 
 before_script:
