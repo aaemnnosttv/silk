@@ -8,12 +8,7 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
     /** @test */
     function it_takes_the_taxonomy_name_to_construct()
     {
-        new Builder('new_tax');
-    }
-
-    /** @test */
-    function it_has_a_named_constructor_also()
-    {
+        $this->assertInstanceOf(Builder::class, new Builder('new_tax'));
         $this->assertInstanceOf(Builder::class, Builder::make('new_tax'));
     }
 
