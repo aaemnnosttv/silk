@@ -65,6 +65,16 @@ class TaxonomyBuilderTest extends WP_UnitTestCase
         $this->assertObjectHasTaxonomy('post', 'new_tax');
     }
 
+    /** @test */
+    function it_has_dedicated_methods_for_public_visibility()
+    {
+        $public = Builder::make('a-public-taxonomy')->open();
+        $this->assertTrue($public->get('public'));
+
+        $private = Builder::make('a-private-taxonomy')->closed();
+        $this->assertFalse($private->get('public'));
+    }
+
     protected function assertObjectHasTaxonomy($object, $taxonomy)
     {
         $taxonomies = get_object_taxonomies($object);

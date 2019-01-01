@@ -73,4 +73,24 @@ class Builder extends TypeBuilder
 
         return Taxonomy::load($this->id);
     }
+
+    /**
+     * Set the taxonomy as publicly available.
+     *
+     * @return $this
+     */
+    public function open()
+    {
+        return $this->public();
+    }
+
+    /**
+     * Set the taxonomy as non-publicly available.
+     *
+     * @return $this
+     */
+    public function closed()
+    {
+        return $this->private();
+    }
 }
